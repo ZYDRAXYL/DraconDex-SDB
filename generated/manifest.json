@@ -1,0 +1,141 @@
+{
+  "manifestVersion": 1,
+  "sdb": {
+    "repo": "ZYDRAXYL/DraconDex-SDB",
+    "version": "1.0.0"
+  },
+  "sources": {
+    "vaultSchemaVersion": 4,
+    "supabaseSchemaVersion": 2,
+    "vaultSqlSha256": "1fc4729276ea3b072493a3faff024dabd0022de83522101b535609dd0639ddb1",
+    "setupSqlSha256": "9bc12ba249cc05c2f29bd82e8ba840440704d09934ea5642ce7bb659112e372e"
+  },
+  "artifacts": {
+    "generated/electron/vault-ddl.electron.js": {
+      "sha256": "c44dbc1c51711f4d429a5e0b6f3f4fc235ac2b5bea1eb0c132d5d67993be7844",
+      "bytes": 47742,
+      "consumers": {
+        "EXE": "src/schema/generated/vault-ddl.electron.js"
+      }
+    },
+    "generated/electron/supabase-schema.js": {
+      "sha256": "5c8b631db18a16b2c8c9e120835c02e3cd222c153f93957d26489ec0fd5d556f",
+      "bytes": 16413,
+      "consumers": {
+        "EXE": "electron/src/db/supabase-schema.js"
+      }
+    },
+    "generated/flutter/vault_schema.g.dart": {
+      "sha256": "a33fea1b30f442854738a079625f80a80b22b9bdd65a6fd5627baaa2d701478e",
+      "bytes": 41255,
+      "consumers": {
+        "APK": "flutter/lib/core/database/vault_schema.g.dart"
+      }
+    },
+    "generated/flutter/supabase_schema.dart": {
+      "sha256": "539cad343515f2a819c6c2ef04fa113fbf053795bee369c0bba22e2a9d5b1155",
+      "bytes": 16359,
+      "consumers": {
+        "APK": "flutter/lib/data/services/supabase_schema.dart"
+      }
+    },
+    "assets/brand/DraconDex_BlackIn.png": {
+      "sha256": "e04929e6a55983c60ff6bd176c16003dae4f11122191c9413122c161c0a2ad23",
+      "bytes": 313188,
+      "consumers": {
+        "EXE": "src/assets/brand/DraconDex_BlackIn.png"
+      }
+    },
+    "assets/brand/DraconDex_BlackOut.png": {
+      "sha256": "18a8066cddd1b8e5c2a7133e0dc02a922e6c14ffa35d96ab41ff33065017186b",
+      "bytes": 207680,
+      "consumers": {
+        "EXE": "src/assets/brand/DraconDex_BlackOut.png"
+      }
+    },
+    "assets/brand/DraconDex_Color.png": {
+      "sha256": "cb9844e845917614e99f7f110f90684589754432b2b925858f68ae4402b995bd",
+      "bytes": 550251,
+      "consumers": {
+        "EXE": "src/assets/brand/DraconDex_Color.png"
+      }
+    },
+    "assets/brand/DraconDex_Icon.ico": {
+      "sha256": "56d6efc2718a38b39209842adc14123db58230cc3b3c0f0a65bacd414611b428",
+      "bytes": 54944,
+      "consumers": {
+        "EXE": "src/assets/brand/DraconDex_Icon.ico"
+      }
+    },
+    "assets/brand/DraconDex_Shade.png": {
+      "sha256": "28f12c2aabf2a2e3762f46d52e782b737df90f076dd73fdbe4748991ebaf8077",
+      "bytes": 525231,
+      "consumers": {
+        "EXE": "src/assets/brand/DraconDex_Shade.png"
+      }
+    },
+    "assets/brand/DraconDex_WhiteIn.png": {
+      "sha256": "f24a09d575b0515c5c02314f869f52dae0ad25ca40fede3f7c7b5f83f7006190",
+      "bytes": 314385,
+      "consumers": {
+        "EXE": "src/assets/brand/DraconDex_WhiteIn.png"
+      }
+    },
+    "assets/brand/DraconDex_WhiteOut.png": {
+      "sha256": "7677500149b9655d06460bc69ac31c46a1b7323fe9c85f1c8680247b1a107821",
+      "bytes": 250116,
+      "consumers": {
+        "EXE": "src/assets/brand/DraconDex_WhiteOut.png"
+      }
+    },
+    "assets/flutter/DraconDex-IconApp.png": {
+      "sha256": "5661d237bf79e5499f3ebd9ee76c2eb72ac29ea29ca32a8375f9231c84e4356d",
+      "bytes": 1311950,
+      "consumers": {
+        "APK": "flutter/assets/images/DraconDex-IconApp.png"
+      }
+    },
+    "assets/flutter/DraconDex-SymbolBlack.png": {
+      "sha256": "56f31ff7cc5db96f9714f9043e1d06aaed0f51bee35a7667d94d358c6436a8ea",
+      "bytes": 1404808,
+      "consumers": {
+        "APK": "flutter/assets/images/DraconDex-SymbolBlack.png"
+      }
+    },
+    "assets/flutter/DraconDex-SymbolColor.png": {
+      "sha256": "3778c06dccc6c35fa0ba51abbc5d1c7a0a142194245bf54bdc8fa49d1ae8f46b",
+      "bytes": 1516792,
+      "consumers": {
+        "APK": "flutter/assets/images/DraconDex-SymbolColor.png"
+      }
+    },
+    "assets/flutter/DraconDex-SymbolWhite.png": {
+      "sha256": "e01f6f20cc8da69c4c8ede1a2ef69a7bf6fd9d4e3a106578e520759b120a862f",
+      "bytes": 1395176,
+      "consumers": {
+        "APK": "flutter/assets/images/DraconDex-SymbolWhite.png"
+      }
+    },
+    "assets/fonts/NotoSans-Bold.ttf": {
+      "sha256": "1df075a380fc7cb898acf64c1f7b3b4dd780de3caa860178bf929de35817a913",
+      "bytes": 631484,
+      "consumers": {
+        "APK": "flutter/assets/fonts/NotoSans-Bold.ttf"
+      }
+    },
+    "assets/fonts/NotoSans-Regular.ttf": {
+      "sha256": "478c558ea716033cd60c03438f628dfa75694dcf6b5f6d505a2f05fd2b4f3823",
+      "bytes": 621572,
+      "consumers": {
+        "APK": "flutter/assets/fonts/NotoSans-Regular.ttf"
+      }
+    },
+    "assets/fonts/OFL.txt": {
+      "sha256": "cee9892f9f0cc8fe882c9e9537ee6a89621d86ee7ceaf70b02e2b2b1c25c061a",
+      "bytes": 4396,
+      "consumers": {
+        "APK": "flutter/assets/fonts/OFL.txt"
+      }
+    }
+  }
+}

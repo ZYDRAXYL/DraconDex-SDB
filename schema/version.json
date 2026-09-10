@@ -1,0 +1,4 @@
+{
+  "vaultSchemaVersion": 4,
+  "_comment": "Shared vault schema version — the ONE central number both apps read. Electron folds it into vaultSchemaStamp() (electron/src/db/schema/init.js) so a bump forces a re-run of the (idempotent) init path; Flutter passes it straight to sqflite's openDatabase(version:) (flutter/lib/core/database/database_helper.dart), which fires onUpgrade (itself a no-op — the real work is _onOpen's idempotent CREATE TABLE IF NOT EXISTS loop, same as Electron's). Bump this by hand whenever src/schema/vault.sql changes in a way that needs every existing install to re-run its init path — a brand new table doesn't strictly need it (both sides' init already runs CREATE TABLE IF NOT EXISTS unconditionally on every open), but bump it anyway for traceability. Starts at 1 to match Flutter's pre-existing hardcoded version, so this rollout itself does not trigger an onUpgrade."
+}
