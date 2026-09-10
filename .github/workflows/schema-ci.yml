@@ -1,0 +1,45 @@
+name: Schema check
+
+# The whole point of this repo is that two shipping apps generate their DDL
+# from one source. That only holds if the committed generated/ output actually
+# matches schema/vault.sql — so this runs the generators in --check mode and
+# fails when someone edits vault.sql without regenerating, or hand-edits a
+# generated file.
+#
+# Before the multi-repo split this guarantee came from `schema:check` running
+# inside the monorepo's own Electron and Flutter workflows. Post-split the
+# producer has to enforce it, because a consumer can no longer see the source.
+
+on:
+  push:
+    branches: [main]
+    paths: ['schema/**', 'supabase/**', 'assets/**', 'tools/**', 'sdb.json', '.github/workflows/schema-ci.yml']
+  pull_request:
+    paths: ['schema/**', 'supabase/**', 'assets/**', 'tools/**', 'sdb.json', '.github/workflows/schema-ci.yml']
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+
+      - name: Generated files match their sources
+        run: npm run check
+
+      # A generated file that matches its source but was never committed is the
+      # same failure wearing a different hat: consumers vendor what is committed,
+      # not what a generator could have produced.
+      - name: No uncommitted generator output
+        run: |
+          if [ -n "$(git status --porcelain generated/)" ]; then
+            echo "::error::generated/ has uncommitted changes. Run 'npm run generate' and commit the result."
+            git status --porcelain generated/
+            exit 1
+          fi
