@@ -1148,6 +1148,20 @@ CREATE TABLE IF NOT EXISTS module_version (
     );
 ''',
 
+  // nexus_history
+  '''
+CREATE TABLE IF NOT EXISTS nexus_history (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      nexus_ref INTEGER NOT NULL REFERENCES nexus(id) ON DELETE CASCADE,
+      seq INTEGER NOT NULL,
+      action TEXT NOT NULL CHECK(action IN ('create','move','delete','copy')),
+      module_ref INTEGER,
+      module_name TEXT,
+      detail TEXT,
+      create_at TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+''',
+
   // import_file
   '''
 CREATE TABLE IF NOT EXISTS import_file (
