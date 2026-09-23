@@ -962,6 +962,17 @@
     -- hub section. linker_key optionally binds a file to a nest entity
     -- (module_5, cobj_3, ...); use_as_image marks an image file as that
     -- entity's display picture (cards / List+Detail / Grid).
+    --
+    -- v5 Asset Nest (APP docs/V5.md §2.2): the module tree IS the asset tree.
+    -- module_ref files the asset into a module node; NULL = unfiled, shown in
+    -- the Import Dock tray. folder is provenance only now (which disk folder
+    -- it came from), no longer the organizing axis. source_kind='url' rows
+    -- keep the URL in file_path with file_type='url', file_size=0. proxy is
+    -- a small cover thumbnail (<=512px, ~200 KB cap) so the vault still shows
+    -- every asset after a move to another machine; sha256 + missing drive
+    -- the relink flow. Every column below the v4 set is also added by an
+    -- ALTER TABLE ADD COLUMN on each app side for existing vaults, which is
+    -- why every NOT NULL one carries a DEFAULT.
     CREATE TABLE IF NOT EXISTS import_file (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       nexus_ref INTEGER NOT NULL REFERENCES nexus(id) ON DELETE CASCADE,
@@ -972,7 +983,14 @@
       folder TEXT,
       linker_key TEXT,
       use_as_image INTEGER NOT NULL DEFAULT 0,
-      create_at TEXT NOT NULL DEFAULT (datetime('now'))
+      create_at TEXT NOT NULL DEFAULT (datetime('now')),
+      module_ref INTEGER REFERENCES module(id) ON DELETE SET NULL,
+      source_kind TEXT CHECK(source_kind IN ('file','url')) NOT NULL DEFAULT 'file',
+      sha256 TEXT,
+      proxy BLOB,
+      proxy_type TEXT,
+      missing INTEGER NOT NULL DEFAULT 0,
+      last_seen_at TEXT
     );
 
     -- Graph "Designer" (Phase 16). Free-form diagram: shaped nodes

@@ -2,7 +2,7 @@
 // Source: ZYDRAXYL/DraconDex-SDB schema/vault.sql (+ schema/version.json).
 // Regenerate with: npm run generate
 
-const int vaultSchemaVersion = 4;
+const int vaultSchemaVersion = 5;
 
 const List<String> defaultColorCodes = [
   '#6366f1',
@@ -1174,7 +1174,14 @@ CREATE TABLE IF NOT EXISTS import_file (
       folder TEXT,
       linker_key TEXT,
       use_as_image INTEGER NOT NULL DEFAULT 0,
-      create_at TEXT NOT NULL DEFAULT (datetime('now'))
+      create_at TEXT NOT NULL DEFAULT (datetime('now')),
+      module_ref INTEGER REFERENCES module(id) ON DELETE SET NULL,
+      source_kind TEXT CHECK(source_kind IN ('file','url')) NOT NULL DEFAULT 'file',
+      sha256 TEXT,
+      proxy BLOB,
+      proxy_type TEXT,
+      missing INTEGER NOT NULL DEFAULT 0,
+      last_seen_at TEXT
     );
 ''',
 
