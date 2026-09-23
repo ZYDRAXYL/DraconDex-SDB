@@ -940,9 +940,13 @@ CREATE TABLE IF NOT EXISTS module (
       -- index idx_module_handle, created in migrations.js rather than here so
       -- pre-existing duplicate data can't abort the whole index pass.
       handle TEXT,
+      -- v5 (APP docs/V5.md §3.1): 'exhibitor' replaces both 'viewer' and
+      -- 'connector'; 'diviner' (§11.5) joins in the same release so this
+      -- CHECK — which SQLite cannot ALTER — is rebuilt once, not twice.
+      -- Existing vaults are rebuilt by EXE migrations.js migrateModuleKindV5.
       kind TEXT NOT NULL CHECK(kind IN ('collector','manager','inspector','classifier',
         'locator','chronicler','wanderer','narrator','author','scribe','drafter',
-        'viewer','connector','sketcher','designer')),
+        'exhibitor','sketcher','designer','diviner')),
       icon TEXT,
       icon_color INTEGER REFERENCES use_color(id),
       color INTEGER REFERENCES use_color(id),
@@ -1242,7 +1246,51 @@ CREATE TABLE IF NOT EXISTS entity_relation (
       label TEXT,
       color INTEGER REFERENCES use_color(id),
       create_at TEXT NOT NULL DEFAULT (datetime('now')),
-      UNIQUE(from_key, to_key, label)
+      module_ref INTEGER REFERENCES module(id) ON DELETE SET NULL,
+      rel_type TEXT,
+      directed INTEGER NOT NULL DEFAULT 1,
+      UNIQUE(from_key, to_key, label, rel_type)
+    );
+''',
+
+  // exhibit_node
+  '''
+CREATE TABLE IF NOT EXISTS exhibit_node (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      module_ref INTEGER NOT NULL REFERENCES module(id) ON DELETE CASCADE,
+      parent_id INTEGER REFERENCES exhibit_node(id) ON DELETE CASCADE,
+      node_type TEXT NOT NULL DEFAULT 'entity',
+      linker_key TEXT,
+      label TEXT,
+      x REAL NOT NULL DEFAULT 0,
+      y REAL NOT NULL DEFAULT 0,
+      w REAL,
+      h REAL,
+      z INTEGER NOT NULL DEFAULT 0,
+      rotation REAL NOT NULL DEFAULT 0,
+      scale REAL NOT NULL DEFAULT 1,
+      locked INTEGER NOT NULL DEFAULT 0,
+      hidden INTEGER NOT NULL DEFAULT 0,
+      color TEXT,
+      props TEXT,
+      create_at TEXT NOT NULL DEFAULT (datetime('now')),
+      update_at TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+''',
+
+  // exhibit_view
+  '''
+CREATE TABLE IF NOT EXISTS exhibit_view (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      module_ref INTEGER NOT NULL REFERENCES module(id) ON DELETE CASCADE,
+      scale REAL NOT NULL DEFAULT 1,
+      tx REAL NOT NULL DEFAULT 0,
+      ty REAL NOT NULL DEFAULT 0,
+      bg_linker_key TEXT,
+      grid INTEGER NOT NULL DEFAULT 1,
+      snap INTEGER NOT NULL DEFAULT 0,
+      update_at TEXT NOT NULL DEFAULT (datetime('now')),
+      UNIQUE(module_ref)
     );
 ''',
 
