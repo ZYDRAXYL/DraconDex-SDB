@@ -7,13 +7,13 @@
   "sources": {
     "vaultSchemaVersion": 5,
     "supabaseSchemaVersion": 2,
-    "vaultSqlSha256": "80e89442aaafd694890f93297f491a270cd7ecd61474c50d5d38bff4a56d9c4a",
+    "vaultSqlSha256": "9ea4bcd49f103361dfc7e2e19fb057a6e752314146056d2477c16da983220509",
     "setupSqlSha256": "9bc12ba249cc05c2f29bd82e8ba840440704d09934ea5642ce7bb659112e372e"
   },
   "artifacts": {
     "generated/electron/vault-ddl.electron.js": {
-      "sha256": "326df6cd4072cdd61f179fae3cb35a165c705fc8e033c7f0c81d4fe8af86e70b",
-      "bytes": 54122,
+      "sha256": "e6f94af6d4b7c402fa90bafdda15c666c3044b14490729374c2dbee931c132e5",
+      "bytes": 58323,
       "consumers": {
         "EXE": "src/schema/generated/vault-ddl.electron.js"
       }
@@ -26,8 +26,8 @@
       }
     },
     "generated/flutter/vault_schema.g.dart": {
-      "sha256": "932a9c3d934b1fa321f558cf79d9c37473997b6244e1d800c0634d4e70e62867",
-      "bytes": 44120,
+      "sha256": "72e45b79eb8492dcb2411481b17da96371d39818e3e18930bf4b6eef09ddc2c5",
+      "bytes": 47394,
       "consumers": {
         "APK": "flutter/lib/core/database/vault_schema.g.dart"
       }
