@@ -40,6 +40,7 @@ CREATE TABLE IF NOT EXISTS nexus (
       name TEXT NOT NULL UNIQUE,
       memo TEXT,
       color INTEGER REFERENCES use_color(id),
+      taught TEXT NOT NULL DEFAULT '{}',
       update_at TEXT NOT NULL DEFAULT (datetime('now'))
     );
 ''',
@@ -1349,6 +1350,19 @@ CREATE TABLE IF NOT EXISTS classifier_level (
       info_value TEXT,
       display_order INTEGER NOT NULL DEFAULT 0,
       update_at TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+''',
+
+  // module_preset
+  '''
+CREATE TABLE IF NOT EXISTS module_preset (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      nexus_ref INTEGER NOT NULL REFERENCES nexus(id) ON DELETE CASCADE,
+      kind TEXT NOT NULL,
+      name TEXT NOT NULL,
+      spec TEXT NOT NULL DEFAULT '{}',
+      update_at TEXT NOT NULL DEFAULT (datetime('now')),
+      UNIQUE(nexus_ref, kind, name)
     );
 ''',
 ];
