@@ -12,7 +12,7 @@ This repo holds no application code and builds no app.
 
 ```
 schema/vault.sql        canonical — ~100 CREATE TABLE statements, 1081 lines
-schema/version.json     vaultSchemaVersion (currently 4)
+schema/version.json     vaultSchemaVersion (currently 6)
 schema/generate.mjs     codegen: vault.sql -> generated/{electron,flutter}/
 schema/README.md        the rules for changing a table — READ BEFORE EDITING vault.sql
 supabase/setup/         Cloud Sync installer SQL + its own codegen

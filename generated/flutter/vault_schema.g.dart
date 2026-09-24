@@ -2,7 +2,7 @@
 // Source: ZYDRAXYL/DraconDex-SDB schema/vault.sql (+ schema/version.json).
 // Regenerate with: npm run generate
 
-const int vaultSchemaVersion = 5;
+const int vaultSchemaVersion = 6;
 
 const List<String> defaultColorCodes = [
   '#6366f1',
@@ -960,18 +960,6 @@ CREATE TABLE IF NOT EXISTS module (
     );
 ''',
 
-  // module_attribute
-  '''
-CREATE TABLE IF NOT EXISTS module_attribute (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      module_ref INTEGER NOT NULL REFERENCES module(id) ON DELETE CASCADE,
-      attr_name TEXT NOT NULL,
-      attr_value TEXT,
-      display_order INTEGER NOT NULL DEFAULT 0,
-      update_at TEXT NOT NULL DEFAULT (datetime('now'))
-    );
-''',
-
   // module_ui
   '''
 CREATE TABLE IF NOT EXISTS module_ui (
@@ -1432,6 +1420,26 @@ CREATE TABLE IF NOT EXISTS diviner_roll (
       entry_ref INTEGER REFERENCES diviner_entry(id) ON DELETE SET NULL,
       result_text TEXT,
       create_at TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+''',
+
+  // page_block
+  '''
+CREATE TABLE IF NOT EXISTS page_block (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      module_ref INTEGER NOT NULL REFERENCES module(id) ON DELETE CASCADE,
+      item_key TEXT,
+      parent_id INTEGER REFERENCES page_block(id) ON DELETE CASCADE,
+      block_type TEXT NOT NULL DEFAULT 'component' CHECK(block_type IN ('component','text','property','heading','columns')),
+      component TEXT,
+      source_key TEXT,
+      config TEXT,
+      content TEXT,
+      prop_name TEXT,
+      prop_type TEXT,
+      block_order INTEGER NOT NULL DEFAULT 0,
+      create_at TEXT NOT NULL DEFAULT (datetime('now')),
+      update_at TEXT NOT NULL DEFAULT (datetime('now'))
     );
 ''',
 
