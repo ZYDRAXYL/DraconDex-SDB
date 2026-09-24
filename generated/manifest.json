@@ -145,6 +145,14 @@
         "APK": "flutter/assets/templates/bundles.json"
       }
     },
+    "fixtures/snapshot-v2.json": {
+      "sha256": "25f0a61cceb80025640285dfe0c7d28897b6b63ab934022e7ed4f8ce0914dc50",
+      "bytes": 16753,
+      "consumers": {
+        "EXE": "electron/test/fixtures/snapshot-v2.json",
+        "APK": "flutter/test/fixtures/snapshot-v2.json"
+      }
+    },
     "templates/guide/en.json": {
       "sha256": "5989449ffa2b21e4329da99cf75e5f0311d32cb529a08628b133ce4687518ad6",
       "bytes": 6888,

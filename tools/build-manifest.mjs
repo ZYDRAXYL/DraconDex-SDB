@@ -63,6 +63,8 @@ for (const f of walk('assets/fonts'))   CONSUMERS[f] = { APK: f.replace(/^assets
 // each app, and the two in-app guides. EXE keeps the guide where db/guide.js
 // has always read it; APK needs both under its own assets/ (pubspec).
 CONSUMERS['generated/templates/bundles.json'] = { EXE: 'electron/templates/bundles.json', APK: 'flutter/assets/templates/bundles.json' };
+// The snapshot fixture both apps' tests import (fixtures/README.md).
+CONSUMERS['fixtures/snapshot-v2.json'] = { EXE: 'electron/test/fixtures/snapshot-v2.json', APK: 'flutter/test/fixtures/snapshot-v2.json' };
 for (const f of walk('templates/guide')) {
   CONSUMERS[f] = { EXE: f.replace(/^templates\//, 'electron/'), APK: f.replace(/^templates\//, 'flutter/assets/templates/') };
 }
