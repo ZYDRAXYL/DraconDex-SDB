@@ -1430,7 +1430,7 @@ CREATE TABLE IF NOT EXISTS page_block (
       module_ref INTEGER NOT NULL REFERENCES module(id) ON DELETE CASCADE,
       item_key TEXT,
       parent_id INTEGER REFERENCES page_block(id) ON DELETE CASCADE,
-      block_type TEXT NOT NULL DEFAULT 'component' CHECK(block_type IN ('component','text','property','heading','columns')),
+      block_type TEXT NOT NULL DEFAULT 'component' CHECK(block_type IN ('component','text','heading','divider','image','property','columns')),
       component TEXT,
       source_key TEXT,
       config TEXT,
