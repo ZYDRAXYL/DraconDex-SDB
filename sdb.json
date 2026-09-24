@@ -1,4 +1,4 @@
 {
-  "sdbVersion": "2.0.1",
+  "sdbVersion": "2.0.2",
   "_comment": "SDB's OWN release identity — the number EXE and APK pin against, and the one that becomes the sdb-vX.Y.Z tag. Deliberately separate from schema/version.json's vaultSchemaVersion, which is the number the two apps fold into their database init path. They move for different reasons: vaultSchemaVersion bumps only when every existing install must re-run its init, while sdbVersion bumps on any published change to this repo's artifacts (a regenerated file, a new asset, a Supabase setup edit). Cadence: X for a breaking vault.sql change (a column dropped or renamed, a table removed), Y when vaultSchemaVersion moves, Z for everything else."
 }
