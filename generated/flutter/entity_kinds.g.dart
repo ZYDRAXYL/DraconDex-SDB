@@ -164,6 +164,18 @@ const List<EntityFamily> entityFamilies = [
     search: ['name'],
   ),
   EntityFamily(
+    prefix: 'mevt',
+    table: 'map_event',
+    owner: r'''SELECT id FROM map_event WHERE module_ref=?''',
+    lookupSql: r'''SELECT id, COALESCE(NULLIF(label,''), (SELECT event_name FROM timeline_event WHERE id=map_event.event_ref), 'Pin ' || id) AS name FROM map_event WHERE id=?''',
+    lookupType: 'pin',
+    lookupModule: 'wanderer',
+    wiki: null,
+    sync: 'mevtMap',
+    indexKind: null,
+    search: null,
+  ),
+  EntityFamily(
     prefix: 'ctpl',
     table: 'classifier_template',
     owner: r'''SELECT id FROM classifier_template WHERE module_ref=?''',
@@ -211,6 +223,7 @@ const List<KeyColumn> keyColumns = [
   KeyColumn(table: 'book_chapter', cols: ['pov_key'], json: false, only: null),
   KeyColumn(table: 'story_choice_option', cols: ['condition', 'set_ops'], json: true, only: null),
   KeyColumn(table: 'diviner_entry', cols: ['linker_key'], json: false, only: null),
+  KeyColumn(table: 'map_event', cols: ['linker_key'], json: false, only: null),
   KeyColumn(table: 'page_block', cols: ['item_key'], json: false, only: r'^[a-z]+_\d+$'),
   KeyColumn(table: 'page_block', cols: ['source_key'], json: false, only: null),
 ];
