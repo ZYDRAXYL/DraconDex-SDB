@@ -2,7 +2,7 @@
   "manifestVersion": 1,
   "sdb": {
     "repo": "ZYDRAXYL/DraconDex-SDB",
-    "version": "2.0.0"
+    "version": "2.0.1"
   },
   "sources": {
     "vaultSchemaVersion": 6,
@@ -37,6 +37,20 @@
       "bytes": 16359,
       "consumers": {
         "APK": "flutter/lib/data/services/supabase_schema.dart"
+      }
+    },
+    "generated/electron/entity-kinds.json": {
+      "sha256": "7d08f759c57e60e3c2271a6c481f5abb7982ad043a5739ec6b60769f15dedc5a",
+      "bytes": 11410,
+      "consumers": {
+        "EXE": "src/schema/generated/entity-kinds.json"
+      }
+    },
+    "generated/flutter/entity_kinds.g.dart": {
+      "sha256": "4cb4b1f65509c16cdeaf3ce14499f227de15bee10a6ecf14366fb10637946eea",
+      "bytes": 7864,
+      "consumers": {
+        "APK": "flutter/lib/core/entity/entity_kinds.g.dart"
       }
     },
     "assets/brand/DraconDex_BlackIn.png": {

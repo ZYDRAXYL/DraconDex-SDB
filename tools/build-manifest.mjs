@@ -52,6 +52,10 @@ const CONSUMERS = {
   'generated/electron/supabase-schema.js':    { EXE: 'electron/src/db/supabase-schema.js' },
   'generated/flutter/vault_schema.g.dart':    { APK: 'flutter/lib/core/database/vault_schema.g.dart' },
   'generated/flutter/supabase_schema.dart':   { APK: 'flutter/lib/data/services/supabase_schema.dart' },
+  // Every entity-key family + every key column (schema/entity-kinds.mjs,
+  // APP docs/APK-V3.md §9.1). EXE keeps it beside the vendored DDL.
+  'generated/electron/entity-kinds.json':     { EXE: 'src/schema/generated/entity-kinds.json' },
+  'generated/flutter/entity_kinds.g.dart':    { APK: 'flutter/lib/core/entity/entity_kinds.g.dart' },
 };
 // Asset masters. EXE vendors brand (electron/css resolves it through url() at
 // runtime); APK mirrors images+fonts because pubspec.yaml cannot declare assets
