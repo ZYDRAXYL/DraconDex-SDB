@@ -59,6 +59,13 @@ const CONSUMERS = {
 for (const f of walk('assets/brand'))   CONSUMERS[f] = { EXE: f.replace(/^assets\//, 'src/assets/') };
 for (const f of walk('assets/flutter')) CONSUMERS[f] = { APK: f.replace(/^assets\/flutter\//, 'flutter/assets/images/') };
 for (const f of walk('assets/fonts'))   CONSUMERS[f] = { APK: f.replace(/^assets\/fonts\//, 'flutter/assets/fonts/') };
+// Templates (templates/build.mjs): the genre bundles, resolved per locale by
+// each app, and the two in-app guides. EXE keeps the guide where db/guide.js
+// has always read it; APK needs both under its own assets/ (pubspec).
+CONSUMERS['generated/templates/bundles.json'] = { EXE: 'electron/templates/bundles.json', APK: 'flutter/assets/templates/bundles.json' };
+for (const f of walk('templates/guide')) {
+  CONSUMERS[f] = { EXE: f.replace(/^templates\//, 'electron/'), APK: f.replace(/^templates\//, 'flutter/assets/templates/') };
+}
 
 const artifacts = {};
 for (const [artifact, consumers] of Object.entries(CONSUMERS)) {

@@ -136,6 +136,30 @@
       "consumers": {
         "APK": "flutter/assets/fonts/OFL.txt"
       }
+    },
+    "generated/templates/bundles.json": {
+      "sha256": "071f72c8d284287a0ff3c126c394d7a48d4799de7627b8fc984594a2bab75d32",
+      "bytes": 53628,
+      "consumers": {
+        "EXE": "electron/templates/bundles.json",
+        "APK": "flutter/assets/templates/bundles.json"
+      }
+    },
+    "templates/guide/en.json": {
+      "sha256": "5989449ffa2b21e4329da99cf75e5f0311d32cb529a08628b133ce4687518ad6",
+      "bytes": 6888,
+      "consumers": {
+        "EXE": "electron/guide/en.json",
+        "APK": "flutter/assets/templates/guide/en.json"
+      }
+    },
+    "templates/guide/th.json": {
+      "sha256": "899eb328b6056bf28112d7fe6b839afe22f6aff90a7966fb163c4553bfbd1a1f",
+      "bytes": 12205,
+      "consumers": {
+        "EXE": "electron/guide/th.json",
+        "APK": "flutter/assets/templates/guide/th.json"
+      }
     }
   }
 }

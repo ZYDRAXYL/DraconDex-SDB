@@ -1,0 +1,229 @@
+{
+  "id": "rpg",
+  "icon": "hero",
+  "name": {
+    "t": "bundleRpg"
+  },
+  "description": {
+    "t": "bundleRpgD"
+  },
+  "spec": {
+    "modules": [
+      {
+        "ref": "chars",
+        "kind": "classifier",
+        "catType": "character",
+        "name": {
+          "t": "gameChars"
+        },
+        "fields": [
+          {
+            "name": "HP",
+            "type": "number",
+            "levelable": true
+          },
+          {
+            "name": "MP",
+            "type": "number",
+            "levelable": true
+          },
+          {
+            "name": "ATK",
+            "type": "number",
+            "levelable": true
+          },
+          {
+            "name": "DEF",
+            "type": "number",
+            "levelable": true
+          },
+          {
+            "name": {
+              "t": "artFldRole"
+            },
+            "type": "text"
+          },
+          {
+            "name": {
+              "t": "artFldBackstory"
+            },
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "ref": "skills",
+        "kind": "classifier",
+        "catType": "element",
+        "name": {
+          "t": "artSkills"
+        },
+        "fields": [
+          {
+            "name": {
+              "t": "pfDescription"
+            },
+            "type": "textarea",
+            "levelable": false,
+            "hasCondition": false,
+            "options": null
+          },
+          {
+            "name": {
+              "t": "pfSkillEffect"
+            },
+            "type": "text",
+            "levelable": true,
+            "hasCondition": true,
+            "options": null
+          },
+          {
+            "name": {
+              "t": "pfUsableBy"
+            },
+            "type": "relation",
+            "levelable": false,
+            "hasCondition": false,
+            "options": {
+              "targetKinds": [
+                "object"
+              ]
+            },
+            "relTo": "chars"
+          }
+        ]
+      },
+      {
+        "ref": "items",
+        "kind": "classifier",
+        "name": {
+          "t": "gameItems"
+        },
+        "fields": [
+          {
+            "name": {
+              "t": "artFldDescription"
+            },
+            "type": "textarea"
+          },
+          {
+            "name": {
+              "t": "artFldEffect"
+            },
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "ref": "quests",
+        "kind": "classifier",
+        "catType": "element",
+        "name": {
+          "t": "artQuests"
+        },
+        "fields": [
+          {
+            "name": {
+              "t": "pfQuestStatus"
+            },
+            "type": "select",
+            "levelable": false,
+            "hasCondition": false,
+            "options": {
+              "choices": [
+                {
+                  "t": "questNotStarted"
+                },
+                {
+                  "t": "questActive"
+                },
+                {
+                  "t": "questDone"
+                },
+                {
+                  "t": "questFailed"
+                }
+              ]
+            }
+          },
+          {
+            "name": {
+              "t": "pfQuestGiver"
+            },
+            "type": "relation",
+            "levelable": false,
+            "hasCondition": false,
+            "options": {
+              "targetKinds": [
+                "object"
+              ]
+            },
+            "relTo": "chars"
+          },
+          {
+            "name": {
+              "t": "pfObjectives"
+            },
+            "type": "textarea",
+            "levelable": false,
+            "hasCondition": false,
+            "options": null
+          },
+          {
+            "name": {
+              "t": "pfReward"
+            },
+            "type": "text",
+            "levelable": false,
+            "hasCondition": false,
+            "options": null
+          },
+          {
+            "name": {
+              "t": "pfInChapter"
+            },
+            "type": "relation",
+            "levelable": false,
+            "hasCondition": false,
+            "options": {
+              "targetKinds": [
+                "chapter",
+                "event"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "kind": "narrator",
+        "name": {
+          "t": "artMainStory"
+        }
+      },
+      {
+        "kind": "diviner",
+        "name": {
+          "t": "bdDrops"
+        },
+        "tables": [
+          {
+            "name": {
+              "t": "bdDrops"
+            },
+            "entries": [
+              {
+                "weight": 6
+              },
+              {
+                "weight": 3
+              },
+              {
+                "weight": 1
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

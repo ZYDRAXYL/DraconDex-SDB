@@ -1,0 +1,178 @@
+{
+  "id": "fantasy",
+  "icon": "sword",
+  "name": {
+    "t": "bundleFantasy"
+  },
+  "description": {
+    "t": "bundleFantasyD"
+  },
+  "spec": {
+    "modules": [
+      {
+        "ref": "chars",
+        "kind": "classifier",
+        "catType": "character",
+        "name": {
+          "t": "worldChars"
+        },
+        "fields": [
+          {
+            "name": {
+              "t": "artFldRole"
+            },
+            "type": "text"
+          },
+          {
+            "name": {
+              "t": "artFldAge"
+            },
+            "type": "text"
+          },
+          {
+            "name": {
+              "t": "artFldPersonality"
+            },
+            "type": "textarea"
+          },
+          {
+            "name": {
+              "t": "artFldGoal"
+            },
+            "type": "text"
+          },
+          {
+            "name": {
+              "t": "pfWeapon"
+            },
+            "type": "relation",
+            "relTo": "items"
+          }
+        ]
+      },
+      {
+        "ref": "items",
+        "kind": "classifier",
+        "name": {
+          "t": "gameItems"
+        },
+        "fields": [
+          {
+            "name": {
+              "t": "artFldDescription"
+            },
+            "type": "textarea"
+          },
+          {
+            "name": {
+              "t": "artFldOwner"
+            },
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "ref": "places",
+        "kind": "classifier",
+        "name": {
+          "t": "artLocations"
+        },
+        "fields": [
+          {
+            "name": {
+              "t": "artFldDescription"
+            },
+            "type": "textarea"
+          },
+          {
+            "name": {
+              "t": "artFldHistory"
+            },
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "ref": "factions",
+        "kind": "classifier",
+        "name": {
+          "t": "artFactions"
+        },
+        "fields": [
+          {
+            "name": {
+              "t": "artFldDescription"
+            },
+            "type": "textarea"
+          },
+          {
+            "name": {
+              "t": "artFldGoal"
+            },
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "ref": "magic",
+        "kind": "classifier",
+        "catType": "element",
+        "name": {
+          "t": "artMagic"
+        },
+        "fields": [
+          {
+            "name": {
+              "t": "artFldRules"
+            },
+            "type": "textarea"
+          },
+          {
+            "name": {
+              "t": "pfCost"
+            },
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "kind": "locator",
+        "name": {
+          "t": "kcMap"
+        }
+      },
+      {
+        "kind": "chronicler",
+        "name": {
+          "t": "artMainTimeline"
+        }
+      },
+      {
+        "kind": "author",
+        "name": {
+          "t": "artBook"
+        },
+        "chapters": [
+          {
+            "name": {
+              "t": "artChapter",
+              "suffix": " 1"
+            }
+          },
+          {
+            "name": {
+              "t": "artChapter",
+              "suffix": " 2"
+            }
+          },
+          {
+            "name": {
+              "t": "artChapter",
+              "suffix": " 3"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

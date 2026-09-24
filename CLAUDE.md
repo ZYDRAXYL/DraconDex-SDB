@@ -18,6 +18,7 @@ schema/README.md        the rules for changing a table — READ BEFORE EDITING v
 supabase/setup/         Cloud Sync installer SQL + its own codegen
 supabase/migrations/    server-side migration history
 assets/{brand,flutter,fonts}/   masters both apps ship
+templates/              genre bundles + strings (18 locales) + the TH/EN guide — templates/README.md
 generated/              GENERATED + COMMITTED — never hand-edit
 generated/manifest.json every artifact, its sha256, and its destination per consumer
 sdb.json                this repo's release identity (sdbVersion)
