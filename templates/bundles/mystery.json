@@ -1,5 +1,6 @@
 {
   "id": "mystery",
+  "order": 4,
   "icon": "search",
   "name": {
     "t": "bundleMystery"

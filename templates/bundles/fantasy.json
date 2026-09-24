@@ -1,5 +1,6 @@
 {
   "id": "fantasy",
+  "order": 1,
   "icon": "sword",
   "name": {
     "t": "bundleFantasy"

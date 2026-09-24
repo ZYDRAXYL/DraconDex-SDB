@@ -24,6 +24,7 @@
   "bundles": [
     {
       "id": "fantasy",
+      "order": 1,
       "icon": "sword",
       "name": {
         "t": "bundleFantasy"
@@ -201,22 +202,23 @@
       }
     },
     {
-      "id": "mystery",
-      "icon": "search",
+      "id": "ttrpg",
+      "order": 2,
+      "icon": "dice",
       "name": {
-        "t": "bundleMystery"
+        "t": "bundleTtrpg"
       },
       "description": {
-        "t": "bundleMysteryD"
+        "t": "bundleTtrpgD"
       },
       "spec": {
         "modules": [
           {
-            "ref": "chars",
+            "ref": "npcs",
             "kind": "classifier",
             "catType": "character",
             "name": {
-              "t": "worldChars"
+              "t": "bdNpcs"
             },
             "fields": [
               {
@@ -230,14 +232,48 @@
                   "t": "artFldPersonality"
                 },
                 "type": "textarea"
+              },
+              {
+                "name": {
+                  "t": "pfHome"
+                },
+                "type": "relation",
+                "relTo": "places"
               }
             ]
           },
           {
-            "ref": "clues",
+            "ref": "monsters",
             "kind": "classifier",
             "name": {
-              "t": "artClues"
+              "t": "artCreatures"
+            },
+            "fields": [
+              {
+                "name": "HP",
+                "type": "number"
+              },
+              {
+                "name": "AC",
+                "type": "number"
+              },
+              {
+                "name": "CR",
+                "type": "number"
+              },
+              {
+                "name": {
+                  "t": "artFldDescription"
+                },
+                "type": "textarea"
+              }
+            ]
+          },
+          {
+            "ref": "places",
+            "kind": "classifier",
+            "name": {
+              "t": "artLocations"
             },
             "fields": [
               {
@@ -245,98 +281,84 @@
                   "t": "artFldDescription"
                 },
                 "type": "textarea"
-              },
-              {
-                "name": {
-                  "t": "pfInChapter"
-                },
-                "type": "relation",
-                "options": {
-                  "targetKinds": [
-                    "chapter"
-                  ]
-                }
-              },
-              {
-                "name": {
-                  "t": "pfPointsTo"
-                },
-                "type": "relation",
-                "relTo": "suspects"
               }
             ]
           },
           {
-            "ref": "suspects",
-            "kind": "classifier",
-            "catType": "character",
+            "kind": "locator",
             "name": {
-              "t": "bdSuspects"
+              "t": "kcMap"
+            }
+          },
+          {
+            "kind": "diviner",
+            "name": {
+              "t": "bdEncounters"
             },
-            "fields": [
+            "tables": [
               {
                 "name": {
-                  "t": "artFldMotive"
+                  "t": "bdEncounters"
                 },
-                "type": "text"
+                "dice": "1d20",
+                "entries": [
+                  {
+                    "lo": 1,
+                    "hi": 8
+                  },
+                  {
+                    "lo": 9,
+                    "hi": 14
+                  },
+                  {
+                    "lo": 15,
+                    "hi": 19
+                  },
+                  {
+                    "lo": 20,
+                    "hi": 20
+                  }
+                ]
               },
               {
                 "name": {
-                  "t": "pfMeans"
+                  "t": "bdLoot"
                 },
-                "type": "text"
-              },
-              {
-                "name": {
-                  "t": "pfAlibi"
-                },
-                "type": "textarea"
+                "entries": [
+                  {
+                    "weight": 5
+                  },
+                  {
+                    "weight": 3
+                  },
+                  {
+                    "weight": 1
+                  }
+                ]
               }
             ]
           },
           {
-            "kind": "author",
+            "kind": "scribe",
             "name": {
-              "t": "artBook"
+              "t": "bdSessions"
             },
-            "chapters": [
+            "sessions": [
               {
                 "name": {
-                  "t": "artChapter",
+                  "t": "bdSession",
                   "suffix": " 1"
-                }
-              },
-              {
-                "name": {
-                  "t": "artChapter",
-                  "suffix": " 2"
-                }
-              },
-              {
-                "name": {
-                  "t": "artChapter",
-                  "suffix": " 3"
-                }
+                },
+                "messages": []
               }
             ]
-          },
-          {
-            "kind": "chronicler",
-            "name": {
-              "t": "artMainTimeline"
-            }
-          },
-          {
-            "kind": "drafter",
-            "name": {
-              "t": "artIdeas"
-            }
           }
         ]
       }
     },
     {
       "id": "rpg",
+      "order": 3,
       "icon": "hero",
       "name": {
         "t": "bundleRpg"
@@ -565,22 +587,23 @@
       }
     },
     {
-      "id": "ttrpg",
-      "icon": "dice",
+      "id": "mystery",
+      "order": 4,
+      "icon": "search",
       "name": {
-        "t": "bundleTtrpg"
+        "t": "bundleMystery"
       },
       "description": {
-        "t": "bundleTtrpgD"
+        "t": "bundleMysteryD"
       },
       "spec": {
         "modules": [
           {
-            "ref": "npcs",
+            "ref": "chars",
             "kind": "classifier",
             "catType": "character",
             "name": {
-              "t": "bdNpcs"
+              "t": "worldChars"
             },
             "fields": [
               {
@@ -594,126 +617,107 @@
                   "t": "artFldPersonality"
                 },
                 "type": "textarea"
+              }
+            ]
+          },
+          {
+            "ref": "clues",
+            "kind": "classifier",
+            "name": {
+              "t": "artClues"
+            },
+            "fields": [
+              {
+                "name": {
+                  "t": "artFldDescription"
+                },
+                "type": "textarea"
               },
               {
                 "name": {
-                  "t": "pfHome"
+                  "t": "pfInChapter"
                 },
                 "type": "relation",
-                "relTo": "places"
+                "options": {
+                  "targetKinds": [
+                    "chapter"
+                  ]
+                }
+              },
+              {
+                "name": {
+                  "t": "pfPointsTo"
+                },
+                "type": "relation",
+                "relTo": "suspects"
               }
             ]
           },
           {
-            "ref": "monsters",
+            "ref": "suspects",
             "kind": "classifier",
+            "catType": "character",
             "name": {
-              "t": "artCreatures"
+              "t": "bdSuspects"
             },
             "fields": [
               {
-                "name": "HP",
-                "type": "number"
-              },
-              {
-                "name": "AC",
-                "type": "number"
-              },
-              {
-                "name": "CR",
-                "type": "number"
+                "name": {
+                  "t": "artFldMotive"
+                },
+                "type": "text"
               },
               {
                 "name": {
-                  "t": "artFldDescription"
+                  "t": "pfMeans"
+                },
+                "type": "text"
+              },
+              {
+                "name": {
+                  "t": "pfAlibi"
                 },
                 "type": "textarea"
               }
             ]
           },
           {
-            "ref": "places",
-            "kind": "classifier",
+            "kind": "author",
             "name": {
-              "t": "artLocations"
+              "t": "artBook"
             },
-            "fields": [
+            "chapters": [
               {
                 "name": {
-                  "t": "artFldDescription"
-                },
-                "type": "textarea"
+                  "t": "artChapter",
+                  "suffix": " 1"
+                }
+              },
+              {
+                "name": {
+                  "t": "artChapter",
+                  "suffix": " 2"
+                }
+              },
+              {
+                "name": {
+                  "t": "artChapter",
+                  "suffix": " 3"
+                }
               }
             ]
           },
           {
-            "kind": "locator",
+            "kind": "chronicler",
             "name": {
-              "t": "kcMap"
+              "t": "artMainTimeline"
             }
           },
           {
-            "kind": "diviner",
+            "kind": "drafter",
             "name": {
-              "t": "bdEncounters"
-            },
-            "tables": [
-              {
-                "name": {
-                  "t": "bdEncounters"
-                },
-                "dice": "1d20",
-                "entries": [
-                  {
-                    "lo": 1,
-                    "hi": 8
-                  },
-                  {
-                    "lo": 9,
-                    "hi": 14
-                  },
-                  {
-                    "lo": 15,
-                    "hi": 19
-                  },
-                  {
-                    "lo": 20,
-                    "hi": 20
-                  }
-                ]
-              },
-              {
-                "name": {
-                  "t": "bdLoot"
-                },
-                "entries": [
-                  {
-                    "weight": 5
-                  },
-                  {
-                    "weight": 3
-                  },
-                  {
-                    "weight": 1
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "kind": "scribe",
-            "name": {
-              "t": "bdSessions"
-            },
-            "sessions": [
-              {
-                "name": {
-                  "t": "bdSession",
-                  "suffix": " 1"
-                },
-                "messages": []
-              }
-            ]
+              "t": "artIdeas"
+            }
           }
         ]
       }

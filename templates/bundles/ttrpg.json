@@ -1,5 +1,6 @@
 {
   "id": "ttrpg",
+  "order": 2,
   "icon": "dice",
   "name": {
     "t": "bundleTtrpg"

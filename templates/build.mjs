@@ -5,7 +5,7 @@
 // the phone needed the same four; now this repo owns them and both apps
 // vendor the output, like the schema.
 //
-//   templates/bundles/<id>.json  { id, icon, name, description, spec }
+//   templates/bundles/<id>.json  { id, order, icon, name, description, spec }
 //   templates/strings.json       key -> { <18 locales> }
 //   templates/guide/<loc>.json   a ddx-guide (Thai and English ship in-app;
 //                                the other 16 are DraconDex-PKG packages)
@@ -67,7 +67,8 @@ function checkModules(mods, where) {
 }
 
 const bundles = readdirSync(join(ROOT, 'templates/bundles')).filter((f) => f.endsWith('.json')).sort()
-  .map((f) => ({ f, b: read(`templates/bundles/${f}`) }));
+  .map((f) => ({ f, b: read(`templates/bundles/${f}`) }))
+  .sort((a, b) => (a.b.order ?? 99) - (b.b.order ?? 99)); // the picker's order
 const ids = new Set();
 for (const { f, b } of bundles) {
   const w = `bundles/${f}`;

@@ -138,8 +138,8 @@
       }
     },
     "generated/templates/bundles.json": {
-      "sha256": "071f72c8d284287a0ff3c126c394d7a48d4799de7627b8fc984594a2bab75d32",
-      "bytes": 53628,
+      "sha256": "7d10b0cfdd0217a00a610e75ce8315499778836b5802f0b35fa4027f234fad15",
+      "bytes": 53700,
       "consumers": {
         "EXE": "electron/templates/bundles.json",
         "APK": "flutter/assets/templates/bundles.json"

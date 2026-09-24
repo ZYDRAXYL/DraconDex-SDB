@@ -7,7 +7,7 @@ now, and EXE and APK vendor the output like the schema.
 
 | File | What it is |
 |---|---|
-| `bundles/<id>.json` | `{ id, icon, name, description, spec }` — `spec` is the shape EXE's `db/bundle.js` documents |
+| `bundles/<id>.json` | `{ id, order, icon, name, description, spec }` — `order` is the picker's order — `spec` is the shape EXE's `db/bundle.js` documents |
 | `strings.json` | every string a bundle shows, in all 18 locales: `key → { en, ja, … }` |
 | `guide/<locale>.json` | a `ddx-guide` in plain text. Thai and English ship in both apps; the other 16 locales are DraconDex-PKG `guide` packages |
 
