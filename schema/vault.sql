@@ -1269,12 +1269,12 @@
     --                        module uses (a Classifier's objects, …)
     --   item_key 'cobj_12'   one element's own page, split off the shared one
     -- block_type: component | text | property | heading | columns.
-    --   component  `component` names it (e.g. 'classifier.table'); `config`
-    --              is JSON (preset + options); `source_key` is set when it
+    --   component  component names it (e.g. 'classifier.table'); config
+    --              is JSON (preset + options); source_key is set when it
     --              shows ANOTHER module or element than the page's own
     --              (a Manager borrowing a Classifier's table)
-    --   text       `content` is Markdown
-    --   property   prop_name / prop_type, value in `content` (was
+    --   text       content is Markdown
+    --   property   prop_name / prop_type, value in content (was
     --              module_attribute)
     --   columns    a container; its children point at it with parent_id
     -- item_key and source_key are entity keys, remapped on import like every

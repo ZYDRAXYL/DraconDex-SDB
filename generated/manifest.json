@@ -7,13 +7,13 @@
   "sources": {
     "vaultSchemaVersion": 6,
     "supabaseSchemaVersion": 2,
-    "vaultSqlSha256": "45f489a52c03fbcad6b5707ee6e816be134ddbc127b15dea2381ee5d757c28b8",
+    "vaultSqlSha256": "9222042b285d20b37a74a7c552581cf9ea19a258f12be30b8b15acb926a5119f",
     "setupSqlSha256": "9bc12ba249cc05c2f29bd82e8ba840440704d09934ea5642ce7bb659112e372e"
   },
   "artifacts": {
     "generated/electron/vault-ddl.electron.js": {
-      "sha256": "00c10130c81260aff19afc74eef87b39c3e44784284825bbd324a4b2aa3aaa90",
-      "bytes": 59901,
+      "sha256": "fb45035c47cd570e70d251a970ab5bbb6278ad42f74664a73c0cdf4c77c77ad2",
+      "bytes": 59881,
       "consumers": {
         "EXE": "src/schema/generated/vault-ddl.electron.js"
       }
