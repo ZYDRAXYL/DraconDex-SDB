@@ -92,6 +92,14 @@ Nexus ชื่อซ้ำในไฟล์เดียวไม่มีท�
    ตารางใหม่ล้วนไม่จำเป็นต้อง bump (ข้อ 4 อธิบายว่าทำไม) แต่ bump ไว้เผื่อ
    traceability ก็ได้
 
+6. **ลบตาราง** (เช่น `module_attribute` ใน v5 Part 8): เอาออกจาก `vault.sql`
+   อย่างเดียวไม่พอ — เครื่อง user เก่ายังมีตารางและข้อมูลอยู่ ต้องมี migration
+   ทั้งสองฝั่งที่ **ย้ายข้อมูลออกก่อน** แล้วค่อย `DROP TABLE` (ฝั่ง EXE ใส่
+   ใน `migrateInlineColumns()` + รายการใน `vaultSchemaStamp()`, ฝั่ง APK ใน
+   `_onOpen`) และลบ index ของตารางนั้นใน `indexes.js` ด้วย เพราะ
+   `CREATE INDEX IF NOT EXISTS` บนตารางที่ไม่มีแล้วยัง throw — bump
+   `vaultSchemaVersion` และ `sdbVersion` เป็นเลข X (breaking)
+
 ## Electron ฝั่ง APP_DDL_SQL — ยังเหมือนเดิมทุกอย่าง
 
 `electron/src/db/schema/ddl.js` (DraconDex-EXE) ของ `APP_DDL_SQL`, `electron/src/db/schema/

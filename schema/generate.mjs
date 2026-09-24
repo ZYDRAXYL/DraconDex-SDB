@@ -50,6 +50,14 @@ const normalizeEol = (s) => s.replace(/\r\n/g, '\n');
 const vaultSql = normalizeEol(fs.readFileSync(vaultSqlPath, 'utf8'));
 const { vaultSchemaVersion } = JSON.parse(fs.readFileSync(versionPath, 'utf8'));
 
+// The Electron artifact wraps vault.sql in ONE JS template literal, so a
+// backtick anywhere in it — even inside an SQL comment — ends the literal
+// and breaks EXE's schema-split test only after vendoring. Refuse it here.
+if (vaultSql.includes('`')) {
+  console.error('generate.mjs: vault.sql contains a backtick; it would end the Electron template literal');
+  process.exit(1);
+}
+
 // Balanced-paren scan for every `CREATE TABLE IF NOT EXISTS <name> ( ... );`
 // block, in file order — the same technique that built vault.sql from
 // ddl.js in the first place, so it's already proven against this exact text.

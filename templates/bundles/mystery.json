@@ -1,0 +1,136 @@
+{
+  "id": "mystery",
+  "order": 4,
+  "icon": "search",
+  "name": {
+    "t": "bundleMystery"
+  },
+  "description": {
+    "t": "bundleMysteryD"
+  },
+  "spec": {
+    "modules": [
+      {
+        "ref": "chars",
+        "kind": "classifier",
+        "catType": "character",
+        "name": {
+          "t": "worldChars"
+        },
+        "fields": [
+          {
+            "name": {
+              "t": "artFldRole"
+            },
+            "type": "text"
+          },
+          {
+            "name": {
+              "t": "artFldPersonality"
+            },
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "ref": "clues",
+        "kind": "classifier",
+        "name": {
+          "t": "artClues"
+        },
+        "fields": [
+          {
+            "name": {
+              "t": "artFldDescription"
+            },
+            "type": "textarea"
+          },
+          {
+            "name": {
+              "t": "pfInChapter"
+            },
+            "type": "relation",
+            "options": {
+              "targetKinds": [
+                "chapter"
+              ]
+            }
+          },
+          {
+            "name": {
+              "t": "pfPointsTo"
+            },
+            "type": "relation",
+            "relTo": "suspects"
+          }
+        ]
+      },
+      {
+        "ref": "suspects",
+        "kind": "classifier",
+        "catType": "character",
+        "name": {
+          "t": "bdSuspects"
+        },
+        "fields": [
+          {
+            "name": {
+              "t": "artFldMotive"
+            },
+            "type": "text"
+          },
+          {
+            "name": {
+              "t": "pfMeans"
+            },
+            "type": "text"
+          },
+          {
+            "name": {
+              "t": "pfAlibi"
+            },
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "kind": "author",
+        "name": {
+          "t": "artBook"
+        },
+        "chapters": [
+          {
+            "name": {
+              "t": "artChapter",
+              "suffix": " 1"
+            }
+          },
+          {
+            "name": {
+              "t": "artChapter",
+              "suffix": " 2"
+            }
+          },
+          {
+            "name": {
+              "t": "artChapter",
+              "suffix": " 3"
+            }
+          }
+        ]
+      },
+      {
+        "kind": "chronicler",
+        "name": {
+          "t": "artMainTimeline"
+        }
+      },
+      {
+        "kind": "drafter",
+        "name": {
+          "t": "artIdeas"
+        }
+      }
+    ]
+  }
+}

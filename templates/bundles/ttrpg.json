@@ -1,0 +1,155 @@
+{
+  "id": "ttrpg",
+  "order": 2,
+  "icon": "dice",
+  "name": {
+    "t": "bundleTtrpg"
+  },
+  "description": {
+    "t": "bundleTtrpgD"
+  },
+  "spec": {
+    "modules": [
+      {
+        "ref": "npcs",
+        "kind": "classifier",
+        "catType": "character",
+        "name": {
+          "t": "bdNpcs"
+        },
+        "fields": [
+          {
+            "name": {
+              "t": "artFldRole"
+            },
+            "type": "text"
+          },
+          {
+            "name": {
+              "t": "artFldPersonality"
+            },
+            "type": "textarea"
+          },
+          {
+            "name": {
+              "t": "pfHome"
+            },
+            "type": "relation",
+            "relTo": "places"
+          }
+        ]
+      },
+      {
+        "ref": "monsters",
+        "kind": "classifier",
+        "name": {
+          "t": "artCreatures"
+        },
+        "fields": [
+          {
+            "name": "HP",
+            "type": "number"
+          },
+          {
+            "name": "AC",
+            "type": "number"
+          },
+          {
+            "name": "CR",
+            "type": "number"
+          },
+          {
+            "name": {
+              "t": "artFldDescription"
+            },
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "ref": "places",
+        "kind": "classifier",
+        "name": {
+          "t": "artLocations"
+        },
+        "fields": [
+          {
+            "name": {
+              "t": "artFldDescription"
+            },
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "kind": "locator",
+        "name": {
+          "t": "kcMap"
+        }
+      },
+      {
+        "kind": "diviner",
+        "name": {
+          "t": "bdEncounters"
+        },
+        "tables": [
+          {
+            "name": {
+              "t": "bdEncounters"
+            },
+            "dice": "1d20",
+            "entries": [
+              {
+                "lo": 1,
+                "hi": 8
+              },
+              {
+                "lo": 9,
+                "hi": 14
+              },
+              {
+                "lo": 15,
+                "hi": 19
+              },
+              {
+                "lo": 20,
+                "hi": 20
+              }
+            ]
+          },
+          {
+            "name": {
+              "t": "bdLoot"
+            },
+            "entries": [
+              {
+                "weight": 5
+              },
+              {
+                "weight": 3
+              },
+              {
+                "weight": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "scribe",
+        "name": {
+          "t": "bdSessions"
+        },
+        "sessions": [
+          {
+            "name": {
+              "t": "bdSession",
+              "suffix": " 1"
+            },
+            "messages": []
+          }
+        ]
+      }
+    ]
+  }
+}

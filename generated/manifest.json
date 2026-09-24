@@ -2,18 +2,18 @@
   "manifestVersion": 1,
   "sdb": {
     "repo": "ZYDRAXYL/DraconDex-SDB",
-    "version": "1.0.0"
+    "version": "2.0.3"
   },
   "sources": {
-    "vaultSchemaVersion": 4,
+    "vaultSchemaVersion": 6,
     "supabaseSchemaVersion": 2,
-    "vaultSqlSha256": "c546d15a2a3abb63c6409fbdd07eee02d758b07a9da82a6f46bd2214e7f3849a",
+    "vaultSqlSha256": "ceb54473024938f8a6b4834ae1403007332f3ea763dc01140b99333a49f1759f",
     "setupSqlSha256": "9bc12ba249cc05c2f29bd82e8ba840440704d09934ea5642ce7bb659112e372e"
   },
   "artifacts": {
     "generated/electron/vault-ddl.electron.js": {
-      "sha256": "df5be959813b2ec1b82024ef89c6d2d14569e0ab35e8c839f9119f2d2f1f24f3",
-      "bytes": 48876,
+      "sha256": "ea9f145c312ebcfb555483be62dc6aff25a81909a2fdb2d60934af1431a69ac2",
+      "bytes": 59980,
       "consumers": {
         "EXE": "src/schema/generated/vault-ddl.electron.js"
       }
@@ -26,8 +26,8 @@
       }
     },
     "generated/flutter/vault_schema.g.dart": {
-      "sha256": "3eb440d7f896a3dfc0f036dc55fa79b5670076e22de533558a2ac09a0844ec3f",
-      "bytes": 41685,
+      "sha256": "51e4ca33897bd3f8907907ff46cc1f4793c68d8782db65b84eb8f208794f3d62",
+      "bytes": 47744,
       "consumers": {
         "APK": "flutter/lib/core/database/vault_schema.g.dart"
       }
@@ -37,6 +37,20 @@
       "bytes": 16359,
       "consumers": {
         "APK": "flutter/lib/data/services/supabase_schema.dart"
+      }
+    },
+    "generated/electron/entity-kinds.json": {
+      "sha256": "29fdd294651e2f0e61c8971e335a49de81797075f74171cb8d1810756b4a4913",
+      "bytes": 12326,
+      "consumers": {
+        "EXE": "src/schema/generated/entity-kinds.json"
+      }
+    },
+    "generated/flutter/entity_kinds.g.dart": {
+      "sha256": "ce30f7eee2552a5496ab33f8dda8e0662043c5356e4340537636b021ff47f9d5",
+      "bytes": 8380,
+      "consumers": {
+        "APK": "flutter/lib/core/entity/entity_kinds.g.dart"
       }
     },
     "assets/brand/DraconDex_BlackIn.png": {
@@ -135,6 +149,38 @@
       "bytes": 4396,
       "consumers": {
         "APK": "flutter/assets/fonts/OFL.txt"
+      }
+    },
+    "generated/templates/bundles.json": {
+      "sha256": "7d10b0cfdd0217a00a610e75ce8315499778836b5802f0b35fa4027f234fad15",
+      "bytes": 53700,
+      "consumers": {
+        "EXE": "electron/templates/bundles.json",
+        "APK": "flutter/assets/templates/bundles.json"
+      }
+    },
+    "fixtures/snapshot-v2.json": {
+      "sha256": "468eee3ad95e58a56404b81d65d0eb7a0ff21292540ecb6ca534268103f0d9e2",
+      "bytes": 21224,
+      "consumers": {
+        "EXE": "electron/test/fixtures/snapshot-v2.json",
+        "APK": "flutter/test/fixtures/snapshot-v2.json"
+      }
+    },
+    "templates/guide/en.json": {
+      "sha256": "5989449ffa2b21e4329da99cf75e5f0311d32cb529a08628b133ce4687518ad6",
+      "bytes": 6888,
+      "consumers": {
+        "EXE": "electron/guide/en.json",
+        "APK": "flutter/assets/templates/guide/en.json"
+      }
+    },
+    "templates/guide/th.json": {
+      "sha256": "899eb328b6056bf28112d7fe6b839afe22f6aff90a7966fb163c4553bfbd1a1f",
+      "bytes": 12205,
+      "consumers": {
+        "EXE": "electron/guide/th.json",
+        "APK": "flutter/assets/templates/guide/th.json"
       }
     }
   }

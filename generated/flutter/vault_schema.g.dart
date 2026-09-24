@@ -2,7 +2,7 @@
 // Source: ZYDRAXYL/DraconDex-SDB schema/vault.sql (+ schema/version.json).
 // Regenerate with: npm run generate
 
-const int vaultSchemaVersion = 4;
+const int vaultSchemaVersion = 6;
 
 const List<String> defaultColorCodes = [
   '#6366f1',
@@ -40,6 +40,7 @@ CREATE TABLE IF NOT EXISTS nexus (
       name TEXT NOT NULL UNIQUE,
       memo TEXT,
       color INTEGER REFERENCES use_color(id),
+      taught TEXT NOT NULL DEFAULT '{}',
       update_at TEXT NOT NULL DEFAULT (datetime('now'))
     );
 ''',
@@ -940,9 +941,13 @@ CREATE TABLE IF NOT EXISTS module (
       -- index idx_module_handle, created in migrations.js rather than here so
       -- pre-existing duplicate data can't abort the whole index pass.
       handle TEXT,
+      -- v5 (APP docs/V5.md §3.1): 'exhibitor' replaces both 'viewer' and
+      -- 'connector'; 'diviner' (§11.5) joins in the same release so this
+      -- CHECK — which SQLite cannot ALTER — is rebuilt once, not twice.
+      -- Existing vaults are rebuilt by EXE migrations.js migrateModuleKindV5.
       kind TEXT NOT NULL CHECK(kind IN ('collector','manager','inspector','classifier',
         'locator','chronicler','wanderer','narrator','author','scribe','drafter',
-        'viewer','connector','sketcher','designer')),
+        'exhibitor','sketcher','designer','diviner')),
       icon TEXT,
       icon_color INTEGER REFERENCES use_color(id),
       color INTEGER REFERENCES use_color(id),
@@ -951,18 +956,6 @@ CREATE TABLE IF NOT EXISTS module (
       pinned INTEGER NOT NULL DEFAULT 0,
       cat_type TEXT CHECK(cat_type IN ('object','element','character')),
       create_at TEXT NOT NULL DEFAULT (datetime('now')),
-      update_at TEXT NOT NULL DEFAULT (datetime('now'))
-    );
-''',
-
-  // module_attribute
-  '''
-CREATE TABLE IF NOT EXISTS module_attribute (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      module_ref INTEGER NOT NULL REFERENCES module(id) ON DELETE CASCADE,
-      attr_name TEXT NOT NULL,
-      attr_value TEXT,
-      display_order INTEGER NOT NULL DEFAULT 0,
       update_at TEXT NOT NULL DEFAULT (datetime('now'))
     );
 ''',
@@ -1057,7 +1050,14 @@ CREATE TABLE IF NOT EXISTS story_choice_option (
       jump_ref INTEGER REFERENCES story_dialogue(id) ON DELETE SET NULL,
       option_order INTEGER NOT NULL DEFAULT 0,
       create_at TEXT NOT NULL DEFAULT (datetime('now')),
-      update_at TEXT NOT NULL DEFAULT (datetime('now'))
+      update_at TEXT NOT NULL DEFAULT (datetime('now')),
+      -- v5 (APP docs/V5.md §11.6): story variables. JSON arrays, never a typed
+      -- expression — condition = AND of [{key,op,value}] comparisons that
+      -- must hold for the option to show; set_ops = [{key,op,value}] applied
+      -- when it is chosen. key is a cobj_<id> (a variable is a Classifier
+      -- object), so both columns hold entity keys an importer must remap.
+      condition TEXT,
+      set_ops TEXT
     );
 ''',
 
@@ -1071,7 +1071,13 @@ CREATE TABLE IF NOT EXISTS book_chapter (
       chapter_content TEXT,
       chapter_order INTEGER NOT NULL DEFAULT 0,
       create_at TEXT NOT NULL DEFAULT (datetime('now')),
-      update_at TEXT NOT NULL DEFAULT (datetime('now'))
+      update_at TEXT NOT NULL DEFAULT (datetime('now')),
+      -- v5 (APP docs/V5.md §11.6): the corkboard card. status is free text
+      -- the app offers a short list for; pov_key is an entity key (usually a
+      -- cobj_ character) — an importer must remap it.
+      synopsis TEXT,
+      status TEXT,
+      pov_key TEXT
     );
 ''',
 
@@ -1174,7 +1180,14 @@ CREATE TABLE IF NOT EXISTS import_file (
       folder TEXT,
       linker_key TEXT,
       use_as_image INTEGER NOT NULL DEFAULT 0,
-      create_at TEXT NOT NULL DEFAULT (datetime('now'))
+      create_at TEXT NOT NULL DEFAULT (datetime('now')),
+      module_ref INTEGER REFERENCES module(id) ON DELETE SET NULL,
+      source_kind TEXT CHECK(source_kind IN ('file','url')) NOT NULL DEFAULT 'file',
+      sha256 TEXT,
+      proxy BLOB,
+      proxy_type TEXT,
+      missing INTEGER NOT NULL DEFAULT 0,
+      last_seen_at TEXT
     );
 ''',
 
@@ -1194,7 +1207,12 @@ CREATE TABLE IF NOT EXISTS design_node (
       color TEXT,
       linker_key TEXT,
       create_at TEXT NOT NULL DEFAULT (datetime('now')),
-      update_at TEXT NOT NULL DEFAULT (datetime('now'))
+      update_at TEXT NOT NULL DEFAULT (datetime('now')),
+      -- v5 (APP docs/V5.md §11.6): comic panels and balloons. NULL w/h = the
+      -- shape's natural size; read_order NULL = not part of the reading order.
+      w REAL,
+      h REAL,
+      read_order INTEGER
     );
 ''',
 
@@ -1235,7 +1253,57 @@ CREATE TABLE IF NOT EXISTS entity_relation (
       label TEXT,
       color INTEGER REFERENCES use_color(id),
       create_at TEXT NOT NULL DEFAULT (datetime('now')),
-      UNIQUE(from_key, to_key, label)
+      module_ref INTEGER REFERENCES module(id) ON DELETE SET NULL,
+      rel_type TEXT,
+      directed INTEGER NOT NULL DEFAULT 1,
+      -- v5 (APP docs/V5.md §11.6): a relation that holds only for a span of
+      -- story time ("married 1020–1045"), on Chronicler's own date rows.
+      -- NULL = open on that side. rel_type 'ctpl_<id>' marks a row a
+      -- Classifier relation FIELD owns (§11.3).
+      valid_from INTEGER REFERENCES timeline_date(id),
+      valid_to INTEGER REFERENCES timeline_date(id),
+      UNIQUE(from_key, to_key, label, rel_type)
+    );
+''',
+
+  // exhibit_node
+  '''
+CREATE TABLE IF NOT EXISTS exhibit_node (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      module_ref INTEGER NOT NULL REFERENCES module(id) ON DELETE CASCADE,
+      parent_id INTEGER REFERENCES exhibit_node(id) ON DELETE CASCADE,
+      node_type TEXT NOT NULL DEFAULT 'entity',
+      linker_key TEXT,
+      label TEXT,
+      x REAL NOT NULL DEFAULT 0,
+      y REAL NOT NULL DEFAULT 0,
+      w REAL,
+      h REAL,
+      z INTEGER NOT NULL DEFAULT 0,
+      rotation REAL NOT NULL DEFAULT 0,
+      scale REAL NOT NULL DEFAULT 1,
+      locked INTEGER NOT NULL DEFAULT 0,
+      hidden INTEGER NOT NULL DEFAULT 0,
+      color TEXT,
+      props TEXT,
+      create_at TEXT NOT NULL DEFAULT (datetime('now')),
+      update_at TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+''',
+
+  // exhibit_view
+  '''
+CREATE TABLE IF NOT EXISTS exhibit_view (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      module_ref INTEGER NOT NULL REFERENCES module(id) ON DELETE CASCADE,
+      scale REAL NOT NULL DEFAULT 1,
+      tx REAL NOT NULL DEFAULT 0,
+      ty REAL NOT NULL DEFAULT 0,
+      bg_linker_key TEXT,
+      grid INTEGER NOT NULL DEFAULT 1,
+      snap INTEGER NOT NULL DEFAULT 0,
+      update_at TEXT NOT NULL DEFAULT (datetime('now')),
+      UNIQUE(module_ref)
     );
 ''',
 
@@ -1266,7 +1334,13 @@ CREATE TABLE IF NOT EXISTS classifier_template (
       has_condition INTEGER NOT NULL DEFAULT 0,
       level_steps TEXT,
       display_order INTEGER NOT NULL DEFAULT 0,
-      update_at TEXT NOT NULL DEFAULT (datetime('now'))
+      update_at TEXT NOT NULL DEFAULT (datetime('now')),
+      -- v5 (APP docs/V5.md §11.3): per-type settings, JSON. select /
+      -- multi-select: {"choices":[...]}; formula: {"expr":"{HP} * 2"};
+      -- relation: {"targetKinds":[...]}. attribute_type has no CHECK, so the
+      -- new types (number, select, multi, checkbox, url, relation, formula)
+      -- need no rebuild.
+      options TEXT
     );
 ''',
 
@@ -1294,6 +1368,93 @@ CREATE TABLE IF NOT EXISTS classifier_level (
       info_value TEXT,
       display_order INTEGER NOT NULL DEFAULT 0,
       update_at TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+''',
+
+  // module_preset
+  '''
+CREATE TABLE IF NOT EXISTS module_preset (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      nexus_ref INTEGER NOT NULL REFERENCES nexus(id) ON DELETE CASCADE,
+      kind TEXT NOT NULL,
+      name TEXT NOT NULL,
+      spec TEXT NOT NULL DEFAULT '{}',
+      update_at TEXT NOT NULL DEFAULT (datetime('now')),
+      UNIQUE(nexus_ref, kind, name)
+    );
+''',
+
+  // diviner_table
+  '''
+CREATE TABLE IF NOT EXISTS diviner_table (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      module_ref INTEGER NOT NULL REFERENCES module(id) ON DELETE CASCADE,
+      name TEXT NOT NULL,
+      dice TEXT,
+      mode TEXT NOT NULL DEFAULT 'pick',
+      display_order INTEGER NOT NULL DEFAULT 0,
+      update_at TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+''',
+
+  // diviner_entry
+  '''
+CREATE TABLE IF NOT EXISTS diviner_entry (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      table_ref INTEGER NOT NULL REFERENCES diviner_table(id) ON DELETE CASCADE,
+      weight INTEGER NOT NULL DEFAULT 1,
+      range_lo INTEGER,
+      range_hi INTEGER,
+      entry_text TEXT,
+      linker_key TEXT,
+      display_order INTEGER NOT NULL DEFAULT 0
+    );
+''',
+
+  // diviner_roll
+  '''
+CREATE TABLE IF NOT EXISTS diviner_roll (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      table_ref INTEGER NOT NULL REFERENCES diviner_table(id) ON DELETE CASCADE,
+      dice_result TEXT,
+      entry_ref INTEGER REFERENCES diviner_entry(id) ON DELETE SET NULL,
+      result_text TEXT,
+      create_at TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+''',
+
+  // page_block
+  '''
+CREATE TABLE IF NOT EXISTS page_block (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      module_ref INTEGER NOT NULL REFERENCES module(id) ON DELETE CASCADE,
+      item_key TEXT,
+      parent_id INTEGER REFERENCES page_block(id) ON DELETE CASCADE,
+      block_type TEXT NOT NULL DEFAULT 'component' CHECK(block_type IN ('component','text','heading','divider','image','property','columns')),
+      component TEXT,
+      source_key TEXT,
+      config TEXT,
+      content TEXT,
+      prop_name TEXT,
+      prop_type TEXT,
+      block_order INTEGER NOT NULL DEFAULT 0,
+      create_at TEXT NOT NULL DEFAULT (datetime('now')),
+      update_at TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+''',
+
+  // trash
+  '''
+CREATE TABLE IF NOT EXISTS trash (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      nexus_ref INTEGER NOT NULL REFERENCES nexus(id) ON DELETE CASCADE,
+      parent_ref INTEGER REFERENCES module(id) ON DELETE SET NULL,
+      name TEXT NOT NULL,
+      kind TEXT NOT NULL,
+      module_count INTEGER NOT NULL DEFAULT 1,
+      payload TEXT NOT NULL,
+      relations TEXT NOT NULL DEFAULT '[]',
+      deleted_at TEXT NOT NULL DEFAULT (datetime('now'))
     );
 ''',
 ];

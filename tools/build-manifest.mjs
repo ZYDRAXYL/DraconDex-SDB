@@ -52,6 +52,10 @@ const CONSUMERS = {
   'generated/electron/supabase-schema.js':    { EXE: 'electron/src/db/supabase-schema.js' },
   'generated/flutter/vault_schema.g.dart':    { APK: 'flutter/lib/core/database/vault_schema.g.dart' },
   'generated/flutter/supabase_schema.dart':   { APK: 'flutter/lib/data/services/supabase_schema.dart' },
+  // Every entity-key family + every key column (schema/entity-kinds.mjs,
+  // APP docs/APK-V3.md §9.1). EXE keeps it beside the vendored DDL.
+  'generated/electron/entity-kinds.json':     { EXE: 'src/schema/generated/entity-kinds.json' },
+  'generated/flutter/entity_kinds.g.dart':    { APK: 'flutter/lib/core/entity/entity_kinds.g.dart' },
 };
 // Asset masters. EXE vendors brand (electron/css resolves it through url() at
 // runtime); APK mirrors images+fonts because pubspec.yaml cannot declare assets
@@ -59,6 +63,15 @@ const CONSUMERS = {
 for (const f of walk('assets/brand'))   CONSUMERS[f] = { EXE: f.replace(/^assets\//, 'src/assets/') };
 for (const f of walk('assets/flutter')) CONSUMERS[f] = { APK: f.replace(/^assets\/flutter\//, 'flutter/assets/images/') };
 for (const f of walk('assets/fonts'))   CONSUMERS[f] = { APK: f.replace(/^assets\/fonts\//, 'flutter/assets/fonts/') };
+// Templates (templates/build.mjs): the genre bundles, resolved per locale by
+// each app, and the two in-app guides. EXE keeps the guide where db/guide.js
+// has always read it; APK needs both under its own assets/ (pubspec).
+CONSUMERS['generated/templates/bundles.json'] = { EXE: 'electron/templates/bundles.json', APK: 'flutter/assets/templates/bundles.json' };
+// The snapshot fixture both apps' tests import (fixtures/README.md).
+CONSUMERS['fixtures/snapshot-v2.json'] = { EXE: 'electron/test/fixtures/snapshot-v2.json', APK: 'flutter/test/fixtures/snapshot-v2.json' };
+for (const f of walk('templates/guide')) {
+  CONSUMERS[f] = { EXE: f.replace(/^templates\//, 'electron/'), APK: f.replace(/^templates\//, 'flutter/assets/templates/') };
+}
 
 const artifacts = {};
 for (const [artifact, consumers] of Object.entries(CONSUMERS)) {
