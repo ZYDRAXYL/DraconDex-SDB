@@ -1,0 +1,50 @@
+{
+  "kind": "inspector",
+  "templates": [
+    {
+      "id": "inspector.note",
+      "default": true,
+      "name": {
+        "t": "tplInsNote"
+      },
+      "description": {
+        "t": "tplInsNoteD"
+      },
+      "page": [
+        {
+          "component": "inspector.view"
+        }
+      ]
+    },
+    {
+      "id": "inspector.lorePage",
+      "name": {
+        "t": "tplInsLore"
+      },
+      "description": {
+        "t": "tplInsLoreD"
+      },
+      "page": [
+        {
+          "component": "core.infobox",
+          "config": {
+            "dock": "right",
+            "layout": "table"
+          }
+        },
+        {
+          "component": "core.toc"
+        },
+        {
+          "component": "inspector.view"
+        },
+        {
+          "component": "inspector.facts"
+        },
+        {
+          "component": "core.seealso"
+        }
+      ]
+    }
+  ]
+}

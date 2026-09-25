@@ -1,0 +1,66 @@
+{
+  "kind": "manager",
+  "templates": [
+    {
+      "id": "manager.projectHome",
+      "default": true,
+      "name": {
+        "t": "tplMgrHome"
+      },
+      "description": {
+        "t": "tplMgrHomeD"
+      },
+      "page": [
+        {
+          "component": "manager.dashboard"
+        },
+        {
+          "component": "core.stats"
+        },
+        {
+          "component": "manager.view",
+          "config": {
+            "preset": "cards"
+          }
+        },
+        {
+          "component": "manager.recent"
+        }
+      ]
+    },
+    {
+      "id": "manager.minimal",
+      "name": {
+        "t": "tplMgrMinimal"
+      },
+      "description": {
+        "t": "tplMgrMinimalD"
+      },
+      "page": [
+        {
+          "component": "manager.view",
+          "config": {
+            "preset": "list"
+          }
+        }
+      ]
+    },
+    {
+      "id": "manager.graph",
+      "name": {
+        "t": "tplMgrGraph"
+      },
+      "description": {
+        "t": "tplMgrGraphD"
+      },
+      "page": [
+        {
+          "component": "manager.view",
+          "config": {
+            "preset": "graph"
+          }
+        }
+      ]
+    }
+  ]
+}

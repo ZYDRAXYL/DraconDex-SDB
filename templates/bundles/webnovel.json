@@ -1,0 +1,152 @@
+{
+  "id": "webnovel",
+  "order": 5,
+  "icon": "series",
+  "group": "genre",
+  "name": {
+    "t": "bundleWebnovel"
+  },
+  "description": {
+    "t": "bundleWebnovelD"
+  },
+  "spec": {
+    "folders": [
+      {
+        "ref": "root",
+        "name": {
+          "t": "bundleWebnovel"
+        }
+      },
+      {
+        "ref": "data",
+        "name": {
+          "t": "fldData"
+        },
+        "parent": "root"
+      },
+      {
+        "ref": "story",
+        "name": {
+          "t": "fldStory"
+        },
+        "parent": "root"
+      }
+    ],
+    "modules": [
+      {
+        "ref": "episodes",
+        "kind": "author",
+        "folder": "story",
+        "name": {
+          "t": "modEpisodes"
+        },
+        "page": "author.manuscript",
+        "chapters": [
+          {
+            "sample": true,
+            "name": {
+              "t": "artChapter",
+              "suffix": " 1"
+            },
+            "status": "done"
+          },
+          {
+            "sample": true,
+            "name": {
+              "t": "artChapter",
+              "suffix": " 2"
+            },
+            "status": "done"
+          },
+          {
+            "sample": true,
+            "name": {
+              "t": "artChapter",
+              "suffix": " 3"
+            },
+            "status": "draft"
+          }
+        ]
+      },
+      {
+        "ref": "chars",
+        "kind": "classifier",
+        "catType": "character",
+        "folder": "data",
+        "name": {
+          "t": "worldChars"
+        },
+        "page": "classifier.characterWiki",
+        "fields": [
+          {
+            "key": "role",
+            "name": {
+              "t": "artFldRole"
+            },
+            "type": "select",
+            "options": {
+              "choices": [
+                {
+                  "t": "roleProtagonist"
+                },
+                {
+                  "t": "roleAntagonist"
+                },
+                {
+                  "t": "roleSupport"
+                }
+              ]
+            }
+          },
+          {
+            "key": "personality",
+            "name": {
+              "t": "artFldPersonality"
+            },
+            "type": "textarea"
+          }
+        ],
+        "objects": [
+          {
+            "ref": "arin",
+            "sample": true,
+            "name": "Arin",
+            "values": {
+              "role": {
+                "t": "roleProtagonist"
+              }
+            }
+          },
+          {
+            "ref": "veyra",
+            "sample": true,
+            "name": "Veyra",
+            "values": {
+              "role": {
+                "t": "roleAntagonist"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "ref": "arcs",
+        "kind": "drafter",
+        "folder": "story",
+        "name": {
+          "t": "modArcPlan"
+        },
+        "page": "drafter.notes"
+      },
+      {
+        "ref": "timeline",
+        "kind": "chronicler",
+        "folder": "story",
+        "name": {
+          "t": "artMainTimeline"
+        },
+        "page": "chronicler.timeline"
+      }
+    ]
+  }
+}

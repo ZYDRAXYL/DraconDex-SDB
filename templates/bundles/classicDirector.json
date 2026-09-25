@@ -1,0 +1,325 @@
+{
+  "id": "classicDirector",
+  "order": 10,
+  "icon": "director",
+  "group": "classic",
+  "name": {
+    "t": "bundleClassicDirector"
+  },
+  "description": {
+    "t": "bundleClassicDirectorD"
+  },
+  "spec": {
+    "home": "project",
+    "folders": [
+      {
+        "ref": "root",
+        "name": {
+          "t": "fldProject"
+        }
+      },
+      {
+        "ref": "data",
+        "name": {
+          "t": "fldData"
+        },
+        "parent": "root"
+      },
+      {
+        "ref": "story",
+        "name": {
+          "t": "fldStory"
+        },
+        "parent": "root"
+      }
+    ],
+    "modules": [
+      {
+        "ref": "project",
+        "kind": "manager",
+        "folder": "root",
+        "name": {
+          "t": "modProject"
+        },
+        "selects": [
+          "chars",
+          "places",
+          "items",
+          "timeline",
+          "map"
+        ],
+        "page": [
+          {
+            "component": "manager.dashboard"
+          },
+          {
+            "type": "columns",
+            "children": [
+              [
+                {
+                  "component": "chronicler.eras",
+                  "borrow": "timeline"
+                }
+              ],
+              [
+                {
+                  "component": "locator.pinlist",
+                  "borrow": "map"
+                }
+              ]
+            ]
+          },
+          {
+            "component": "manager.recent"
+          }
+        ]
+      },
+      {
+        "ref": "about",
+        "kind": "inspector",
+        "folder": "root",
+        "name": {
+          "t": "modAbout"
+        },
+        "page": "inspector.note"
+      },
+      {
+        "ref": "chars",
+        "kind": "classifier",
+        "catType": "character",
+        "folder": "data",
+        "name": {
+          "t": "worldChars"
+        },
+        "page": "classifier.characterWiki",
+        "fields": [
+          {
+            "key": "role",
+            "name": {
+              "t": "artFldRole"
+            },
+            "type": "select",
+            "options": {
+              "choices": [
+                {
+                  "t": "roleProtagonist"
+                },
+                {
+                  "t": "roleAntagonist"
+                },
+                {
+                  "t": "roleSupport"
+                }
+              ]
+            }
+          },
+          {
+            "key": "age",
+            "name": {
+              "t": "artFldAge"
+            },
+            "type": "number"
+          },
+          {
+            "key": "home",
+            "name": {
+              "t": "pfHome"
+            },
+            "type": "relation",
+            "relTo": "places"
+          },
+          {
+            "key": "weapon",
+            "name": {
+              "t": "pfWeapon"
+            },
+            "type": "relation",
+            "relTo": "items"
+          },
+          {
+            "key": "personality",
+            "name": {
+              "t": "artFldPersonality"
+            },
+            "type": "textarea"
+          }
+        ],
+        "objects": [
+          {
+            "ref": "hero",
+            "sample": true,
+            "name": "Arin",
+            "values": {
+              "role": {
+                "t": "roleProtagonist"
+              },
+              "age": 19
+            },
+            "links": {
+              "home": [
+                "town"
+              ],
+              "weapon": [
+                "sword"
+              ]
+            }
+          },
+          {
+            "ref": "rival",
+            "sample": true,
+            "name": "Veyra",
+            "values": {
+              "role": {
+                "t": "roleAntagonist"
+              },
+              "age": 23
+            },
+            "links": {
+              "home": [
+                "tower"
+              ]
+            }
+          },
+          {
+            "ref": "mentor",
+            "sample": true,
+            "name": "Tomas",
+            "values": {
+              "role": {
+                "t": "roleSupport"
+              },
+              "age": 61
+            },
+            "links": {
+              "home": [
+                "town"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "ref": "places",
+        "kind": "classifier",
+        "catType": "object",
+        "folder": "data",
+        "name": {
+          "t": "artLocations"
+        },
+        "page": "classifier.encyclopedia",
+        "fields": [
+          {
+            "key": "description",
+            "name": {
+              "t": "artFldDescription"
+            },
+            "type": "textarea"
+          }
+        ],
+        "objects": [
+          {
+            "ref": "town",
+            "sample": true,
+            "name": "Tarven"
+          },
+          {
+            "ref": "tower",
+            "sample": true,
+            "name": "Glasshold"
+          }
+        ]
+      },
+      {
+        "ref": "items",
+        "kind": "classifier",
+        "catType": "object",
+        "folder": "data",
+        "name": {
+          "t": "gameItems"
+        },
+        "page": "classifier.catalog",
+        "fields": [
+          {
+            "key": "description",
+            "name": {
+              "t": "artFldDescription"
+            },
+            "type": "textarea"
+          }
+        ],
+        "objects": [
+          {
+            "ref": "sword",
+            "sample": true,
+            "name": "Ashbrand"
+          }
+        ]
+      },
+      {
+        "ref": "timeline",
+        "kind": "chronicler",
+        "folder": "story",
+        "name": {
+          "t": "artMainTimeline"
+        },
+        "page": "chronicler.timeline",
+        "events": [
+          {
+            "sample": true,
+            "name": {
+              "t": "smpEvtLeave"
+            },
+            "date": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "sample": true,
+            "name": {
+              "t": "smpEvtTower"
+            },
+            "date": [
+              1,
+              3,
+              12
+            ]
+          },
+          {
+            "sample": true,
+            "name": {
+              "t": "smpEvtReturn"
+            },
+            "date": [
+              2,
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      {
+        "ref": "map",
+        "kind": "locator",
+        "folder": "story",
+        "name": {
+          "t": "kcMap"
+        },
+        "page": "locator.atlas"
+      },
+      {
+        "ref": "web",
+        "kind": "exhibitor",
+        "folder": "story",
+        "name": {
+          "t": "modRelations"
+        },
+        "selects": [
+          "chars"
+        ],
+        "page": "exhibitor.web"
+      }
+    ]
+  }
+}

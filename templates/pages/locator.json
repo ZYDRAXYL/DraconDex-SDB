@@ -1,0 +1,46 @@
+{
+  "kind": "locator",
+  "templates": [
+    {
+      "id": "locator.atlas",
+      "default": true,
+      "name": {
+        "t": "tplLocAtlas"
+      },
+      "description": {
+        "t": "tplLocAtlasD"
+      },
+      "page": [
+        {
+          "component": "locator.view"
+        },
+        {
+          "component": "locator.pinlist"
+        }
+      ]
+    },
+    {
+      "id": "locator.regionGuide",
+      "name": {
+        "t": "tplLocRegion"
+      },
+      "description": {
+        "t": "tplLocRegionD"
+      },
+      "page": [
+        {
+          "component": "core.toc"
+        },
+        {
+          "component": "locator.placecard"
+        },
+        {
+          "component": "locator.view"
+        },
+        {
+          "component": "core.related"
+        }
+      ]
+    }
+  ]
+}

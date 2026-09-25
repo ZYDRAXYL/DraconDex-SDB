@@ -1,0 +1,43 @@
+{
+  "kind": "wanderer",
+  "templates": [
+    {
+      "id": "wanderer.journey",
+      "default": true,
+      "name": {
+        "t": "tplWanJourney"
+      },
+      "description": {
+        "t": "tplWanJourneyD"
+      },
+      "page": [
+        {
+          "component": "wanderer.journey"
+        },
+        {
+          "component": "wanderer.view",
+          "config": {
+            "preset": "map"
+          }
+        }
+      ]
+    },
+    {
+      "id": "wanderer.area",
+      "name": {
+        "t": "tplWanArea"
+      },
+      "description": {
+        "t": "tplWanAreaD"
+      },
+      "page": [
+        {
+          "component": "wanderer.view",
+          "config": {
+            "preset": "area"
+          }
+        }
+      ]
+    }
+  ]
+}

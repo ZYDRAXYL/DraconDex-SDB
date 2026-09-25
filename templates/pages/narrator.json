@@ -1,0 +1,63 @@
+{
+  "kind": "narrator",
+  "templates": [
+    {
+      "id": "narrator.storyMap",
+      "default": true,
+      "name": {
+        "t": "tplNarStoryMap"
+      },
+      "description": {
+        "t": "tplNarStoryMapD"
+      },
+      "page": [
+        {
+          "component": "narrator.view",
+          "config": {
+            "preset": "board"
+          }
+        },
+        {
+          "component": "narrator.endings"
+        }
+      ]
+    },
+    {
+      "id": "narrator.script",
+      "name": {
+        "t": "tplNarScript"
+      },
+      "description": {
+        "t": "tplNarScriptD"
+      },
+      "page": [
+        {
+          "component": "narrator.view",
+          "config": {
+            "preset": "reader"
+          }
+        }
+      ]
+    },
+    {
+      "id": "narrator.routes",
+      "name": {
+        "t": "tplNarRoutes"
+      },
+      "description": {
+        "t": "tplNarRoutesD"
+      },
+      "page": [
+        {
+          "component": "narrator.view",
+          "config": {
+            "preset": "routes"
+          }
+        },
+        {
+          "component": "narrator.variables"
+        }
+      ]
+    }
+  ]
+}

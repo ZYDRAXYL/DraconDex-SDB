@@ -1,0 +1,134 @@
+{
+  "id": "comic",
+  "order": 7,
+  "icon": "sketcher",
+  "group": "genre",
+  "name": {
+    "t": "bundleComic"
+  },
+  "description": {
+    "t": "bundleComicD"
+  },
+  "spec": {
+    "folders": [
+      {
+        "ref": "root",
+        "name": {
+          "t": "bundleComic"
+        }
+      },
+      {
+        "ref": "story",
+        "name": {
+          "t": "fldStory"
+        },
+        "parent": "root"
+      },
+      {
+        "ref": "art",
+        "name": {
+          "t": "fldArt"
+        },
+        "parent": "root"
+      }
+    ],
+    "modules": [
+      {
+        "ref": "panels",
+        "kind": "designer",
+        "folder": "art",
+        "name": {
+          "t": "modPanels"
+        },
+        "page": "designer.storyboard"
+      },
+      {
+        "ref": "sketches",
+        "kind": "sketcher",
+        "folder": "art",
+        "name": {
+          "t": "modSketches"
+        },
+        "page": "sketcher.gallery"
+      },
+      {
+        "ref": "script",
+        "kind": "author",
+        "folder": "story",
+        "name": {
+          "t": "modScript"
+        },
+        "page": "author.manuscript",
+        "chapters": [
+          {
+            "name": {
+              "t": "artChapter",
+              "suffix": " 1"
+            }
+          }
+        ]
+      },
+      {
+        "ref": "chars",
+        "kind": "classifier",
+        "catType": "character",
+        "folder": "story",
+        "name": {
+          "t": "worldChars"
+        },
+        "page": "classifier.roster",
+        "fields": [
+          {
+            "key": "role",
+            "name": {
+              "t": "artFldRole"
+            },
+            "type": "select",
+            "options": {
+              "choices": [
+                {
+                  "t": "roleProtagonist"
+                },
+                {
+                  "t": "roleAntagonist"
+                },
+                {
+                  "t": "roleSupport"
+                }
+              ]
+            }
+          },
+          {
+            "key": "personality",
+            "name": {
+              "t": "artFldPersonality"
+            },
+            "type": "textarea"
+          }
+        ],
+        "objects": [
+          {
+            "ref": "arin",
+            "sample": true,
+            "name": "Arin",
+            "values": {
+              "role": {
+                "t": "roleProtagonist"
+              }
+            }
+          },
+          {
+            "ref": "veyra",
+            "sample": true,
+            "name": "Veyra",
+            "values": {
+              "role": {
+                "t": "roleAntagonist"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

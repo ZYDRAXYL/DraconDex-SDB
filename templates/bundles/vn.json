@@ -1,0 +1,189 @@
+{
+  "id": "vn",
+  "order": 6,
+  "icon": "narrator",
+  "group": "genre",
+  "name": {
+    "t": "bundleVn"
+  },
+  "description": {
+    "t": "bundleVnD"
+  },
+  "spec": {
+    "folders": [
+      {
+        "ref": "root",
+        "name": {
+          "t": "bundleVn"
+        }
+      },
+      {
+        "ref": "data",
+        "name": {
+          "t": "fldData"
+        },
+        "parent": "root"
+      },
+      {
+        "ref": "story",
+        "name": {
+          "t": "fldStory"
+        },
+        "parent": "root"
+      },
+      {
+        "ref": "art",
+        "name": {
+          "t": "fldArt"
+        },
+        "parent": "root"
+      }
+    ],
+    "modules": [
+      {
+        "ref": "story",
+        "kind": "narrator",
+        "folder": "story",
+        "name": {
+          "t": "artMainStory"
+        },
+        "page": [
+          {
+            "component": "narrator.view",
+            "config": {
+              "preset": "board"
+            }
+          },
+          {
+            "type": "columns",
+            "children": [
+              [
+                {
+                  "component": "narrator.endings"
+                }
+              ],
+              [
+                {
+                  "component": "narrator.variables"
+                }
+              ]
+            ]
+          }
+        ],
+        "dialogues": [
+          {
+            "sample": true,
+            "name": {
+              "t": "smpScene1"
+            }
+          }
+        ]
+      },
+      {
+        "ref": "chars",
+        "kind": "classifier",
+        "catType": "character",
+        "folder": "data",
+        "name": {
+          "t": "worldChars"
+        },
+        "page": "classifier.characterWiki",
+        "fields": [
+          {
+            "key": "role",
+            "name": {
+              "t": "artFldRole"
+            },
+            "type": "select",
+            "options": {
+              "choices": [
+                {
+                  "t": "roleProtagonist"
+                },
+                {
+                  "t": "roleAntagonist"
+                },
+                {
+                  "t": "roleSupport"
+                }
+              ]
+            }
+          },
+          {
+            "key": "personality",
+            "name": {
+              "t": "artFldPersonality"
+            },
+            "type": "textarea"
+          }
+        ],
+        "objects": [
+          {
+            "ref": "arin",
+            "sample": true,
+            "name": "Arin",
+            "values": {
+              "role": {
+                "t": "roleProtagonist"
+              }
+            }
+          },
+          {
+            "ref": "veyra",
+            "sample": true,
+            "name": "Veyra",
+            "values": {
+              "role": {
+                "t": "roleAntagonist"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "ref": "vars",
+        "kind": "classifier",
+        "catType": "element",
+        "folder": "data",
+        "name": {
+          "t": "modVariables"
+        },
+        "page": "classifier.list",
+        "fields": [
+          {
+            "key": "initial",
+            "name": {
+              "t": "pfInitial"
+            },
+            "type": "text"
+          },
+          {
+            "key": "description",
+            "name": {
+              "t": "pfDescription"
+            },
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "ref": "scenes",
+        "kind": "sketcher",
+        "folder": "art",
+        "name": {
+          "t": "modScenes"
+        },
+        "page": "sketcher.gallery"
+      },
+      {
+        "ref": "flow",
+        "kind": "designer",
+        "folder": "story",
+        "name": {
+          "t": "modFlowchart"
+        },
+        "page": "designer.outline"
+      }
+    ]
+  }
+}

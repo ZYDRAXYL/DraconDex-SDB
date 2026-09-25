@@ -1,0 +1,60 @@
+{
+  "kind": "designer",
+  "templates": [
+    {
+      "id": "designer.storyboard",
+      "default": true,
+      "name": {
+        "t": "tplDesStoryboard"
+      },
+      "description": {
+        "t": "tplDesStoryboardD"
+      },
+      "page": [
+        {
+          "component": "designer.strip"
+        },
+        {
+          "component": "designer.view",
+          "config": {
+            "preset": "canvas"
+          }
+        }
+      ]
+    },
+    {
+      "id": "designer.outline",
+      "name": {
+        "t": "tplDesOutline"
+      },
+      "description": {
+        "t": "tplDesOutlineD"
+      },
+      "page": [
+        {
+          "component": "designer.view",
+          "config": {
+            "preset": "outline"
+          }
+        }
+      ]
+    },
+    {
+      "id": "designer.matrix",
+      "name": {
+        "t": "tplDesMatrix"
+      },
+      "description": {
+        "t": "tplDesMatrixD"
+      },
+      "page": [
+        {
+          "component": "designer.view",
+          "config": {
+            "preset": "matrix"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "kind": "sketcher",
+  "templates": [
+    {
+      "id": "sketcher.gallery",
+      "default": true,
+      "name": {
+        "t": "tplSkeGallery"
+      },
+      "description": {
+        "t": "tplSkeGalleryD"
+      },
+      "page": [
+        {
+          "component": "sketcher.featured"
+        },
+        {
+          "component": "sketcher.view",
+          "config": {
+            "preset": "gallery"
+          }
+        }
+      ]
+    },
+    {
+      "id": "sketcher.canvas",
+      "name": {
+        "t": "tplSkeCanvas"
+      },
+      "description": {
+        "t": "tplSkeCanvasD"
+      },
+      "page": [
+        {
+          "component": "sketcher.view",
+          "config": {
+            "preset": "canvas"
+          }
+        }
+      ]
+    },
+    {
+      "id": "sketcher.pages",
+      "name": {
+        "t": "tplSkePages"
+      },
+      "description": {
+        "t": "tplSkePagesD"
+      },
+      "page": [
+        {
+          "component": "sketcher.view",
+          "config": {
+            "preset": "pages"
+          }
+        }
+      ]
+    }
+  ]
+}

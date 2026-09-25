@@ -1,0 +1,286 @@
+{
+  "id": "classicNavigator",
+  "order": 11,
+  "icon": "navigator",
+  "group": "classic",
+  "name": {
+    "t": "bundleClassicNavigator"
+  },
+  "description": {
+    "t": "bundleClassicNavigatorD"
+  },
+  "spec": {
+    "home": "world",
+    "folders": [
+      {
+        "ref": "root",
+        "name": {
+          "t": "fldWorld"
+        }
+      },
+      {
+        "ref": "people",
+        "name": {
+          "t": "fldPeople"
+        },
+        "parent": "root"
+      },
+      {
+        "ref": "geo",
+        "name": {
+          "t": "fldPlaces"
+        },
+        "parent": "root"
+      },
+      {
+        "ref": "hist",
+        "name": {
+          "t": "fldHistory"
+        },
+        "parent": "root"
+      }
+    ],
+    "modules": [
+      {
+        "ref": "world",
+        "kind": "manager",
+        "folder": "root",
+        "name": {
+          "t": "modWorld"
+        },
+        "selects": [
+          "chars",
+          "races",
+          "factions",
+          "map",
+          "history"
+        ],
+        "page": "manager.projectHome"
+      },
+      {
+        "ref": "chars",
+        "kind": "classifier",
+        "catType": "character",
+        "folder": "people",
+        "name": {
+          "t": "worldChars"
+        },
+        "page": "classifier.characterWiki",
+        "fields": [
+          {
+            "key": "role",
+            "name": {
+              "t": "artFldRole"
+            },
+            "type": "select",
+            "options": {
+              "choices": [
+                {
+                  "t": "roleProtagonist"
+                },
+                {
+                  "t": "roleAntagonist"
+                },
+                {
+                  "t": "roleSupport"
+                }
+              ]
+            }
+          },
+          {
+            "key": "age",
+            "name": {
+              "t": "artFldAge"
+            },
+            "type": "number"
+          },
+          {
+            "key": "race",
+            "name": {
+              "t": "pfRace"
+            },
+            "type": "relation",
+            "relTo": "races"
+          },
+          {
+            "key": "faction",
+            "name": {
+              "t": "pfFaction"
+            },
+            "type": "relation",
+            "relTo": "factions"
+          },
+          {
+            "key": "personality",
+            "name": {
+              "t": "artFldPersonality"
+            },
+            "type": "textarea"
+          }
+        ],
+        "objects": [
+          {
+            "ref": "kaelen",
+            "sample": true,
+            "name": "Kaelen",
+            "values": {
+              "role": {
+                "t": "roleProtagonist"
+              }
+            },
+            "links": {
+              "race": [
+                "sylvari"
+              ],
+              "faction": [
+                "hand"
+              ]
+            }
+          },
+          {
+            "ref": "mira",
+            "sample": true,
+            "name": "Mira",
+            "values": {
+              "role": {
+                "t": "roleSupport"
+              }
+            },
+            "links": {
+              "race": [
+                "dwarrow"
+              ],
+              "faction": [
+                "court"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "ref": "races",
+        "kind": "classifier",
+        "catType": "element",
+        "folder": "people",
+        "name": {
+          "t": "modRaces"
+        },
+        "page": "classifier.list",
+        "fields": [
+          {
+            "key": "description",
+            "name": {
+              "t": "artFldDescription"
+            },
+            "type": "textarea"
+          }
+        ],
+        "objects": [
+          {
+            "ref": "sylvari",
+            "sample": true,
+            "name": "Sylvari"
+          },
+          {
+            "ref": "dwarrow",
+            "sample": true,
+            "name": "Dwarrow"
+          }
+        ]
+      },
+      {
+        "ref": "factions",
+        "kind": "classifier",
+        "catType": "object",
+        "folder": "people",
+        "name": {
+          "t": "artFactions"
+        },
+        "page": "classifier.encyclopedia",
+        "fields": [
+          {
+            "key": "goal",
+            "name": {
+              "t": "artFldGoal"
+            },
+            "type": "text"
+          },
+          {
+            "key": "description",
+            "name": {
+              "t": "artFldDescription"
+            },
+            "type": "textarea"
+          }
+        ],
+        "objects": [
+          {
+            "ref": "hand",
+            "sample": true,
+            "name": "Silver Hand"
+          },
+          {
+            "ref": "court",
+            "sample": true,
+            "name": "Night Court"
+          }
+        ]
+      },
+      {
+        "ref": "map",
+        "kind": "locator",
+        "folder": "geo",
+        "name": {
+          "t": "modWorldMap"
+        },
+        "page": "locator.atlas"
+      },
+      {
+        "ref": "history",
+        "kind": "chronicler",
+        "folder": "hist",
+        "name": {
+          "t": "modHistory"
+        },
+        "page": "chronicler.timeline",
+        "events": [
+          {
+            "sample": true,
+            "name": {
+              "t": "smpEvtFounding"
+            },
+            "date": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "sample": true,
+            "name": {
+              "t": "smpEvtWar"
+            },
+            "date": [
+              212,
+              6,
+              1
+            ]
+          }
+        ]
+      },
+      {
+        "ref": "journey",
+        "kind": "wanderer",
+        "folder": "geo",
+        "name": {
+          "t": "modJourney"
+        },
+        "uses": [
+          "map",
+          "history"
+        ],
+        "page": "wanderer.journey"
+      }
+    ]
+  }
+}

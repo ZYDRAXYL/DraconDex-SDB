@@ -1,0 +1,37 @@
+{
+  "kind": "diviner",
+  "templates": [
+    {
+      "id": "diviner.table",
+      "default": true,
+      "name": {
+        "t": "tplDivTable"
+      },
+      "description": {
+        "t": "tplDivTableD"
+      },
+      "page": [
+        {
+          "component": "diviner.quickroll"
+        },
+        {
+          "component": "diviner.view"
+        }
+      ]
+    },
+    {
+      "id": "diviner.diceOnly",
+      "name": {
+        "t": "tplDivDice"
+      },
+      "description": {
+        "t": "tplDivDiceD"
+      },
+      "page": [
+        {
+          "component": "diviner.quickroll"
+        }
+      ]
+    }
+  ]
+}
