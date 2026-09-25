@@ -21,7 +21,7 @@ const CHECK = process.argv.includes('--check');
 // a Windows checkout rewrites every text file's line endings on the way to
 // disk; hashing raw bytes would make every Windows CI run red for no reason.
 const normalizeEol = s => s.replace(/\r\n/g, '\n');
-const isText = p => /\.(js|dart|sql|json|md|mjs|txt)$/.test(p);
+const isText = p => /\.(js|dart|sql|json|md|mjs|txt|css)$/.test(p);
 
 function sha256(relPath) {
   const abs = join(ROOT, relPath);
@@ -57,6 +57,10 @@ const CONSUMERS = {
   'generated/electron/entity-kinds.json':     { EXE: 'src/schema/generated/entity-kinds.json' },
   'generated/flutter/entity_kinds.g.dart':    { APK: 'flutter/lib/core/entity/entity_kinds.g.dart' },
 };
+// Design tokens (design/tokens.mjs, APP docs/REDESIGN.md §C5). EXE loads the
+// CSS before its own css/tokens.css; APK reads the Dart from core/theme/.
+CONSUMERS['generated/electron/tokens.css']   = { EXE: 'src/design/generated/tokens.css' };
+CONSUMERS['generated/flutter/tokens.g.dart'] = { APK: 'flutter/lib/core/theme/tokens.g.dart' };
 // Asset masters. EXE vendors brand (electron/css resolves it through url() at
 // runtime); APK mirrors images+fonts because pubspec.yaml cannot declare assets
 // outside its own package dir.

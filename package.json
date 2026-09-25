@@ -9,8 +9,8 @@
     "url": "https://github.com/ZYDRAXYL/DraconDex-SDB.git"
   },
   "scripts": {
-    "generate": "node schema/generate.mjs && node schema/entity-kinds.mjs && node supabase/setup/gen.mjs && node templates/build.mjs && node tools/build-manifest.mjs",
-    "check": "node schema/generate.mjs --check && node schema/entity-kinds.mjs --check && node supabase/setup/gen.mjs --check && node templates/build.mjs --check && node tools/build-manifest.mjs --check && npm test",
+    "generate": "node schema/generate.mjs && node schema/entity-kinds.mjs && node supabase/setup/gen.mjs && node templates/build.mjs && node design/tokens.mjs && node tools/build-manifest.mjs",
+    "check": "node schema/generate.mjs --check && node schema/entity-kinds.mjs --check && node supabase/setup/gen.mjs --check && node templates/build.mjs --check && node design/tokens.mjs --check && node tools/build-manifest.mjs --check && npm test",
     "chain:survey": "node tools/chain-survey.mjs",
     "chain:propagate": "node tools/chain-propagate.mjs",
     "test": "node --test 'test/*.test.mjs'"
