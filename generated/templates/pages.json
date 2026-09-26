@@ -191,63 +191,63 @@
     {
       "id": "core.infobox",
       "kind": "core",
-      "since": "planned",
+      "since": "exe",
       "borrowable": false,
       "once": true
     },
     {
       "id": "core.callout",
       "kind": "core",
-      "since": "planned",
+      "since": "exe",
       "borrowable": false
     },
     {
       "id": "core.stats",
       "kind": "core",
-      "since": "planned",
+      "since": "exe",
       "borrowable": false
     },
     {
       "id": "core.toc",
       "kind": "core",
-      "since": "planned",
+      "since": "exe",
       "borrowable": false,
       "once": true
     },
     {
       "id": "classifier.spotlight",
       "kind": "classifier",
-      "since": "planned",
+      "since": "exe",
       "borrowable": true
     },
     {
       "id": "classifier.roster",
       "kind": "classifier",
-      "since": "planned",
+      "since": "exe",
       "borrowable": true
     },
     {
       "id": "classifier.breakdown",
       "kind": "classifier",
-      "since": "planned",
+      "since": "exe",
       "borrowable": true
     },
     {
       "id": "chronicler.eras",
       "kind": "chronicler",
-      "since": "planned",
+      "since": "exe",
       "borrowable": true
     },
     {
       "id": "chronicler.upcoming",
       "kind": "chronicler",
-      "since": "planned",
+      "since": "exe",
       "borrowable": true
     },
     {
       "id": "locator.pinlist",
       "kind": "locator",
-      "since": "planned",
+      "since": "exe",
       "borrowable": true
     },
     {
@@ -259,87 +259,87 @@
     {
       "id": "author.progress",
       "kind": "author",
-      "since": "planned",
+      "since": "exe",
       "borrowable": true
     },
     {
       "id": "author.chapters",
       "kind": "author",
-      "since": "planned",
+      "since": "exe",
       "borrowable": true
     },
     {
       "id": "narrator.endings",
       "kind": "narrator",
-      "since": "planned",
+      "since": "exe",
       "borrowable": true
     },
     {
       "id": "narrator.variables",
       "kind": "narrator",
-      "since": "planned",
+      "since": "exe",
       "borrowable": true
     },
     {
       "id": "exhibitor.focus",
       "kind": "exhibitor",
-      "since": "planned",
+      "since": "exe",
       "borrowable": true
     },
     {
       "id": "exhibitor.legend",
       "kind": "exhibitor",
-      "since": "planned",
+      "since": "exe",
       "borrowable": true
     },
     {
       "id": "wanderer.journey",
       "kind": "wanderer",
-      "since": "planned",
+      "since": "exe",
       "borrowable": false
     },
     {
       "id": "designer.strip",
       "kind": "designer",
-      "since": "planned",
+      "since": "exe",
       "borrowable": true
     },
     {
       "id": "sketcher.featured",
       "kind": "sketcher",
-      "since": "planned",
+      "since": "exe",
       "borrowable": true
     },
     {
       "id": "manager.dashboard",
       "kind": "manager",
-      "since": "planned",
+      "since": "exe",
       "borrowable": false,
       "once": true
     },
     {
       "id": "manager.recent",
       "kind": "manager",
-      "since": "planned",
+      "since": "exe",
       "borrowable": false,
       "once": true
     },
     {
       "id": "diviner.quickroll",
       "kind": "diviner",
-      "since": "planned",
+      "since": "exe",
       "borrowable": true
     },
     {
       "id": "scribe.pinned",
       "kind": "scribe",
-      "since": "planned",
+      "since": "exe",
       "borrowable": true
     },
     {
       "id": "drafter.tasks",
       "kind": "drafter",
-      "since": "planned",
+      "since": "exe",
       "borrowable": true
     },
     {
@@ -363,7 +363,7 @@
     {
       "id": "core.hatnote",
       "kind": "core",
-      "since": "planned",
+      "since": "exe",
       "borrowable": false
     },
     {
@@ -375,7 +375,7 @@
     {
       "id": "core.seealso",
       "kind": "core",
-      "since": "planned",
+      "since": "exe",
       "borrowable": false,
       "once": true
     },
