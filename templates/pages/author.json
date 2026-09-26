@@ -1,0 +1,66 @@
+{
+  "kind": "author",
+  "templates": [
+    {
+      "id": "author.manuscript",
+      "default": true,
+      "name": {
+        "t": "tplAutManuscript"
+      },
+      "description": {
+        "t": "tplAutManuscriptD"
+      },
+      "page": [
+        {
+          "component": "author.progress"
+        },
+        {
+          "component": "author.chapters"
+        },
+        {
+          "component": "author.view",
+          "config": {
+            "preset": "editor"
+          }
+        }
+      ]
+    },
+    {
+      "id": "author.corkboard",
+      "name": {
+        "t": "tplAutCorkboard"
+      },
+      "description": {
+        "t": "tplAutCorkboardD"
+      },
+      "page": [
+        {
+          "component": "author.progress"
+        },
+        {
+          "component": "author.view",
+          "config": {
+            "preset": "board"
+          }
+        }
+      ]
+    },
+    {
+      "id": "author.reader",
+      "name": {
+        "t": "tplAutReader"
+      },
+      "description": {
+        "t": "tplAutReaderD"
+      },
+      "page": [
+        {
+          "component": "author.view",
+          "config": {
+            "preset": "reading"
+          }
+        }
+      ]
+    }
+  ]
+}

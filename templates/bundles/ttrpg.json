@@ -2,6 +2,7 @@
   "id": "ttrpg",
   "order": 2,
   "icon": "dice",
+  "group": "genre",
   "name": {
     "t": "bundleTtrpg"
   },
@@ -9,89 +10,192 @@
     "t": "bundleTtrpgD"
   },
   "spec": {
+    "home": "campaign",
+    "folders": [
+      {
+        "ref": "root",
+        "name": {
+          "t": "bundleTtrpg"
+        }
+      },
+      {
+        "ref": "data",
+        "name": {
+          "t": "fldData"
+        },
+        "parent": "root"
+      },
+      {
+        "ref": "story",
+        "name": {
+          "t": "fldStory"
+        },
+        "parent": "root"
+      }
+    ],
     "modules": [
+      {
+        "ref": "campaign",
+        "kind": "manager",
+        "folder": "root",
+        "name": {
+          "t": "modCampaign"
+        },
+        "selects": [
+          "npcs",
+          "monsters",
+          "places",
+          "map",
+          "sessions"
+        ],
+        "page": [
+          {
+            "component": "manager.dashboard"
+          },
+          {
+            "component": "diviner.quickroll",
+            "borrow": "encounters"
+          },
+          {
+            "component": "manager.recent"
+          }
+        ]
+      },
       {
         "ref": "npcs",
         "kind": "classifier",
         "catType": "character",
+        "folder": "data",
         "name": {
           "t": "bdNpcs"
         },
+        "page": "classifier.characterWiki",
         "fields": [
           {
+            "key": "role",
             "name": {
               "t": "artFldRole"
             },
             "type": "text"
           },
           {
+            "key": "personality",
             "name": {
               "t": "artFldPersonality"
             },
             "type": "textarea"
           },
           {
+            "key": "home",
             "name": {
               "t": "pfHome"
             },
             "type": "relation",
             "relTo": "places"
           }
+        ],
+        "objects": [
+          {
+            "ref": "innkeeper",
+            "sample": true,
+            "name": "Bram",
+            "links": {
+              "home": [
+                "inn"
+              ]
+            }
+          }
         ]
       },
       {
         "ref": "monsters",
         "kind": "classifier",
+        "catType": "object",
+        "folder": "data",
         "name": {
           "t": "artCreatures"
         },
+        "page": "classifier.encyclopedia",
         "fields": [
           {
+            "key": "hp",
             "name": "HP",
             "type": "number"
           },
           {
+            "key": "ac",
             "name": "AC",
             "type": "number"
           },
           {
+            "key": "cr",
             "name": "CR",
             "type": "number"
           },
           {
+            "key": "description",
             "name": {
               "t": "artFldDescription"
             },
             "type": "textarea"
+          }
+        ],
+        "objects": [
+          {
+            "ref": "wolf",
+            "sample": true,
+            "name": "Direwolf",
+            "values": {
+              "hp": 37,
+              "ac": 14,
+              "cr": 1
+            }
           }
         ]
       },
       {
         "ref": "places",
         "kind": "classifier",
+        "catType": "object",
+        "folder": "data",
         "name": {
           "t": "artLocations"
         },
+        "page": "classifier.place",
         "fields": [
           {
+            "key": "description",
             "name": {
               "t": "artFldDescription"
             },
             "type": "textarea"
           }
+        ],
+        "objects": [
+          {
+            "ref": "inn",
+            "sample": true,
+            "name": "The Wayside Inn"
+          }
         ]
       },
       {
+        "ref": "map",
         "kind": "locator",
+        "folder": "story",
         "name": {
           "t": "kcMap"
-        }
+        },
+        "page": "locator.atlas"
       },
       {
+        "ref": "encounters",
         "kind": "diviner",
+        "folder": "data",
         "name": {
           "t": "bdEncounters"
         },
+        "page": "diviner.table",
         "tables": [
           {
             "name": {
@@ -136,10 +240,13 @@
         ]
       },
       {
+        "ref": "sessions",
         "kind": "scribe",
+        "folder": "story",
         "name": {
           "t": "bdSessions"
         },
+        "page": "scribe.transcript",
         "sessions": [
           {
             "name": {

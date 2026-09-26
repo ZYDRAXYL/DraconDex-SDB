@@ -21,7 +21,7 @@ const CHECK = process.argv.includes('--check');
 // a Windows checkout rewrites every text file's line endings on the way to
 // disk; hashing raw bytes would make every Windows CI run red for no reason.
 const normalizeEol = s => s.replace(/\r\n/g, '\n');
-const isText = p => /\.(js|dart|sql|json|md|mjs|txt)$/.test(p);
+const isText = p => /\.(js|dart|sql|json|md|mjs|txt|css)$/.test(p);
 
 function sha256(relPath) {
   const abs = join(ROOT, relPath);
@@ -57,6 +57,10 @@ const CONSUMERS = {
   'generated/electron/entity-kinds.json':     { EXE: 'src/schema/generated/entity-kinds.json' },
   'generated/flutter/entity_kinds.g.dart':    { APK: 'flutter/lib/core/entity/entity_kinds.g.dart' },
 };
+// Design tokens (design/tokens.mjs, APP docs/REDESIGN.md §C5). EXE loads the
+// CSS before its own css/tokens.css; APK reads the Dart from core/theme/.
+CONSUMERS['generated/electron/tokens.css']   = { EXE: 'src/design/generated/tokens.css' };
+CONSUMERS['generated/flutter/tokens.g.dart'] = { APK: 'flutter/lib/core/theme/tokens.g.dart' };
 // Asset masters. EXE vendors brand (electron/css resolves it through url() at
 // runtime); APK mirrors images+fonts because pubspec.yaml cannot declare assets
 // outside its own package dir.
@@ -67,6 +71,9 @@ for (const f of walk('assets/fonts'))   CONSUMERS[f] = { APK: f.replace(/^assets
 // each app, and the two in-app guides. EXE keeps the guide where db/guide.js
 // has always read it; APK needs both under its own assets/ (pubspec).
 CONSUMERS['generated/templates/bundles.json'] = { EXE: 'electron/templates/bundles.json', APK: 'flutter/assets/templates/bundles.json' };
+// Page templates + the component catalog they are checked against (APP
+// docs/TEMPLATES.md §3): read by the template gallery and "Use template…".
+CONSUMERS['generated/templates/pages.json'] = { EXE: 'electron/templates/pages.json', APK: 'flutter/assets/templates/pages.json' };
 // The snapshot fixture both apps' tests import (fixtures/README.md).
 CONSUMERS['fixtures/snapshot-v2.json'] = { EXE: 'electron/test/fixtures/snapshot-v2.json', APK: 'flutter/test/fixtures/snapshot-v2.json' };
 for (const f of walk('templates/guide')) {

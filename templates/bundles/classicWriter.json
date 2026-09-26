@@ -1,0 +1,187 @@
+{
+  "id": "classicWriter",
+  "order": 13,
+  "icon": "writer",
+  "group": "classic",
+  "name": {
+    "t": "bundleClassicWriter"
+  },
+  "description": {
+    "t": "bundleClassicWriterD"
+  },
+  "spec": {
+    "home": "series",
+    "folders": [
+      {
+        "ref": "root",
+        "name": {
+          "t": "fldSeries"
+        }
+      },
+      {
+        "ref": "vol1",
+        "name": {
+          "t": "artBook",
+          "suffix": " 1"
+        },
+        "parent": "root"
+      }
+    ],
+    "modules": [
+      {
+        "ref": "series",
+        "kind": "manager",
+        "folder": "root",
+        "name": {
+          "t": "modSeries"
+        },
+        "selects": [
+          "book",
+          "chars"
+        ],
+        "page": [
+          {
+            "component": "author.progress",
+            "borrow": "book"
+          },
+          {
+            "component": "author.chapters",
+            "borrow": "book"
+          },
+          {
+            "component": "manager.recent"
+          }
+        ]
+      },
+      {
+        "ref": "book",
+        "kind": "author",
+        "folder": "vol1",
+        "name": {
+          "t": "artBook",
+          "suffix": " 1"
+        },
+        "page": "author.manuscript",
+        "chapters": [
+          {
+            "sample": true,
+            "name": {
+              "t": "artChapter",
+              "suffix": " 1"
+            }
+          },
+          {
+            "sample": true,
+            "name": {
+              "t": "artChapter",
+              "suffix": " 2"
+            }
+          },
+          {
+            "sample": true,
+            "name": {
+              "t": "artChapter",
+              "suffix": " 3"
+            }
+          }
+        ]
+      },
+      {
+        "ref": "notes",
+        "kind": "scribe",
+        "folder": "vol1",
+        "name": {
+          "t": "modChatNotes"
+        },
+        "page": "scribe.chat",
+        "sessions": [
+          {
+            "sample": true,
+            "name": {
+              "t": "bdSession",
+              "suffix": " 1"
+            },
+            "messages": [
+              {
+                "t": "smpMsg1"
+              },
+              {
+                "t": "smpMsg2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "ref": "ideas",
+        "kind": "drafter",
+        "folder": "vol1",
+        "name": {
+          "t": "artIdeas"
+        },
+        "page": "drafter.ideaBoard"
+      },
+      {
+        "ref": "chars",
+        "kind": "classifier",
+        "catType": "character",
+        "folder": "vol1",
+        "name": {
+          "t": "worldChars"
+        },
+        "page": "classifier.roster",
+        "fields": [
+          {
+            "key": "role",
+            "name": {
+              "t": "artFldRole"
+            },
+            "type": "select",
+            "options": {
+              "choices": [
+                {
+                  "t": "roleProtagonist"
+                },
+                {
+                  "t": "roleAntagonist"
+                },
+                {
+                  "t": "roleSupport"
+                }
+              ]
+            }
+          },
+          {
+            "key": "personality",
+            "name": {
+              "t": "artFldPersonality"
+            },
+            "type": "textarea"
+          }
+        ],
+        "objects": [
+          {
+            "ref": "arin",
+            "sample": true,
+            "name": "Arin",
+            "values": {
+              "role": {
+                "t": "roleProtagonist"
+              }
+            }
+          },
+          {
+            "ref": "veyra",
+            "sample": true,
+            "name": "Veyra",
+            "values": {
+              "role": {
+                "t": "roleAntagonist"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

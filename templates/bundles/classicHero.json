@@ -1,20 +1,21 @@
 {
-  "id": "rpg",
-  "order": 3,
+  "id": "classicHero",
+  "order": 12,
   "icon": "hero",
-  "group": "genre",
+  "group": "classic",
   "name": {
-    "t": "bundleRpg"
+    "t": "bundleClassicHero"
   },
   "description": {
-    "t": "bundleRpgD"
+    "t": "bundleClassicHeroD"
   },
   "spec": {
+    "home": "game",
     "folders": [
       {
         "ref": "root",
         "name": {
-          "t": "bundleRpg"
+          "t": "fldGame"
         }
       },
       {
@@ -33,6 +34,32 @@
       }
     ],
     "modules": [
+      {
+        "ref": "game",
+        "kind": "manager",
+        "folder": "root",
+        "name": {
+          "t": "modGame"
+        },
+        "selects": [
+          "chars",
+          "skills",
+          "items",
+          "story"
+        ],
+        "page": [
+          {
+            "component": "manager.dashboard"
+          },
+          {
+            "component": "narrator.variables",
+            "borrow": "story"
+          },
+          {
+            "component": "manager.recent"
+          }
+        ]
+      },
       {
         "ref": "chars",
         "kind": "classifier",
@@ -72,14 +99,36 @@
             "name": {
               "t": "artFldRole"
             },
-            "type": "text"
+            "type": "select",
+            "options": {
+              "choices": [
+                {
+                  "t": "roleProtagonist"
+                },
+                {
+                  "t": "roleAntagonist"
+                },
+                {
+                  "t": "roleSupport"
+                }
+              ]
+            }
           },
           {
-            "key": "backstory",
+            "key": "skill",
             "name": {
-              "t": "artFldBackstory"
+              "t": "artSkills"
             },
-            "type": "textarea"
+            "type": "relation",
+            "relTo": "skills"
+          },
+          {
+            "key": "item",
+            "name": {
+              "t": "gameItems"
+            },
+            "type": "relation",
+            "relTo": "items"
           }
         ],
         "objects": [
@@ -91,7 +140,41 @@
               "hp": 120,
               "mp": 40,
               "atk": 18,
-              "def": 12
+              "def": 12,
+              "role": {
+                "t": "roleProtagonist"
+              }
+            },
+            "links": {
+              "skill": [
+                "fire",
+                "dash"
+              ],
+              "item": [
+                "brand"
+              ]
+            }
+          },
+          {
+            "ref": "lyss",
+            "sample": true,
+            "name": "Lyss",
+            "values": {
+              "hp": 80,
+              "mp": 110,
+              "atk": 9,
+              "def": 8,
+              "role": {
+                "t": "roleSupport"
+              }
+            },
+            "links": {
+              "skill": [
+                "heal"
+              ],
+              "item": [
+                "potion"
+              ]
             }
           }
         ]
@@ -120,19 +203,6 @@
             },
             "type": "text",
             "levelable": true
-          },
-          {
-            "key": "usableBy",
-            "name": {
-              "t": "pfUsableBy"
-            },
-            "type": "relation",
-            "relTo": "chars",
-            "options": {
-              "targetKinds": [
-                "object"
-              ]
-            }
           }
         ],
         "objects": [
@@ -141,11 +211,20 @@
             "sample": true,
             "name": {
               "t": "smpSkillFire"
-            },
-            "links": {
-              "usableBy": [
-                "arin"
-              ]
+            }
+          },
+          {
+            "ref": "heal",
+            "sample": true,
+            "name": {
+              "t": "smpSkillHeal"
+            }
+          },
+          {
+            "ref": "dash",
+            "sample": true,
+            "name": {
+              "t": "smpSkillDash"
             }
           }
         ]
@@ -177,85 +256,22 @@
         ],
         "objects": [
           {
+            "ref": "brand",
+            "sample": true,
+            "name": "Ashbrand"
+          },
+          {
             "ref": "potion",
             "sample": true,
             "name": {
               "t": "smpItemPotion"
             }
-          }
-        ]
-      },
-      {
-        "ref": "quests",
-        "kind": "classifier",
-        "catType": "element",
-        "folder": "story",
-        "name": {
-          "t": "artQuests"
-        },
-        "page": "classifier.list",
-        "fields": [
-          {
-            "key": "status",
-            "name": {
-              "t": "pfQuestStatus"
-            },
-            "type": "select",
-            "options": {
-              "choices": [
-                {
-                  "t": "questNotStarted"
-                },
-                {
-                  "t": "questActive"
-                },
-                {
-                  "t": "questDone"
-                },
-                {
-                  "t": "questFailed"
-                }
-              ]
-            }
           },
           {
-            "key": "giver",
+            "ref": "amulet",
+            "sample": true,
             "name": {
-              "t": "pfQuestGiver"
-            },
-            "type": "relation",
-            "relTo": "chars",
-            "options": {
-              "targetKinds": [
-                "object"
-              ]
-            }
-          },
-          {
-            "key": "objectives",
-            "name": {
-              "t": "pfObjectives"
-            },
-            "type": "textarea"
-          },
-          {
-            "key": "reward",
-            "name": {
-              "t": "pfReward"
-            },
-            "type": "text"
-          },
-          {
-            "key": "inChapter",
-            "name": {
-              "t": "pfInChapter"
-            },
-            "type": "relation",
-            "options": {
-              "targetKinds": [
-                "chapter",
-                "event"
-              ]
+              "t": "smpItemAmulet"
             }
           }
         ]
@@ -267,7 +283,15 @@
         "name": {
           "t": "artMainStory"
         },
-        "page": "narrator.storyMap"
+        "page": "narrator.storyMap",
+        "dialogues": [
+          {
+            "sample": true,
+            "name": {
+              "t": "smpScene1"
+            }
+          }
+        ]
       },
       {
         "ref": "drops",

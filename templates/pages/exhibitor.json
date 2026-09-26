@@ -1,0 +1,60 @@
+{
+  "kind": "exhibitor",
+  "templates": [
+    {
+      "id": "exhibitor.web",
+      "default": true,
+      "name": {
+        "t": "tplExhWeb"
+      },
+      "description": {
+        "t": "tplExhWebD"
+      },
+      "page": [
+        {
+          "component": "exhibitor.view",
+          "config": {
+            "preset": "graph"
+          }
+        },
+        {
+          "component": "exhibitor.legend"
+        }
+      ]
+    },
+    {
+      "id": "exhibitor.focus",
+      "name": {
+        "t": "tplExhFocus"
+      },
+      "description": {
+        "t": "tplExhFocusD"
+      },
+      "page": [
+        {
+          "component": "exhibitor.focus"
+        },
+        {
+          "component": "exhibitor.legend"
+        }
+      ]
+    },
+    {
+      "id": "exhibitor.scene",
+      "name": {
+        "t": "tplExhScene"
+      },
+      "description": {
+        "t": "tplExhSceneD"
+      },
+      "page": [
+        {
+          "component": "exhibitor.view",
+          "config": {
+            "preset": "scene"
+          }
+        }
+      ]
+    }
+  ]
+}

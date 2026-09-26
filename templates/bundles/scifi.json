@@ -1,20 +1,20 @@
 {
-  "id": "fantasy",
-  "order": 1,
-  "icon": "sword",
+  "id": "scifi",
+  "order": 8,
+  "icon": "globe",
   "group": "genre",
   "name": {
-    "t": "bundleFantasy"
+    "t": "bundleScifi"
   },
   "description": {
-    "t": "bundleFantasyD"
+    "t": "bundleScifiD"
   },
   "spec": {
     "folders": [
       {
         "ref": "root",
         "name": {
-          "t": "bundleFantasy"
+          "t": "bundleScifi"
         }
       },
       {
@@ -71,119 +71,120 @@
             "type": "number"
           },
           {
+            "key": "faction",
+            "name": {
+              "t": "pfFaction"
+            },
+            "type": "relation",
+            "relTo": "factions"
+          },
+          {
+            "key": "ship",
+            "name": {
+              "t": "pfShip"
+            },
+            "type": "relation",
+            "relTo": "tech"
+          },
+          {
             "key": "personality",
             "name": {
               "t": "artFldPersonality"
             },
             "type": "textarea"
-          },
-          {
-            "key": "goal",
-            "name": {
-              "t": "artFldGoal"
-            },
-            "type": "text"
-          },
-          {
-            "key": "weapon",
-            "name": {
-              "t": "pfWeapon"
-            },
-            "type": "relation",
-            "relTo": "items"
           }
         ],
         "objects": [
           {
-            "ref": "arin",
+            "ref": "rhee",
             "sample": true,
-            "name": "Arin",
+            "name": "Captain Rhee",
             "values": {
               "role": {
                 "t": "roleProtagonist"
               }
             },
             "links": {
-              "weapon": [
-                "brand"
+              "faction": [
+                "union"
+              ],
+              "ship": [
+                "meridian"
               ]
-            }
-          },
-          {
-            "ref": "veyra",
-            "sample": true,
-            "name": "Veyra",
-            "values": {
-              "role": {
-                "t": "roleAntagonist"
-              }
             }
           }
         ]
       },
       {
-        "ref": "items",
+        "ref": "tech",
         "kind": "classifier",
         "catType": "object",
         "folder": "data",
         "name": {
-          "t": "gameItems"
+          "t": "modTech"
         },
-        "page": "classifier.catalog",
+        "page": "classifier.encyclopedia",
         "fields": [
+          {
+            "key": "type",
+            "name": {
+              "t": "pfType"
+            },
+            "type": "text"
+          },
           {
             "key": "description",
             "name": {
               "t": "artFldDescription"
             },
             "type": "textarea"
-          },
-          {
-            "key": "owner",
-            "name": {
-              "t": "artFldOwner"
-            },
-            "type": "text"
           }
         ],
         "objects": [
           {
-            "ref": "brand",
+            "ref": "meridian",
             "sample": true,
-            "name": "Ashbrand"
+            "name": "ISV Meridian"
           }
         ]
       },
       {
-        "ref": "places",
+        "ref": "planets",
         "kind": "classifier",
         "catType": "object",
         "folder": "data",
         "name": {
-          "t": "artLocations"
+          "t": "modPlanets"
         },
         "page": "classifier.place",
         "fields": [
           {
+            "key": "region",
+            "name": {
+              "t": "pfRegion"
+            },
+            "type": "text"
+          },
+          {
+            "key": "climate",
+            "name": {
+              "t": "pfClimate"
+            },
+            "type": "text"
+          },
+          {
             "key": "description",
             "name": {
               "t": "artFldDescription"
-            },
-            "type": "textarea"
-          },
-          {
-            "key": "history",
-            "name": {
-              "t": "artFldHistory"
             },
             "type": "textarea"
           }
         ],
         "objects": [
           {
-            "ref": "tarven",
+            "ref": "kepler",
             "sample": true,
-            "name": "Tarven"
+            "name": "Kepler-442b"
           }
         ]
       },
@@ -198,53 +199,34 @@
         "page": "classifier.encyclopedia",
         "fields": [
           {
-            "key": "description",
-            "name": {
-              "t": "artFldDescription"
-            },
-            "type": "textarea"
-          },
-          {
             "key": "goal",
             "name": {
               "t": "artFldGoal"
             },
             "type": "text"
-          }
-        ]
-      },
-      {
-        "ref": "magic",
-        "kind": "classifier",
-        "catType": "element",
-        "folder": "data",
-        "name": {
-          "t": "artMagic"
-        },
-        "page": "classifier.glossary",
-        "fields": [
-          {
-            "key": "rules",
-            "name": {
-              "t": "artFldRules"
-            },
-            "type": "textarea"
           },
           {
-            "key": "cost",
+            "key": "description",
             "name": {
-              "t": "pfCost"
+              "t": "artFldDescription"
             },
-            "type": "text"
+            "type": "textarea"
+          }
+        ],
+        "objects": [
+          {
+            "ref": "union",
+            "sample": true,
+            "name": "Solar Union"
           }
         ]
       },
       {
-        "ref": "map",
+        "ref": "starmap",
         "kind": "locator",
         "folder": "story",
         "name": {
-          "t": "kcMap"
+          "t": "modStarMap"
         },
         "page": "locator.atlas"
       },
@@ -256,35 +238,6 @@
           "t": "artMainTimeline"
         },
         "page": "chronicler.timeline"
-      },
-      {
-        "ref": "book",
-        "kind": "author",
-        "folder": "story",
-        "name": {
-          "t": "artBook"
-        },
-        "page": "author.manuscript",
-        "chapters": [
-          {
-            "name": {
-              "t": "artChapter",
-              "suffix": " 1"
-            }
-          },
-          {
-            "name": {
-              "t": "artChapter",
-              "suffix": " 2"
-            }
-          },
-          {
-            "name": {
-              "t": "artChapter",
-              "suffix": " 3"
-            }
-          }
-        ]
       }
     ]
   }

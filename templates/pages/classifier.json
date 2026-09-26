@@ -1,0 +1,495 @@
+{
+  "kind": "classifier",
+  "templates": [
+    {
+      "id": "classifier.characterWiki",
+      "default": true,
+      "for": [
+        "character"
+      ],
+      "name": {
+        "t": "tplClsCharWiki"
+      },
+      "description": {
+        "t": "tplClsCharWikiD"
+      },
+      "preset": {
+        "catType": "character",
+        "fields": [
+          {
+            "key": "role",
+            "name": {
+              "t": "artFldRole"
+            },
+            "type": "select",
+            "options": {
+              "choices": [
+                {
+                  "t": "roleProtagonist"
+                },
+                {
+                  "t": "roleAntagonist"
+                },
+                {
+                  "t": "roleSupport"
+                }
+              ]
+            }
+          },
+          {
+            "key": "age",
+            "name": {
+              "t": "artFldAge"
+            },
+            "type": "number"
+          },
+          {
+            "key": "personality",
+            "name": {
+              "t": "artFldPersonality"
+            },
+            "type": "textarea"
+          },
+          {
+            "key": "goal",
+            "name": {
+              "t": "artFldGoal"
+            },
+            "type": "text"
+          }
+        ]
+      },
+      "page": [
+        {
+          "component": "classifier.spotlight"
+        },
+        {
+          "type": "columns",
+          "children": [
+            [
+              {
+                "component": "classifier.view",
+                "config": {
+                  "preset": "grid"
+                }
+              }
+            ],
+            [
+              {
+                "component": "classifier.breakdown",
+                "config": {
+                  "field": "role"
+                }
+              }
+            ]
+          ]
+        },
+        {
+          "component": "core.related"
+        }
+      ],
+      "itemPage": [
+        {
+          "component": "core.infobox",
+          "config": {
+            "dock": "right",
+            "layout": "table",
+            "fields": [
+              "role",
+              "age",
+              "goal"
+            ]
+          }
+        },
+        {
+          "component": "item.body"
+        },
+        {
+          "component": "core.related"
+        }
+      ]
+    },
+    {
+      "id": "classifier.characterSheet",
+      "for": [
+        "character"
+      ],
+      "name": {
+        "t": "tplClsCharSheet"
+      },
+      "description": {
+        "t": "tplClsCharSheetD"
+      },
+      "preset": {
+        "catType": "character",
+        "fields": [
+          {
+            "key": "level",
+            "name": {
+              "t": "pfLevel"
+            },
+            "type": "number"
+          },
+          {
+            "key": "hp",
+            "name": "HP",
+            "type": "number",
+            "levelable": true
+          },
+          {
+            "key": "mp",
+            "name": "MP",
+            "type": "number",
+            "levelable": true
+          },
+          {
+            "key": "role",
+            "name": {
+              "t": "artFldRole"
+            },
+            "type": "select",
+            "options": {
+              "choices": [
+                {
+                  "t": "roleProtagonist"
+                },
+                {
+                  "t": "roleAntagonist"
+                },
+                {
+                  "t": "roleSupport"
+                }
+              ]
+            }
+          },
+          {
+            "key": "backstory",
+            "name": {
+              "t": "artFldBackstory"
+            },
+            "type": "textarea"
+          }
+        ]
+      },
+      "page": [
+        {
+          "component": "classifier.view",
+          "config": {
+            "preset": "table"
+          }
+        },
+        {
+          "component": "classifier.breakdown",
+          "config": {
+            "field": "role"
+          }
+        }
+      ],
+      "itemPage": [
+        {
+          "component": "core.stats",
+          "config": {
+            "tiles": [
+              {
+                "field": "level"
+              },
+              {
+                "field": "hp"
+              },
+              {
+                "field": "mp"
+              }
+            ]
+          }
+        },
+        {
+          "component": "core.infobox",
+          "config": {
+            "dock": "full",
+            "layout": "stacked",
+            "fields": [
+              "role"
+            ]
+          }
+        },
+        {
+          "component": "item.body"
+        },
+        {
+          "component": "core.related"
+        }
+      ]
+    },
+    {
+      "id": "classifier.roster",
+      "for": [
+        "character"
+      ],
+      "name": {
+        "t": "tplClsRoster"
+      },
+      "description": {
+        "t": "tplClsRosterD"
+      },
+      "page": [
+        {
+          "component": "classifier.roster"
+        },
+        {
+          "component": "core.related"
+        }
+      ],
+      "itemPage": [
+        {
+          "component": "core.infobox",
+          "config": {
+            "dock": "right",
+            "layout": "stacked"
+          }
+        },
+        {
+          "component": "item.body"
+        }
+      ]
+    },
+    {
+      "id": "classifier.encyclopedia",
+      "default": true,
+      "for": [
+        "object"
+      ],
+      "name": {
+        "t": "tplClsEncyclopedia"
+      },
+      "description": {
+        "t": "tplClsEncyclopediaD"
+      },
+      "preset": {
+        "catType": "object",
+        "fields": [
+          {
+            "key": "type",
+            "name": {
+              "t": "pfType"
+            },
+            "type": "text"
+          },
+          {
+            "key": "description",
+            "name": {
+              "t": "artFldDescription"
+            },
+            "type": "textarea"
+          }
+        ]
+      },
+      "page": [
+        {
+          "component": "core.stats"
+        },
+        {
+          "component": "classifier.view",
+          "config": {
+            "preset": "table"
+          }
+        },
+        {
+          "component": "classifier.breakdown",
+          "config": {
+            "field": "type"
+          }
+        }
+      ],
+      "itemPage": [
+        {
+          "component": "core.infobox",
+          "config": {
+            "dock": "right",
+            "layout": "table",
+            "fields": [
+              "type"
+            ]
+          }
+        },
+        {
+          "component": "item.body"
+        },
+        {
+          "component": "core.seealso"
+        }
+      ]
+    },
+    {
+      "id": "classifier.catalog",
+      "for": [
+        "object"
+      ],
+      "name": {
+        "t": "tplClsCatalog"
+      },
+      "description": {
+        "t": "tplClsCatalogD"
+      },
+      "page": [
+        {
+          "component": "classifier.view",
+          "config": {
+            "preset": "grid"
+          }
+        }
+      ],
+      "itemPage": [
+        {
+          "component": "core.infobox",
+          "config": {
+            "dock": "full",
+            "layout": "table"
+          }
+        },
+        {
+          "component": "item.body"
+        }
+      ]
+    },
+    {
+      "id": "classifier.place",
+      "for": [
+        "object"
+      ],
+      "name": {
+        "t": "tplClsPlace"
+      },
+      "description": {
+        "t": "tplClsPlaceD"
+      },
+      "preset": {
+        "catType": "object",
+        "fields": [
+          {
+            "key": "region",
+            "name": {
+              "t": "pfRegion"
+            },
+            "type": "text"
+          },
+          {
+            "key": "climate",
+            "name": {
+              "t": "pfClimate"
+            },
+            "type": "text"
+          },
+          {
+            "key": "description",
+            "name": {
+              "t": "artFldDescription"
+            },
+            "type": "textarea"
+          }
+        ]
+      },
+      "page": [
+        {
+          "component": "classifier.view",
+          "config": {
+            "preset": "listDetail"
+          }
+        }
+      ],
+      "itemPage": [
+        {
+          "component": "core.infobox",
+          "config": {
+            "dock": "right",
+            "layout": "table",
+            "fields": [
+              "region",
+              "climate"
+            ]
+          }
+        },
+        {
+          "component": "item.body"
+        },
+        {
+          "component": "core.related"
+        }
+      ]
+    },
+    {
+      "id": "classifier.list",
+      "default": true,
+      "for": [
+        "element"
+      ],
+      "name": {
+        "t": "tplClsList"
+      },
+      "description": {
+        "t": "tplClsListD"
+      },
+      "page": [
+        {
+          "component": "classifier.view",
+          "config": {
+            "preset": "table"
+          }
+        }
+      ],
+      "itemPage": [
+        {
+          "component": "item.body"
+        },
+        {
+          "component": "core.related"
+        }
+      ]
+    },
+    {
+      "id": "classifier.glossary",
+      "for": [
+        "element"
+      ],
+      "name": {
+        "t": "tplClsGlossary"
+      },
+      "description": {
+        "t": "tplClsGlossaryD"
+      },
+      "preset": {
+        "catType": "element",
+        "fields": [
+          {
+            "key": "definition",
+            "name": {
+              "t": "pfDefinition"
+            },
+            "type": "textarea"
+          }
+        ]
+      },
+      "page": [
+        {
+          "component": "core.toc"
+        },
+        {
+          "component": "classifier.view",
+          "config": {
+            "preset": "listDetail"
+          }
+        }
+      ],
+      "itemPage": [
+        {
+          "component": "core.hatnote"
+        },
+        {
+          "component": "item.body"
+        },
+        {
+          "component": "core.seealso"
+        }
+      ]
+    }
+  ]
+}

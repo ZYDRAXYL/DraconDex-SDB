@@ -2,6 +2,7 @@
   "id": "mystery",
   "order": 4,
   "icon": "search",
+  "group": "genre",
   "name": {
     "t": "bundleMystery"
   },
@@ -9,22 +10,48 @@
     "t": "bundleMysteryD"
   },
   "spec": {
+    "folders": [
+      {
+        "ref": "root",
+        "name": {
+          "t": "bundleMystery"
+        }
+      },
+      {
+        "ref": "data",
+        "name": {
+          "t": "fldData"
+        },
+        "parent": "root"
+      },
+      {
+        "ref": "story",
+        "name": {
+          "t": "fldStory"
+        },
+        "parent": "root"
+      }
+    ],
     "modules": [
       {
         "ref": "chars",
         "kind": "classifier",
         "catType": "character",
+        "folder": "data",
         "name": {
           "t": "worldChars"
         },
+        "page": "classifier.characterWiki",
         "fields": [
           {
+            "key": "role",
             "name": {
               "t": "artFldRole"
             },
             "type": "text"
           },
           {
+            "key": "personality",
             "name": {
               "t": "artFldPersonality"
             },
@@ -35,17 +62,22 @@
       {
         "ref": "clues",
         "kind": "classifier",
+        "catType": "object",
+        "folder": "data",
         "name": {
           "t": "artClues"
         },
+        "page": "classifier.encyclopedia",
         "fields": [
           {
+            "key": "description",
             "name": {
               "t": "artFldDescription"
             },
             "type": "textarea"
           },
           {
+            "key": "inChapter",
             "name": {
               "t": "pfInChapter"
             },
@@ -57,11 +89,26 @@
             }
           },
           {
+            "key": "pointsTo",
             "name": {
               "t": "pfPointsTo"
             },
             "type": "relation",
             "relTo": "suspects"
+          }
+        ],
+        "objects": [
+          {
+            "ref": "glove",
+            "sample": true,
+            "name": {
+              "t": "smpClueGlove"
+            },
+            "links": {
+              "pointsTo": [
+                "gardener"
+              ]
+            }
           }
         ]
       },
@@ -69,35 +116,68 @@
         "ref": "suspects",
         "kind": "classifier",
         "catType": "character",
+        "folder": "data",
         "name": {
           "t": "bdSuspects"
         },
+        "page": "classifier.roster",
         "fields": [
           {
+            "key": "motive",
             "name": {
               "t": "artFldMotive"
             },
             "type": "text"
           },
           {
+            "key": "means",
             "name": {
               "t": "pfMeans"
             },
             "type": "text"
           },
           {
+            "key": "alibi",
             "name": {
               "t": "pfAlibi"
             },
             "type": "textarea"
           }
+        ],
+        "objects": [
+          {
+            "ref": "gardener",
+            "sample": true,
+            "name": "Mr. Hale"
+          },
+          {
+            "ref": "niece",
+            "sample": true,
+            "name": "Clara Voss"
+          }
         ]
       },
       {
+        "ref": "web",
+        "kind": "exhibitor",
+        "folder": "story",
+        "name": {
+          "t": "modRelations"
+        },
+        "selects": [
+          "suspects",
+          "clues"
+        ],
+        "page": "exhibitor.focus"
+      },
+      {
+        "ref": "book",
         "kind": "author",
+        "folder": "story",
         "name": {
           "t": "artBook"
         },
+        "page": "author.manuscript",
         "chapters": [
           {
             "name": {
@@ -120,16 +200,22 @@
         ]
       },
       {
+        "ref": "timeline",
         "kind": "chronicler",
+        "folder": "story",
         "name": {
           "t": "artMainTimeline"
-        }
+        },
+        "page": "chronicler.timeline"
       },
       {
+        "ref": "ideas",
         "kind": "drafter",
+        "folder": "story",
         "name": {
           "t": "artIdeas"
-        }
+        },
+        "page": "drafter.ideaBoard"
       }
     ]
   }

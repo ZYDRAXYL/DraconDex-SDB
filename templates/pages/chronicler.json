@@ -1,0 +1,66 @@
+{
+  "kind": "chronicler",
+  "templates": [
+    {
+      "id": "chronicler.timeline",
+      "default": true,
+      "name": {
+        "t": "tplChrTimeline"
+      },
+      "description": {
+        "t": "tplChrTimelineD"
+      },
+      "page": [
+        {
+          "component": "chronicler.eras"
+        },
+        {
+          "component": "chronicler.view",
+          "config": {
+            "preset": "oneline"
+          }
+        },
+        {
+          "component": "chronicler.upcoming"
+        }
+      ]
+    },
+    {
+      "id": "chronicler.calendar",
+      "name": {
+        "t": "tplChrCalendar"
+      },
+      "description": {
+        "t": "tplChrCalendarD"
+      },
+      "page": [
+        {
+          "component": "chronicler.view",
+          "config": {
+            "preset": "calendar"
+          }
+        },
+        {
+          "component": "chronicler.upcoming"
+        }
+      ]
+    },
+    {
+      "id": "chronicler.compare",
+      "name": {
+        "t": "tplChrCompare"
+      },
+      "description": {
+        "t": "tplChrCompareD"
+      },
+      "page": [
+        {
+          "component": "chronicler.view",
+          "config": {
+            "preset": "compare"
+          }
+        }
+      ]
+    }
+  ]
+}

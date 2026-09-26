@@ -1,0 +1,174 @@
+{
+  "id": "romance",
+  "order": 9,
+  "icon": "person",
+  "group": "genre",
+  "name": {
+    "t": "bundleRomance"
+  },
+  "description": {
+    "t": "bundleRomanceD"
+  },
+  "spec": {
+    "folders": [
+      {
+        "ref": "root",
+        "name": {
+          "t": "bundleRomance"
+        }
+      },
+      {
+        "ref": "people",
+        "name": {
+          "t": "fldPeople"
+        },
+        "parent": "root"
+      },
+      {
+        "ref": "story",
+        "name": {
+          "t": "fldStory"
+        },
+        "parent": "root"
+      }
+    ],
+    "modules": [
+      {
+        "ref": "chars",
+        "kind": "classifier",
+        "catType": "character",
+        "folder": "people",
+        "name": {
+          "t": "worldChars"
+        },
+        "page": "classifier.characterWiki",
+        "fields": [
+          {
+            "key": "role",
+            "name": {
+              "t": "artFldRole"
+            },
+            "type": "select",
+            "options": {
+              "choices": [
+                {
+                  "t": "roleProtagonist"
+                },
+                {
+                  "t": "roleAntagonist"
+                },
+                {
+                  "t": "roleSupport"
+                }
+              ]
+            }
+          },
+          {
+            "key": "age",
+            "name": {
+              "t": "artFldAge"
+            },
+            "type": "number"
+          },
+          {
+            "key": "love",
+            "name": {
+              "t": "pfLoveInterest"
+            },
+            "type": "relation",
+            "relTo": "chars"
+          },
+          {
+            "key": "personality",
+            "name": {
+              "t": "artFldPersonality"
+            },
+            "type": "textarea"
+          }
+        ],
+        "objects": [
+          {
+            "ref": "june",
+            "sample": true,
+            "name": "June",
+            "values": {
+              "role": {
+                "t": "roleProtagonist"
+              }
+            },
+            "links": {
+              "love": [
+                "theo"
+              ]
+            }
+          },
+          {
+            "ref": "theo",
+            "sample": true,
+            "name": "Theo",
+            "values": {
+              "role": {
+                "t": "roleSupport"
+              }
+            },
+            "links": {
+              "love": [
+                "june"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "ref": "web",
+        "kind": "exhibitor",
+        "folder": "story",
+        "name": {
+          "t": "modRelations"
+        },
+        "selects": [
+          "chars"
+        ],
+        "page": "exhibitor.focus"
+      },
+      {
+        "ref": "relTimeline",
+        "kind": "chronicler",
+        "folder": "story",
+        "name": {
+          "t": "modRelTimeline"
+        },
+        "page": "chronicler.timeline"
+      },
+      {
+        "ref": "book",
+        "kind": "author",
+        "folder": "story",
+        "name": {
+          "t": "artBook"
+        },
+        "page": "author.manuscript",
+        "chapters": [
+          {
+            "name": {
+              "t": "artChapter",
+              "suffix": " 1"
+            }
+          },
+          {
+            "name": {
+              "t": "artChapter",
+              "suffix": " 2"
+            }
+          },
+          {
+            "name": {
+              "t": "artChapter",
+              "suffix": " 3"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

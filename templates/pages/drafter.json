@@ -1,0 +1,43 @@
+{
+  "kind": "drafter",
+  "templates": [
+    {
+      "id": "drafter.notes",
+      "default": true,
+      "name": {
+        "t": "tplDrfNotes"
+      },
+      "description": {
+        "t": "tplDrfNotesD"
+      },
+      "page": [
+        {
+          "component": "drafter.view"
+        }
+      ]
+    },
+    {
+      "id": "drafter.ideaBoard",
+      "name": {
+        "t": "tplDrfIdeas"
+      },
+      "description": {
+        "t": "tplDrfIdeasD"
+      },
+      "page": [
+        {
+          "component": "core.callout",
+          "config": {
+            "tone": "tip"
+          }
+        },
+        {
+          "component": "drafter.tasks"
+        },
+        {
+          "component": "drafter.view"
+        }
+      ]
+    }
+  ]
+}

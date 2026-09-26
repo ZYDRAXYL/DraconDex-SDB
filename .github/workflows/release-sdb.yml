@@ -1,0 +1,53 @@
+name: Release SDB
+
+# Publishes the `sdb-vX.Y.Z` release — the tag EXE and APK pin their
+# vendored schema, templates and assets to (tools/sdb-vendor.mjs --ref).
+# Run by hand from main after a change to generated/ has merged. The tag is
+# created by the release itself, from sdb.json's sdbVersion: a tag that
+# disagreed with sdbVersion would pin consumers to a release whose manifest
+# names another version.
+
+on:
+  workflow_dispatch:
+    inputs:
+      draft:
+        description: 'Publish as a draft release'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-sdb-${{ github.ref }}
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+
+      # The same gate as Schema check: generated/ must be what the sources
+      # produce, or the release would ship output nobody can reproduce.
+      - name: Generated output is current
+        run: npm run check
+
+      - name: Publish
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          version="$(node -p "require('./sdb.json').sdbVersion")"
+          tag="sdb-v$version"
+          if gh release view "$tag" >/dev/null 2>&1; then
+            echo "::error::$tag already exists — bump sdb.json's sdbVersion first"
+            exit 1
+          fi
+          (cd generated && zip -qr "../sdb-generated-$version.zip" .)
+          gh release create "$tag" "sdb-generated-$version.zip" generated/manifest.json \
+            --target "$GITHUB_SHA" \
+            --title "SDB $version" \
+            --notes "Schema, templates, design tokens and assets for DraconDex-EXE and DraconDex-APK. Pin with: node tools/sdb-vendor.mjs --ref $tag" \
+            ${{ inputs.draft && '--draft' || '' }}

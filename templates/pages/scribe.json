@@ -1,0 +1,43 @@
+{
+  "kind": "scribe",
+  "templates": [
+    {
+      "id": "scribe.chat",
+      "default": true,
+      "name": {
+        "t": "tplScrChat"
+      },
+      "description": {
+        "t": "tplScrChatD"
+      },
+      "page": [
+        {
+          "component": "scribe.pinned"
+        },
+        {
+          "component": "scribe.view",
+          "config": {
+            "preset": "chat"
+          }
+        }
+      ]
+    },
+    {
+      "id": "scribe.transcript",
+      "name": {
+        "t": "tplScrTranscript"
+      },
+      "description": {
+        "t": "tplScrTranscriptD"
+      },
+      "page": [
+        {
+          "component": "scribe.view",
+          "config": {
+            "preset": "transcript"
+          }
+        }
+      ]
+    }
+  ]
+}

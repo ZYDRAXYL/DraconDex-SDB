@@ -13,9 +13,9 @@ name: Schema check
 on:
   push:
     branches: [main]
-    paths: ['schema/**', 'supabase/**', 'assets/**', 'tools/**', 'sdb.json', '.github/workflows/schema-ci.yml']
+    paths: ['schema/**', 'supabase/**', 'assets/**', 'templates/**', 'fixtures/**', 'design/**', 'test/**', 'tools/**', 'package.json', 'sdb.json', '.github/workflows/schema-ci.yml']
   pull_request:
-    paths: ['schema/**', 'supabase/**', 'assets/**', 'tools/**', 'sdb.json', '.github/workflows/schema-ci.yml']
+    paths: ['schema/**', 'supabase/**', 'assets/**', 'templates/**', 'fixtures/**', 'design/**', 'test/**', 'tools/**', 'package.json', 'sdb.json', '.github/workflows/schema-ci.yml']
   workflow_dispatch: {}
 
 permissions:
