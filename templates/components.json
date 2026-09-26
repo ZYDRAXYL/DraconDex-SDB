@@ -48,26 +48,26 @@
     { "id": "drafter.tasks", "kind": "drafter", "since": "exe", "borrowable": true },
     { "id": "inspector.facts", "kind": "inspector", "since": "planned", "borrowable": true },
 
-    { "id": "core.linkbar", "kind": "core", "since": "planned", "borrowable": false },
-    { "id": "core.navbox", "kind": "core", "since": "planned", "borrowable": false },
+    { "id": "core.linkbar", "kind": "core", "since": "exe", "borrowable": false },
+    { "id": "core.navbox", "kind": "core", "since": "exe", "borrowable": false },
     { "id": "core.hatnote", "kind": "core", "since": "exe", "borrowable": false },
-    { "id": "core.linkcard", "kind": "core", "since": "planned", "borrowable": false },
+    { "id": "core.linkcard", "kind": "core", "since": "exe", "borrowable": false },
     { "id": "core.seealso", "kind": "core", "since": "exe", "borrowable": false, "once": true },
-    { "id": "core.children", "kind": "core", "since": "planned", "borrowable": false },
-    { "id": "core.references", "kind": "core", "since": "planned", "borrowable": false, "once": true },
-    { "id": "core.tabs", "kind": "core", "since": "planned", "borrowable": false, "container": true },
-    { "id": "core.toggle", "kind": "core", "since": "planned", "borrowable": false, "container": true },
+    { "id": "core.children", "kind": "core", "since": "exe", "borrowable": false },
+    { "id": "core.references", "kind": "core", "since": "exe", "borrowable": false, "once": true },
+    { "id": "core.tabs", "kind": "core", "since": "exe", "borrowable": false, "container": true },
+    { "id": "core.toggle", "kind": "core", "since": "exe", "borrowable": false, "container": true },
 
-    { "id": "core.banner", "kind": "core", "since": "planned", "borrowable": false },
-    { "id": "core.gallery", "kind": "core", "since": "planned", "borrowable": false },
-    { "id": "core.divider", "kind": "core", "since": "planned", "borrowable": false },
-    { "id": "core.iconrow", "kind": "core", "since": "planned", "borrowable": false },
-    { "id": "core.figure", "kind": "core", "since": "planned", "borrowable": false },
+    { "id": "core.banner", "kind": "core", "since": "exe", "borrowable": false },
+    { "id": "core.gallery", "kind": "core", "since": "exe", "borrowable": false },
+    { "id": "core.divider", "kind": "core", "since": "exe", "borrowable": false },
+    { "id": "core.iconrow", "kind": "core", "since": "exe", "borrowable": false },
+    { "id": "core.figure", "kind": "core", "since": "exe", "borrowable": false },
 
-    { "id": "core.video", "kind": "core", "since": "planned", "borrowable": false },
-    { "id": "core.audio", "kind": "core", "since": "planned", "borrowable": false },
-    { "id": "core.pdf", "kind": "core", "since": "planned", "borrowable": false },
-    { "id": "core.model3d", "kind": "core", "since": "planned", "borrowable": false },
-    { "id": "core.media", "kind": "core", "since": "planned", "borrowable": false }
+    { "id": "core.video", "kind": "core", "since": "exe", "borrowable": false },
+    { "id": "core.audio", "kind": "core", "since": "exe", "borrowable": false },
+    { "id": "core.pdf", "kind": "core", "since": "exe", "borrowable": false },
+    { "id": "core.model3d", "kind": "core", "since": "exe", "borrowable": false },
+    { "id": "core.media", "kind": "core", "since": "exe", "borrowable": false }
   ]
 }

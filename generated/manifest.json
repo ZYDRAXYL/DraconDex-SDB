@@ -2,7 +2,7 @@
   "manifestVersion": 1,
   "sdb": {
     "repo": "ZYDRAXYL/DraconDex-SDB",
-    "version": "2.0.7"
+    "version": "2.0.8"
   },
   "sources": {
     "vaultSchemaVersion": 6,
@@ -174,8 +174,8 @@
       }
     },
     "generated/templates/pages.json": {
-      "sha256": "708e0e56d24b006a7aa6ff106e4d094ff6e0ca1888b1cf65d0a0f697594167ea",
-      "bytes": 95643,
+      "sha256": "1a11125e09559cb385709bebe8e144bba24a7e1e402a1992c62cdaa7d347c431",
+      "bytes": 95575,
       "consumers": {
         "EXE": "electron/templates/pages.json",
         "APK": "flutter/assets/templates/pages.json"
