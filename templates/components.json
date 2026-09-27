@@ -31,7 +31,7 @@
     { "id": "chronicler.eras", "kind": "chronicler", "since": "exe", "borrowable": true },
     { "id": "chronicler.upcoming", "kind": "chronicler", "since": "exe", "borrowable": true },
     { "id": "locator.pinlist", "kind": "locator", "since": "exe", "borrowable": true },
-    { "id": "locator.placecard", "kind": "locator", "since": "planned", "borrowable": true },
+    { "id": "locator.placecard", "kind": "locator", "since": "exe", "borrowable": true },
     { "id": "author.progress", "kind": "author", "since": "exe", "borrowable": true },
     { "id": "author.chapters", "kind": "author", "since": "exe", "borrowable": true },
     { "id": "narrator.endings", "kind": "narrator", "since": "exe", "borrowable": true },
@@ -46,7 +46,7 @@
     { "id": "diviner.quickroll", "kind": "diviner", "since": "exe", "borrowable": true },
     { "id": "scribe.pinned", "kind": "scribe", "since": "exe", "borrowable": true },
     { "id": "drafter.tasks", "kind": "drafter", "since": "exe", "borrowable": true },
-    { "id": "inspector.facts", "kind": "inspector", "since": "planned", "borrowable": true },
+    { "id": "inspector.facts", "kind": "inspector", "since": "exe", "borrowable": true },
 
     { "id": "core.linkbar", "kind": "core", "since": "exe", "borrowable": false },
     { "id": "core.navbox", "kind": "core", "since": "exe", "borrowable": false },
