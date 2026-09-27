@@ -2,7 +2,7 @@
   "manifestVersion": 1,
   "sdb": {
     "repo": "ZYDRAXYL/DraconDex-SDB",
-    "version": "2.0.6"
+    "version": "2.0.10"
   },
   "sources": {
     "vaultSchemaVersion": 6,
@@ -158,6 +158,27 @@
         "APK": "flutter/assets/fonts/NotoSans-Regular.ttf"
       }
     },
+    "assets/fonts/NotoSansThai-Bold.ttf": {
+      "sha256": "2ac6c6e8a478e23b15f76e4894af1fa2210f8f350e4e6e54aad530bec03efbfb",
+      "bytes": 37824,
+      "consumers": {
+        "APK": "flutter/assets/fonts/NotoSansThai-Bold.ttf"
+      }
+    },
+    "assets/fonts/NotoSansThai-Regular.ttf": {
+      "sha256": "61cf814eec46b294d6ea4401ac295d0cecd5207bd2331dcc5a15e7301d30ee44",
+      "bytes": 37780,
+      "consumers": {
+        "APK": "flutter/assets/fonts/NotoSansThai-Regular.ttf"
+      }
+    },
+    "assets/fonts/OFL-NotoSansThai.txt": {
+      "sha256": "dad6e6abc2bf3fc37cc698af7607c3f4d4235039695713b222e5a034fb5b9b1c",
+      "bytes": 4380,
+      "consumers": {
+        "APK": "flutter/assets/fonts/OFL-NotoSansThai.txt"
+      }
+    },
     "assets/fonts/OFL.txt": {
       "sha256": "cee9892f9f0cc8fe882c9e9537ee6a89621d86ee7ceaf70b02e2b2b1c25c061a",
       "bytes": 4396,
@@ -174,8 +195,8 @@
       }
     },
     "generated/templates/pages.json": {
-      "sha256": "f7c3dc8cb15ab45525b6253ff6d21be7aa6bcd90f18b8488954f1d9a658b8949",
-      "bytes": 94505,
+      "sha256": "a4a1d84c2d1314b01af84b1ef9d552c08d4465017864969e693db0d68ee47b9a",
+      "bytes": 95567,
       "consumers": {
         "EXE": "electron/templates/pages.json",
         "APK": "flutter/assets/templates/pages.json"
