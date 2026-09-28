@@ -2,7 +2,7 @@
   "manifestVersion": 1,
   "sdb": {
     "repo": "ZYDRAXYL/DraconDex-SDB",
-    "version": "2.0.10"
+    "version": "2.0.11"
   },
   "sources": {
     "vaultSchemaVersion": 6,
@@ -54,15 +54,15 @@
       }
     },
     "generated/electron/tokens.css": {
-      "sha256": "37586a51161484764ae396f5a4c7b5a97ae4989dcee373199188621ec0645f8a",
-      "bytes": 3323,
+      "sha256": "6dfd6491ffb53752ff79f7386adf57319918154bbd400b3169c8048810918bd6",
+      "bytes": 3619,
       "consumers": {
         "EXE": "src/design/generated/tokens.css"
       }
     },
     "generated/flutter/tokens.g.dart": {
-      "sha256": "1e075cb1e9df962cfa25091171ef1cf3d06d290d1a089c954c7f1aad029c0545",
-      "bytes": 16772,
+      "sha256": "d1fda45c29634a4ef12d8f2a0f42bdb174f971201cb2666ac4571302df9cd8f0",
+      "bytes": 20252,
       "consumers": {
         "APK": "flutter/lib/core/theme/tokens.g.dart"
       }
