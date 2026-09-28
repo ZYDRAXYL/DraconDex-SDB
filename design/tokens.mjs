@@ -41,7 +41,8 @@ const mix = (a, b, t) => toHex(rgb(a).map((v, i) => v + (rgb(b)[i] - v) * t));
 // The names are the CSS custom properties without "--". PKG theme packages
 // and every user's custom theme are keyed by them, so this list only grows.
 const PALETTE = ['bg', 'surface', 'raised', 'hover', 'border', 't1', 't2', 't3', 't3-aa',
-  'accent', 'accentH', 'danger', 'success', 'button', 'on-accent', 'on-button'];
+  'accent', 'accentH', 'danger', 'success', 'button', 'on-accent', 'on-button',
+  'warn', 'info', 'on-warn', 'on-info'];
 const REQUIRED = ['bg', 'surface', 'raised', 'hover', 'border', 't1', 't2', 't3', 't3-aa',
   'accent', 'accentH', 'danger', 'success'];
 const AA = 4.5;
@@ -92,6 +93,17 @@ for (const [name, node] of Object.entries(src.color?.theme || {})) {
     if (p[s] && contrast(p['t3-aa'], p[s]) < AA) {
       errors.push(`theme "${name}": t3-aa ${p['t3-aa']} is ${contrast(p['t3-aa'], p[s]).toFixed(2)}:1 on ${s} ${p[s]} — needs ${AA}`);
     }
+  }
+  // warn/info are status colours used as text and as fills (APP
+  // docs/UX-LAYOUT.md §9): text on every surface, and their on-* ink on them.
+  for (const k of ['warn', 'info']) {
+    if (!p[k]) continue;
+    for (const s of TEXT_SURFACES) {
+      if (p[s] && contrast(p[k], p[s]) < AA) errors.push(`theme "${name}": ${k} ${p[k]} is ${contrast(p[k], p[s]).toFixed(2)}:1 on ${s} ${p[s]} — needs ${AA}`);
+    }
+    const on = p[`on-${k}`];
+    if (!on) errors.push(`theme "${name}": ${k} without on-${k}`);
+    else if (contrast(on, p[k]) < AA) errors.push(`theme "${name}": on-${k} ${on} is ${contrast(on, p[k]).toFixed(2)}:1 on ${k} ${p[k]} — needs ${AA}`);
   }
   themes[name] = { exe, p, pc };
 }

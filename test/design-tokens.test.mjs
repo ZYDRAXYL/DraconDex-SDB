@@ -42,6 +42,18 @@ test('muted text that fails only on the Fluent 2 Mica base is refused', () => {
   assert.match(r.err, /fluent2 × daylight/);
 });
 
+test('a warn or info status colour below 4.5:1 is refused', () => {
+  const r = validate((s) => { s.color.theme.daylight.warn = hexColor('#f59e0b'); }); // the dark-theme amber on a light bg
+  assert.ok(!r.ok);
+  assert.match(r.err, /daylight": warn #f59e0b is .*needs 4\.5/);
+});
+
+test('warn or info without its on-* ink is refused', () => {
+  const r = validate((s) => { delete s.color.theme.midnight['on-info']; });
+  assert.ok(!r.ok);
+  assert.match(r.err, /midnight": info without on-info/);
+});
+
 test('a missing palette token is refused', () => {
   const r = validate((s) => { delete s.color.theme.atDusk.border; });
   assert.ok(!r.ok);
