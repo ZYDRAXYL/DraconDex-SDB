@@ -13,28 +13,28 @@
   "artifacts": {
     "generated/electron/vault-ddl.electron.js": {
       "sha256": "0c4b4244de687094f260cb1729bc94b712eb3552777461c293463e1c245438f6",
-      "bytes": 61471,
+      "bytes": 60144,
       "consumers": {
         "EXE": "src/schema/generated/vault-ddl.electron.js"
       }
     },
     "generated/electron/supabase-schema.js": {
-      "sha256": "baa0299ea0c691d44d7fd739f0ff02e6125234be928c313d59ab3ba95bb1f473",
-      "bytes": 17127,
+      "sha256": "5c8b631db18a16b2c8c9e120835c02e3cd222c153f93957d26489ec0fd5d556f",
+      "bytes": 16413,
       "consumers": {
         "EXE": "electron/src/db/supabase-schema.js"
       }
     },
     "generated/flutter/vault_schema.g.dart": {
       "sha256": "e4f2e64bbddc6dc0f7fd4cc080a079a819577e74f757f6af3503041853790280",
-      "bytes": 49370,
+      "bytes": 47908,
       "consumers": {
         "APK": "flutter/lib/core/database/vault_schema.g.dart"
       }
     },
     "generated/flutter/supabase_schema.dart": {
-      "sha256": "1e4aacf1299f319f2149f449ead3d6d64947ea73066474058ac41c8dec6db0fb",
-      "bytes": 17073,
+      "sha256": "539cad343515f2a819c6c2ef04fa113fbf053795bee369c0bba22e2a9d5b1155",
+      "bytes": 16359,
       "consumers": {
         "APK": "flutter/lib/data/services/supabase_schema.dart"
       }
@@ -55,14 +55,14 @@
     },
     "generated/electron/tokens.css": {
       "sha256": "6dfd6491ffb53752ff79f7386adf57319918154bbd400b3169c8048810918bd6",
-      "bytes": 3758,
+      "bytes": 3619,
       "consumers": {
         "EXE": "src/design/generated/tokens.css"
       }
     },
     "generated/flutter/tokens.g.dart": {
       "sha256": "d1fda45c29634a4ef12d8f2a0f42bdb174f971201cb2666ac4571302df9cd8f0",
-      "bytes": 20417,
+      "bytes": 20252,
       "consumers": {
         "APK": "flutter/lib/core/theme/tokens.g.dart"
       }
@@ -174,14 +174,14 @@
     },
     "assets\\fonts\\OFL-NotoSansThai.txt": {
       "sha256": "dad6e6abc2bf3fc37cc698af7607c3f4d4235039695713b222e5a034fb5b9b1c",
-      "bytes": 4473,
+      "bytes": 4380,
       "consumers": {
         "APK": "assets\\fonts\\OFL-NotoSansThai.txt"
       }
     },
     "assets\\fonts\\OFL.txt": {
       "sha256": "cee9892f9f0cc8fe882c9e9537ee6a89621d86ee7ceaf70b02e2b2b1c25c061a",
-      "bytes": 4489,
+      "bytes": 4396,
       "consumers": {
         "APK": "assets\\fonts\\OFL.txt"
       }
@@ -204,7 +204,7 @@
     },
     "fixtures/snapshot-v2.json": {
       "sha256": "468eee3ad95e58a56404b81d65d0eb7a0ff21292540ecb6ca534268103f0d9e2",
-      "bytes": 22296,
+      "bytes": 21224,
       "consumers": {
         "EXE": "electron/test/fixtures/snapshot-v2.json",
         "APK": "flutter/test/fixtures/snapshot-v2.json"
@@ -212,7 +212,7 @@
     },
     "templates\\guide\\en.json": {
       "sha256": "5989449ffa2b21e4329da99cf75e5f0311d32cb529a08628b133ce4687518ad6",
-      "bytes": 6958,
+      "bytes": 6888,
       "consumers": {
         "EXE": "templates\\guide\\en.json",
         "APK": "templates\\guide\\en.json"
@@ -220,7 +220,7 @@
     },
     "templates\\guide\\th.json": {
       "sha256": "899eb328b6056bf28112d7fe6b839afe22f6aff90a7966fb163c4553bfbd1a1f",
-      "bytes": 12275,
+      "bytes": 12205,
       "consumers": {
         "EXE": "templates\\guide\\th.json",
         "APK": "templates\\guide\\th.json"
