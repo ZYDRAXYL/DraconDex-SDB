@@ -2,39 +2,39 @@
   "manifestVersion": 1,
   "sdb": {
     "repo": "ZYDRAXYL/DraconDex-SDB",
-    "version": "2.0.11"
+    "version": "2.1.0"
   },
   "sources": {
-    "vaultSchemaVersion": 6,
+    "vaultSchemaVersion": 7,
     "supabaseSchemaVersion": 2,
-    "vaultSqlSha256": "ceb54473024938f8a6b4834ae1403007332f3ea763dc01140b99333a49f1759f",
+    "vaultSqlSha256": "86c90c56c0287eabb26dde43a5612ddaa77211904529b2e48a824f909e7fba32",
     "setupSqlSha256": "9bc12ba249cc05c2f29bd82e8ba840440704d09934ea5642ce7bb659112e372e"
   },
   "artifacts": {
     "generated/electron/vault-ddl.electron.js": {
-      "sha256": "ea9f145c312ebcfb555483be62dc6aff25a81909a2fdb2d60934af1431a69ac2",
-      "bytes": 59980,
+      "sha256": "0c4b4244de687094f260cb1729bc94b712eb3552777461c293463e1c245438f6",
+      "bytes": 61471,
       "consumers": {
         "EXE": "src/schema/generated/vault-ddl.electron.js"
       }
     },
     "generated/electron/supabase-schema.js": {
-      "sha256": "5c8b631db18a16b2c8c9e120835c02e3cd222c153f93957d26489ec0fd5d556f",
-      "bytes": 16413,
+      "sha256": "baa0299ea0c691d44d7fd739f0ff02e6125234be928c313d59ab3ba95bb1f473",
+      "bytes": 17127,
       "consumers": {
         "EXE": "electron/src/db/supabase-schema.js"
       }
     },
     "generated/flutter/vault_schema.g.dart": {
-      "sha256": "51e4ca33897bd3f8907907ff46cc1f4793c68d8782db65b84eb8f208794f3d62",
-      "bytes": 47744,
+      "sha256": "e4f2e64bbddc6dc0f7fd4cc080a079a819577e74f757f6af3503041853790280",
+      "bytes": 49370,
       "consumers": {
         "APK": "flutter/lib/core/database/vault_schema.g.dart"
       }
     },
     "generated/flutter/supabase_schema.dart": {
-      "sha256": "539cad343515f2a819c6c2ef04fa113fbf053795bee369c0bba22e2a9d5b1155",
-      "bytes": 16359,
+      "sha256": "1e4aacf1299f319f2149f449ead3d6d64947ea73066474058ac41c8dec6db0fb",
+      "bytes": 17073,
       "consumers": {
         "APK": "flutter/lib/data/services/supabase_schema.dart"
       }
@@ -55,135 +55,135 @@
     },
     "generated/electron/tokens.css": {
       "sha256": "6dfd6491ffb53752ff79f7386adf57319918154bbd400b3169c8048810918bd6",
-      "bytes": 3619,
+      "bytes": 3758,
       "consumers": {
         "EXE": "src/design/generated/tokens.css"
       }
     },
     "generated/flutter/tokens.g.dart": {
       "sha256": "d1fda45c29634a4ef12d8f2a0f42bdb174f971201cb2666ac4571302df9cd8f0",
-      "bytes": 20252,
+      "bytes": 20417,
       "consumers": {
         "APK": "flutter/lib/core/theme/tokens.g.dart"
       }
     },
-    "assets/brand/DraconDex_BlackIn.png": {
+    "assets\\brand\\DraconDex_BlackIn.png": {
       "sha256": "e04929e6a55983c60ff6bd176c16003dae4f11122191c9413122c161c0a2ad23",
       "bytes": 313188,
       "consumers": {
-        "EXE": "src/assets/brand/DraconDex_BlackIn.png"
+        "EXE": "assets\\brand\\DraconDex_BlackIn.png"
       }
     },
-    "assets/brand/DraconDex_BlackOut.png": {
+    "assets\\brand\\DraconDex_BlackOut.png": {
       "sha256": "18a8066cddd1b8e5c2a7133e0dc02a922e6c14ffa35d96ab41ff33065017186b",
       "bytes": 207680,
       "consumers": {
-        "EXE": "src/assets/brand/DraconDex_BlackOut.png"
+        "EXE": "assets\\brand\\DraconDex_BlackOut.png"
       }
     },
-    "assets/brand/DraconDex_Color.png": {
+    "assets\\brand\\DraconDex_Color.png": {
       "sha256": "cb9844e845917614e99f7f110f90684589754432b2b925858f68ae4402b995bd",
       "bytes": 550251,
       "consumers": {
-        "EXE": "src/assets/brand/DraconDex_Color.png"
+        "EXE": "assets\\brand\\DraconDex_Color.png"
       }
     },
-    "assets/brand/DraconDex_Icon.ico": {
+    "assets\\brand\\DraconDex_Icon.ico": {
       "sha256": "56d6efc2718a38b39209842adc14123db58230cc3b3c0f0a65bacd414611b428",
       "bytes": 54944,
       "consumers": {
-        "EXE": "src/assets/brand/DraconDex_Icon.ico"
+        "EXE": "assets\\brand\\DraconDex_Icon.ico"
       }
     },
-    "assets/brand/DraconDex_Shade.png": {
+    "assets\\brand\\DraconDex_Shade.png": {
       "sha256": "28f12c2aabf2a2e3762f46d52e782b737df90f076dd73fdbe4748991ebaf8077",
       "bytes": 525231,
       "consumers": {
-        "EXE": "src/assets/brand/DraconDex_Shade.png"
+        "EXE": "assets\\brand\\DraconDex_Shade.png"
       }
     },
-    "assets/brand/DraconDex_WhiteIn.png": {
+    "assets\\brand\\DraconDex_WhiteIn.png": {
       "sha256": "f24a09d575b0515c5c02314f869f52dae0ad25ca40fede3f7c7b5f83f7006190",
       "bytes": 314385,
       "consumers": {
-        "EXE": "src/assets/brand/DraconDex_WhiteIn.png"
+        "EXE": "assets\\brand\\DraconDex_WhiteIn.png"
       }
     },
-    "assets/brand/DraconDex_WhiteOut.png": {
+    "assets\\brand\\DraconDex_WhiteOut.png": {
       "sha256": "7677500149b9655d06460bc69ac31c46a1b7323fe9c85f1c8680247b1a107821",
       "bytes": 250116,
       "consumers": {
-        "EXE": "src/assets/brand/DraconDex_WhiteOut.png"
+        "EXE": "assets\\brand\\DraconDex_WhiteOut.png"
       }
     },
-    "assets/flutter/DraconDex-IconApp.png": {
+    "assets\\flutter\\DraconDex-IconApp.png": {
       "sha256": "5661d237bf79e5499f3ebd9ee76c2eb72ac29ea29ca32a8375f9231c84e4356d",
       "bytes": 1311950,
       "consumers": {
-        "APK": "flutter/assets/images/DraconDex-IconApp.png"
+        "APK": "assets\\flutter\\DraconDex-IconApp.png"
       }
     },
-    "assets/flutter/DraconDex-SymbolBlack.png": {
+    "assets\\flutter\\DraconDex-SymbolBlack.png": {
       "sha256": "56f31ff7cc5db96f9714f9043e1d06aaed0f51bee35a7667d94d358c6436a8ea",
       "bytes": 1404808,
       "consumers": {
-        "APK": "flutter/assets/images/DraconDex-SymbolBlack.png"
+        "APK": "assets\\flutter\\DraconDex-SymbolBlack.png"
       }
     },
-    "assets/flutter/DraconDex-SymbolColor.png": {
+    "assets\\flutter\\DraconDex-SymbolColor.png": {
       "sha256": "3778c06dccc6c35fa0ba51abbc5d1c7a0a142194245bf54bdc8fa49d1ae8f46b",
       "bytes": 1516792,
       "consumers": {
-        "APK": "flutter/assets/images/DraconDex-SymbolColor.png"
+        "APK": "assets\\flutter\\DraconDex-SymbolColor.png"
       }
     },
-    "assets/flutter/DraconDex-SymbolWhite.png": {
+    "assets\\flutter\\DraconDex-SymbolWhite.png": {
       "sha256": "e01f6f20cc8da69c4c8ede1a2ef69a7bf6fd9d4e3a106578e520759b120a862f",
       "bytes": 1395176,
       "consumers": {
-        "APK": "flutter/assets/images/DraconDex-SymbolWhite.png"
+        "APK": "assets\\flutter\\DraconDex-SymbolWhite.png"
       }
     },
-    "assets/fonts/NotoSans-Bold.ttf": {
+    "assets\\fonts\\NotoSans-Bold.ttf": {
       "sha256": "1df075a380fc7cb898acf64c1f7b3b4dd780de3caa860178bf929de35817a913",
       "bytes": 631484,
       "consumers": {
-        "APK": "flutter/assets/fonts/NotoSans-Bold.ttf"
+        "APK": "assets\\fonts\\NotoSans-Bold.ttf"
       }
     },
-    "assets/fonts/NotoSans-Regular.ttf": {
+    "assets\\fonts\\NotoSans-Regular.ttf": {
       "sha256": "478c558ea716033cd60c03438f628dfa75694dcf6b5f6d505a2f05fd2b4f3823",
       "bytes": 621572,
       "consumers": {
-        "APK": "flutter/assets/fonts/NotoSans-Regular.ttf"
+        "APK": "assets\\fonts\\NotoSans-Regular.ttf"
       }
     },
-    "assets/fonts/NotoSansThai-Bold.ttf": {
+    "assets\\fonts\\NotoSansThai-Bold.ttf": {
       "sha256": "2ac6c6e8a478e23b15f76e4894af1fa2210f8f350e4e6e54aad530bec03efbfb",
       "bytes": 37824,
       "consumers": {
-        "APK": "flutter/assets/fonts/NotoSansThai-Bold.ttf"
+        "APK": "assets\\fonts\\NotoSansThai-Bold.ttf"
       }
     },
-    "assets/fonts/NotoSansThai-Regular.ttf": {
+    "assets\\fonts\\NotoSansThai-Regular.ttf": {
       "sha256": "61cf814eec46b294d6ea4401ac295d0cecd5207bd2331dcc5a15e7301d30ee44",
       "bytes": 37780,
       "consumers": {
-        "APK": "flutter/assets/fonts/NotoSansThai-Regular.ttf"
+        "APK": "assets\\fonts\\NotoSansThai-Regular.ttf"
       }
     },
-    "assets/fonts/OFL-NotoSansThai.txt": {
+    "assets\\fonts\\OFL-NotoSansThai.txt": {
       "sha256": "dad6e6abc2bf3fc37cc698af7607c3f4d4235039695713b222e5a034fb5b9b1c",
-      "bytes": 4380,
+      "bytes": 4473,
       "consumers": {
-        "APK": "flutter/assets/fonts/OFL-NotoSansThai.txt"
+        "APK": "assets\\fonts\\OFL-NotoSansThai.txt"
       }
     },
-    "assets/fonts/OFL.txt": {
+    "assets\\fonts\\OFL.txt": {
       "sha256": "cee9892f9f0cc8fe882c9e9537ee6a89621d86ee7ceaf70b02e2b2b1c25c061a",
-      "bytes": 4396,
+      "bytes": 4489,
       "consumers": {
-        "APK": "flutter/assets/fonts/OFL.txt"
+        "APK": "assets\\fonts\\OFL.txt"
       }
     },
     "generated/templates/bundles.json": {
@@ -195,8 +195,8 @@
       }
     },
     "generated/templates/pages.json": {
-      "sha256": "a4a1d84c2d1314b01af84b1ef9d552c08d4465017864969e693db0d68ee47b9a",
-      "bytes": 95567,
+      "sha256": "a1b113e0f95635cd167f3ae8473c1b194a759cebc432505a8af8ca8fe0120aef",
+      "bytes": 113419,
       "consumers": {
         "EXE": "electron/templates/pages.json",
         "APK": "flutter/assets/templates/pages.json"
@@ -204,26 +204,26 @@
     },
     "fixtures/snapshot-v2.json": {
       "sha256": "468eee3ad95e58a56404b81d65d0eb7a0ff21292540ecb6ca534268103f0d9e2",
-      "bytes": 21224,
+      "bytes": 22296,
       "consumers": {
         "EXE": "electron/test/fixtures/snapshot-v2.json",
         "APK": "flutter/test/fixtures/snapshot-v2.json"
       }
     },
-    "templates/guide/en.json": {
+    "templates\\guide\\en.json": {
       "sha256": "5989449ffa2b21e4329da99cf75e5f0311d32cb529a08628b133ce4687518ad6",
-      "bytes": 6888,
+      "bytes": 6958,
       "consumers": {
-        "EXE": "electron/guide/en.json",
-        "APK": "flutter/assets/templates/guide/en.json"
+        "EXE": "templates\\guide\\en.json",
+        "APK": "templates\\guide\\en.json"
       }
     },
-    "templates/guide/th.json": {
+    "templates\\guide\\th.json": {
       "sha256": "899eb328b6056bf28112d7fe6b839afe22f6aff90a7966fb163c4553bfbd1a1f",
-      "bytes": 12205,
+      "bytes": 12275,
       "consumers": {
-        "EXE": "electron/guide/th.json",
-        "APK": "flutter/assets/templates/guide/th.json"
+        "EXE": "templates\\guide\\th.json",
+        "APK": "templates\\guide\\th.json"
       }
     }
   }

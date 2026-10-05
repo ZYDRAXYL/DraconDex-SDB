@@ -1,0 +1,219 @@
+{
+  "kind": "page",
+  "templates": [
+    {
+      "id": "page.blank",
+      "default": true,
+      "name": {
+        "t": "tplPgBlank"
+      },
+      "description": {
+        "t": "tplPgBlankD"
+      },
+      "page": []
+    },
+    {
+      "id": "page.article",
+      "name": {
+        "t": "tplPgArticle"
+      },
+      "description": {
+        "t": "tplPgArticleD"
+      },
+      "page": [
+        {
+          "type": "heading",
+          "config": {
+            "level": "1"
+          }
+        },
+        {
+          "type": "columns",
+          "config": {
+            "widths": [
+              8,
+              4
+            ],
+            "n": 2
+          },
+          "children": [
+            [
+              {
+                "type": "text"
+              },
+              {
+                "component": "core.seealso"
+              }
+            ],
+            [
+              {
+                "component": "core.infobox"
+              },
+              {
+                "component": "core.toc"
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "page.portal",
+      "name": {
+        "t": "tplPgPortal"
+      },
+      "description": {
+        "t": "tplPgPortalD"
+      },
+      "page": [
+        {
+          "component": "core.banner"
+        },
+        {
+          "component": "core.search"
+        },
+        {
+          "type": "columns",
+          "config": {
+            "widths": [
+              6,
+              6
+            ],
+            "n": 2
+          },
+          "children": [
+            [
+              {
+                "component": "core.linkcard"
+              }
+            ],
+            [
+              {
+                "component": "core.linkcard"
+              }
+            ]
+          ]
+        },
+        {
+          "component": "core.children"
+        }
+      ]
+    },
+    {
+      "id": "page.profile",
+      "name": {
+        "t": "tplPgProfile"
+      },
+      "description": {
+        "t": "tplPgProfileD"
+      },
+      "page": [
+        {
+          "type": "columns",
+          "config": {
+            "widths": [
+              4,
+              8
+            ],
+            "n": 2
+          },
+          "children": [
+            [
+              {
+                "component": "core.figure"
+              },
+              {
+                "component": "core.infobox"
+              }
+            ],
+            [
+              {
+                "type": "heading",
+                "config": {
+                  "level": "1"
+                }
+              },
+              {
+                "type": "text"
+              },
+              {
+                "component": "core.related"
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "page.landing",
+      "name": {
+        "t": "tplPgLanding"
+      },
+      "description": {
+        "t": "tplPgLandingD"
+      },
+      "page": [
+        {
+          "component": "core.banner"
+        },
+        {
+          "type": "columns",
+          "config": {
+            "widths": [
+              4,
+              4,
+              4
+            ],
+            "n": 3
+          },
+          "children": [
+            [
+              {
+                "component": "core.callout"
+              }
+            ],
+            [
+              {
+                "component": "core.callout"
+              }
+            ],
+            [
+              {
+                "component": "core.callout"
+              }
+            ]
+          ]
+        },
+        {
+          "component": "core.linkbar"
+        }
+      ]
+    },
+    {
+      "id": "page.index",
+      "name": {
+        "t": "tplPgIndex"
+      },
+      "description": {
+        "t": "tplPgIndexD"
+      },
+      "page": [
+        {
+          "type": "heading",
+          "config": {
+            "level": "1"
+          }
+        },
+        {
+          "component": "core.search"
+        },
+        {
+          "component": "core.datatable"
+        },
+        {
+          "component": "core.children"
+        }
+      ]
+    }
+  ]
+}
