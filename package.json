@@ -4,6 +4,7 @@
   "private": true,
   "description": "DraconDex central SQLite schema — the one source both the Electron and Flutter apps generate their vault DDL from",
   "license": "MIT",
+  "author": "LDKTC",
   "repository": {
     "type": "git",
     "url": "https://github.com/ZYDRAXYL/DraconDex-SDB.git"
