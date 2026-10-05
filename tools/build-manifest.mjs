@@ -32,7 +32,8 @@ function sha256(relPath) {
 
 function walk(dir, out = []) {
   for (const name of readdirSync(join(ROOT, dir))) {
-    const rel = join(dir, name);
+    // forward slashes on every OS: these are manifest keys and consumer paths
+    const rel = `${dir}/${name}`;
     if (statSync(join(ROOT, rel)).isDirectory()) walk(rel, out);
     else out.push(rel);
   }
