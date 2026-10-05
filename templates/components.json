@@ -57,6 +57,10 @@
     { "id": "core.references", "kind": "core", "since": "exe", "borrowable": false, "once": true },
     { "id": "core.tabs", "kind": "core", "since": "exe", "borrowable": false, "container": true },
     { "id": "core.toggle", "kind": "core", "since": "exe", "borrowable": false, "container": true },
+    { "id": "core.datatable", "kind": "core", "since": "exe", "borrowable": false },
+    { "id": "core.linktext", "kind": "core", "since": "exe", "borrowable": false },
+    { "id": "core.search", "kind": "core", "since": "exe", "borrowable": false },
+    { "id": "core.categories", "kind": "core", "since": "exe", "borrowable": false, "once": true },
 
     { "id": "core.banner", "kind": "core", "since": "exe", "borrowable": false },
     { "id": "core.gallery", "kind": "core", "since": "exe", "borrowable": false },

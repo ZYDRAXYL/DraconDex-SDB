@@ -742,9 +742,11 @@
       -- 'connector'; 'diviner' (§11.5) joins in the same release so this
       -- CHECK — which SQLite cannot ALTER — is rebuilt once, not twice.
       -- Existing vaults are rebuilt by EXE migrations.js migrateModuleKindV5.
+      -- 'page' (Procress 16 part 3a, APP docs/DATA-PAGE.md): a page of its own, no data —
+      -- rebuilt in by EXE migrations.js migrateModuleKindPage.
       kind TEXT NOT NULL CHECK(kind IN ('collector','manager','inspector','classifier',
         'locator','chronicler','wanderer','narrator','author','scribe','drafter',
-        'exhibitor','sketcher','designer','diviner')),
+        'exhibitor','sketcher','designer','diviner','page')),
       icon TEXT,
       icon_color INTEGER REFERENCES use_color(id),
       color INTEGER REFERENCES use_color(id),
