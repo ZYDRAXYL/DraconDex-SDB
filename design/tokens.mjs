@@ -138,11 +138,43 @@ const shadow = (tok, where) => {
 const group = (node, fn, where) => Object.fromEntries(Object.entries(node || {})
   .filter(([k]) => !k.startsWith('$')).map(([k, t]) => [k, fn(t, `${where}.${k}`)]));
 
+const integer = (tok, where) => {
+  const n = number(tok, where);
+  if (!Number.isInteger(n) || n < 0) errors.push(`${where}: a non-negative integer`);
+  return n;
+};
+const duration = (tok, where) => {
+  const v = tok?.$value;
+  if (tok?.$type !== 'duration' || typeof v?.value !== 'number' || v.unit !== 'ms') {
+    errors.push(`${where}: expected {"$type":"duration","$value":{"value":<n>,"unit":"ms"}}`);
+    return 0;
+  }
+  return v.value;
+};
+const cubicBezier = (tok, where) => {
+  const v = tok?.$value;
+  if (tok?.$type !== 'cubicBezier' || !Array.isArray(v) || v.length !== 4 || v.some((x) => typeof x !== 'number')
+    || v[0] < 0 || v[0] > 1 || v[2] < 0 || v[2] > 1) {
+    errors.push(`${where}: expected {"$type":"cubicBezier","$value":[x1,y1,x2,y2]} with x in 0..1`);
+    return [0, 0, 1, 1];
+  }
+  return v;
+};
+
 const space = group(src.space, dimension, 'space');
 const fontSize = group(src.fontSize, dimension, 'fontSize');
 const lineHeight = group(src.lineHeight, number, 'lineHeight');
 const radius = group(src.radius, dimension, 'radius');
 const shadows = group(src.shadow, shadow, 'shadow');
+// Procress 21-22: component sizes, the stacking scale (EXE only) and motion.
+const sizes = group(src.size, dimension, 'size');
+const zIndex = group(src.zIndex, integer, 'zIndex');
+const motion = Object.fromEntries(Object.entries(src.motion || {}).filter(([k]) => !k.startsWith('$'))
+  .map(([k, t]) => [k, t?.$type === 'cubicBezier' ? { bezier: cubicBezier(t, `motion.${k}`) } : { ms: duration(t, `motion.${k}`) }]));
+{
+  const z = Object.values(zIndex);
+  if (z.some((v, i) => i && v <= z[i - 1])) errors.push('zIndex: layers must be listed lowest first, each above the last');
+}
 
 // ── platform layers ────────────────────────────────────────────────────
 // A derived colour is computed per theme by the platform: `mix` blends a
@@ -181,7 +213,9 @@ for (const [name, node] of Object.entries(src.platform || {})) {
   for (const [k, g] of Object.entries(node)) {
     if (k.startsWith('$')) continue;
     const first = Object.values(g).find((t) => t && typeof t === 'object' && t.$type);
+    // "percent": a fraction 0..1 here, a percentage in CSS (glass-tint).
     sub[k] = first?.$type === 'shadow' ? { type: 'shadow', v: group(g, shadow, `platform.${name}.${k}`) }
+      : k === 'percent' ? { type: 'percent', v: group(g, (t, w) => { const n = number(t, w); if (n < 0 || n > 1) errors.push(`${w}: a fraction 0..1`); return n; }, `platform.${name}.${k}`) }
       : { type: 'dimension', v: group(g, dimension, `platform.${name}.${k}`) };
   }
   platforms[name] = { targets, selector: e.selector || {}, derived, overrides, sub };
@@ -191,7 +225,8 @@ for (const [name, node] of Object.entries(src.platform || {})) {
 // (that is its job) but must not reuse a palette or scale name for something
 // else, and its new names must not collide with each other.
 const SHARED = new Set([...Object.keys(radius)]);
-const TAKEN = new Set([...PALETTE, ...Object.keys(inks), ...Object.keys(space), ...Object.keys(fontSize), ...Object.keys(lineHeight), ...Object.keys(shadows)]);
+const TAKEN = new Set([...PALETTE, ...Object.keys(inks), ...Object.keys(space), ...Object.keys(fontSize), ...Object.keys(lineHeight), ...Object.keys(shadows),
+  ...Object.keys(sizes), ...Object.keys(zIndex), ...Object.keys(motion)]);
 for (const [name, pl] of Object.entries(platforms)) {
   const seen = new Set();
   const names = [...Object.keys(pl.derived), ...Object.entries(pl.sub).flatMap(([k, g]) => (k === 'radius' ? [] : Object.keys(g.v)))];
@@ -216,6 +251,32 @@ if (fluent?.derived['material-base']?.mix) for (const [name, { p }] of Object.en
   const aa = o.color['t3-aa'] || p['t3-aa'];
   if (aa && base && contrast(aa, base) < AA) {
     errors.push(`platform.fluent2 × ${name}: t3-aa ${aa} is ${contrast(aa, base).toFixed(2)}:1 on the Mica base ${base} — add a themeOverride`);
+  }
+}
+
+// Glass (Procress 23 part 1): text on a pane must read on the WORST backdrop.
+// A pane keeps glass-tint of --surface over the backdrop, so what text sits on
+// is mix(backdrop, surface, tint); the backdrop runs from glass-backdrop-from
+// to glass-backdrop-to. Where t1 or t3-aa falls under 4.5:1 at the base tint,
+// the theme gets the smallest tint (in 1 % steps) that clears both ends —
+// computed here every run, so a palette change re-derives it and nobody keeps
+// a list of overrides by hand. A theme that would need a solid pane is an error.
+const glassTint = {};
+const glass = platforms.glass;
+if (glass) {
+  const base = glass.sub.percent?.v['glass-tint'];
+  const ends = ['glass-backdrop-from', 'glass-backdrop-to'].map((k) => glass.derived[k]);
+  if (typeof base !== 'number' || ends.some((d) => !d)) errors.push('platform.glass: needs percent.glass-tint and derived glass-backdrop-from/-to');
+  else {
+    const solve = (d, p) => (d.mix ? mix(p[d.mix[0]], p[d.mix[1]], d.mix[2]) : d.ref ? p[d.ref] : null);
+    for (const [name, { p }] of Object.entries(themes)) {
+      const backs = ends.map((d) => solve(d, p));
+      const ok = (t) => backs.every((b) => ['t1', 't3-aa'].every((k) => contrast(p[k], mix(b, p.surface, t)) >= AA));
+      let t = Math.round(base * 100);
+      while (t < 100 && !ok(t / 100)) t++;
+      if (!ok(t / 100)) errors.push(`platform.glass × ${name}: text does not reach ${AA}:1 even on a solid pane`);
+      else if (t / 100 > base) glassTint[name] = t / 100;
+    }
   }
 }
 
@@ -248,7 +309,15 @@ ${decls([
   ...Object.entries(lineHeight).map(([k, v]) => [k, String(v)]),
   ...Object.entries(radius).map(([k, v]) => [k, `${v}px`]),
   ...Object.entries(shadows).map(([k, v]) => [k, cssShadow(v)]),
+  ...Object.entries(sizes).map(([k, v]) => [k, `${v}px`]),
+  ...Object.entries(zIndex).map(([k, v]) => [k, String(v)]),
+  ...Object.entries(motion).map(([k, v]) => [k, v.bezier ? `cubic-bezier(${v.bezier.join(',')})` : `${v.ms}ms`]),
 ])}
+}
+@media (prefers-reduced-motion: reduce){
+:root{
+${decls(Object.entries(motion).filter(([, v]) => !v.bezier).map(([k]) => [k, '0ms']))}
+}
 }
 `;
 for (const [name, { exe, pc }] of Object.entries(themes)) {
@@ -260,10 +329,17 @@ for (const [name, pl] of Object.entries(platforms)) {
   const sel = pl.selector.electron;
   const pairs = [];
   for (const [k, g] of Object.entries(pl.sub)) {
-    for (const [n, v] of Object.entries(g.v)) pairs.push([n, g.type === 'shadow' ? cssShadow(v) : `${v}px`]);
+    for (const [n, v] of Object.entries(g.v)) pairs.push([n, g.type === 'shadow' ? cssShadow(v) : g.type === 'percent' ? `${Math.round(v * 100)}%` : `${v}px`]);
   }
   for (const [n, d] of Object.entries(pl.derived)) pairs.push([n, cssDerived(d)]);
   css += `/* platform: ${name} */\n${sel}{\n${decls(pairs)}\n}\n`;
+  // The computed glass tints. A package theme runs as data-theme="custom" and
+  // is not listed — its package carries --glass-tint, or the base applies.
+  if (name === 'glass') {
+    for (const [theme, t] of Object.entries(glassTint)) {
+      if (themes[theme].exe === 'builtin') css += `${sel}[data-theme="${theme}"]{--glass-tint:${Math.round(t * 100)}%;}\n`;
+    }
+  }
   for (const [theme, o] of Object.entries(pl.overrides)) {
     // Same rule as the palettes above: a package theme runs as
     // data-theme="custom", so a rule naming it would never match.
@@ -286,6 +362,7 @@ const dartDerived = (d) => (d.mix ? `Color.lerp(p.${camel(d.mix[0])}, p.${camel(
 let dart = `// ${HEADER}
 // ignore_for_file: constant_identifier_names
 
+import 'package:flutter/animation.dart';
 import 'package:flutter/painting.dart';
 
 /// One theme's palette — the same names EXE uses as CSS custom properties
@@ -313,11 +390,16 @@ ${dartConsts('DdxSpace', 'Spacing, logical pixels.', Object.entries(space).map((
 ${dartConsts('DdxFontSize', 'Type sizes, logical pixels, before the font-scale setting.', Object.entries(fontSize).map(([k, v]) => [k, 'double', dartNum(v)]))}
 ${dartConsts('DdxLineHeight', 'Line-height multipliers.', Object.entries(lineHeight).map(([k, v]) => [k, 'double', dartNum(v)]))}
 ${dartConsts('DdxRadius', 'Corner radii, logical pixels.', Object.entries(radius).map(([k, v]) => [k, 'double', dartNum(v)]))}
-${dartConsts('DdxShadow', 'Elevation.', Object.entries(shadows).map(([k, v]) => [k, 'List<BoxShadow>', dartShadow(v)]))}`;
+${dartConsts('DdxShadow', 'Elevation.', Object.entries(shadows).map(([k, v]) => [k, 'List<BoxShadow>', dartShadow(v)]))}
+${dartConsts('DdxSize', 'Component sizes, logical pixels: list rows are rowCompact or rowComfy, nothing else.', Object.entries(sizes).map(([k, v]) => [k, 'double', dartNum(v)]))}
+${dartConsts('DdxMotion', 'Durations and easings. Honour MediaQuery.disableAnimations.', Object.entries(motion).map(([k, v]) => (v.bezier
+    ? [k, 'Cubic', `Cubic(${v.bezier.map(dartNum).join(', ')})`]
+    : [k, 'Duration', `Duration(milliseconds: ${v.ms})`])))}`;
 for (const [name, pl] of Object.entries(platforms)) {
   if (!pl.targets.includes('flutter')) continue;
   const cls = `Ddx${name[0].toUpperCase()}${name.slice(1)}`;
-  const nums = Object.entries(pl.sub).flatMap(([g, { type, v }]) => Object.entries(v).map(([k, x]) => [`${g}-${k}`, type === 'shadow' ? 'List<BoxShadow>' : 'double', type === 'shadow' ? dartShadow(x) : dartNum(x)]));
+  // A key that already carries the layer's name (glass-blur) needs no group prefix.
+  const nums = Object.entries(pl.sub).flatMap(([g, { type, v }]) => Object.entries(v).map(([k, x]) => [k.startsWith(`${name}-`) ? k : `${g}-${k}`, type === 'shadow' ? 'List<BoxShadow>' : 'double', type === 'shadow' ? dartShadow(x) : dartNum(x)]));
   dart += `
 /// Platform layer "${name}" — sizes, and the colours it derives from the
 /// active palette.
@@ -325,7 +407,14 @@ abstract final class ${cls} {
 ${nums.map(([k, t, v]) => `  static const ${t} ${camel(k)} = ${v};`).join('\n')}
 
 ${Object.entries(pl.derived).map(([k, d]) => `  static Color ${camel(k)}(DdxPalette p) => ${dartDerived(d)};`).join('\n')}
-}
+${name === 'glass' ? `
+  /// glass-tint per theme where the base is not enough for 4.5:1 text
+  /// (computed by tokens.mjs on the worst backdrop).
+  static const Map<String, double> glassTintByTheme = {
+${Object.entries(glassTint).map(([t, v]) => `    '${t}': ${dartNum(v)},`).join('\n')}
+  };
+  static double glassTintFor(String theme) => glassTintByTheme[theme] ?? glassTint;
+` : ''}}
 `;
 }
 
@@ -342,4 +431,4 @@ function writeOrCheck(rel, content) {
 }
 writeOrCheck('generated/electron/tokens.css', css);
 writeOrCheck('generated/flutter/tokens.g.dart', dart);
-console.log(`design tokens ${check ? 'in sync' : 'written'} (${Object.keys(themes).length} themes, ${Object.keys(platforms).length} platform layers)`);
+console.log(`design tokens ${check ? 'in sync' : 'written'} (${Object.keys(themes).length} themes, ${Object.keys(platforms).length} platform layers, glass tint raised for ${Object.keys(glassTint).length})`);

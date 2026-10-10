@@ -5,7 +5,7 @@
 | ผลลัพธ์ | ไปที่ | ใช้ยังไง |
 |---|---|---|
 | `generated/electron/tokens.css` | EXE `src/design/generated/tokens.css` | โหลด **ก่อน** `css/tokens.css` — ของที่แอปยังประกาศเองชนะเสมอ แล้วแอปค่อยลบของซ้ำทีละขั้น |
-| `generated/flutter/tokens.g.dart` | APK `flutter/lib/core/theme/tokens.g.dart` | `ddxPalettes` · `DdxSpace` · `DdxFontSize` · `DdxRadius` · `DdxShadow` · `DdxIos` |
+| `generated/flutter/tokens.g.dart` | APK `flutter/lib/core/theme/tokens.g.dart` | `ddxPalettes` · `DdxSpace` · `DdxFontSize` · `DdxRadius` · `DdxShadow` · `DdxSize` · `DdxMotion` · `DdxIos` · `DdxGlass` |
 
 ที่มา : APP `docs/REDESIGN.md` §C1 (D1 D2) · §C4 · §C5
 
@@ -32,6 +32,22 @@ npm run check        # ตรวจอย่างเดียว — CI
   `surface` `raised` และ `on-*` ≥ 4.5:1 บนสีของมัน · ไม่บังคับ (แพ็กเกจธีมที่ไม่มีก็ใช้ได้)
   แต่ถ้ามี `warn`/`info` ต้องมี `on-*` คู่กัน
 - **`space` `fontSize` `lineHeight` `radius` `shadow`** — ค่าเดียวกับ `css/tokens.css` ของ EXE
+- **`size`** (Procress 21–22) — `row-compact` 28 / `row-comfy` 40 (แถว list มี 2 ระดับนี้เท่านั้น) ·
+  `ctl-sm/md/lg` 24/32/40 · `icon-sm/md` 16/20 · `modal-sm/md/lg` 400/560/1100 · `focus-ring` 2
+- **`zIndex`** (Procress 22 C3, EXE เท่านั้น) — `z-base` 0 · `z-sticky` 10 · `z-dropdown` 100 ·
+  `z-popover` 900 · `z-modal` 1000 · `z-toast` 1100 · `z-tooltip` 1200 · `z-max` (splash/preview เท่านั้น)
+  — ค่าเรียงตามชั้นเดิมของ EXE (pb-pop 900 · confirm 1000 · toast 1100 · guide 1200) ย้ายแล้วลำดับไม่เปลี่ยน ·
+  generator ปฏิเสธถ้าไม่เรียงจากต่ำไปสูง
+- **`motion`** — `dur-fast/normal/slow` 120/200/320 ms · `ease-standard` `ease-emphasized` ·
+  CSS ตั้ง duration เป็น 0ms ใต้ `prefers-reduced-motion` เอง · Dart = `Duration` / `Cubic`
+- **`platform.glass`** (Procress 23, ทั้งสองแอป, selector `body[data-ui-style="glass"]`) —
+  `glass-blur` `glass-tint` `glass-stroke` `glass-shadow` = **ชื่อเดียวกับสัญญา PKG** (`PACKAGES.md`
+  กลุ่ม glass — ห้ามเปลี่ยนชื่อ) + `glass-backdrop-from/-to` (ปลายสองข้างของ gradient ใต้กระจก) ·
+  `glass-tint` เก็บเป็นสัดส่วน 0..1 · CSS ได้เป็น `%` ตามสัญญา PKG ·
+  **ตรวจ contrast กรณีแย่สุด** : ข้อความ `t1` และ `t3-aa` บนแผง = `mix(พื้นหลัง, surface, tint)` ทั้งสองปลาย
+  ต้อง ≥ 4.5:1 — ธีมที่ไม่ถึง generator **เพิ่ม tint ให้เอง** (ทีละ 1 %) แล้วออกเป็น
+  `[data-theme=…]{--glass-tint:…}` / `DdxGlass.glassTintFor(theme)` — ไม่มีรายการ override ที่ต้องดูแลมือ ·
+  ธีมที่ต้องทึบ 100 % ถึงจะอ่านได้ = error · ภาพพื้นหลังของผู้ใช้ตรวจล่วงหน้าไม่ได้ — แอปต้องมีแถบมืด/สว่างทับ
 - **`platform.fluent2`** (EXE เท่านั้น, selector `body[data-ui-style="fluent"]`) — radius 4/8 ·
   `elev-*` · สีที่คำนวณจากธีม (`material-*` `stroke-*`) · `themeOverrides` = ธีมที่ `t3-aa`
   ไม่ถึง 4.5:1 บนพื้น Mica ต้องมีค่าของตัวเอง

@@ -91,3 +91,46 @@ test('APK output carries every theme', () => {
   const dart = readFileSync(new URL('../generated/flutter/tokens.g.dart', import.meta.url), 'utf8');
   for (const name of Object.keys(SRC.color.theme)) assert.match(dart, new RegExp(`'${name}': DdxPalette\\(`));
 });
+
+// Procress 21-23 additions: sizes, the stacking scale, motion and the glass layer.
+test('a stacking scale out of order is refused', () => {
+  const r = validate((s) => { s.zIndex['z-toast'].$value = 5; });
+  assert.ok(!r.ok);
+  assert.match(r.err, /zIndex: layers must be listed lowest first/);
+});
+
+test('a duration that is not in ms is refused', () => {
+  const r = validate((s) => { s.motion['dur-fast'].$value.unit = 's'; });
+  assert.ok(!r.ok);
+  assert.match(r.err, /motion\.dur-fast: expected/);
+});
+
+test('glass-tint outside 0..1 is refused', () => {
+  const r = validate((s) => { s.platform.glass['percent']['glass-tint'].$value = 72; });
+  assert.ok(!r.ok);
+  assert.match(r.err, /glass-tint: a fraction 0\.\.1/);
+});
+
+test('a glass pane that no tint can make readable is refused', () => {
+  // t1 the colour of the surface: no tint gives it contrast
+  const r = validate((s) => { s.color.theme.midnight.t1 = structuredClone(s.color.theme.midnight.surface); });
+  assert.ok(!r.ok);
+});
+
+test('glass tints are computed, not hand-kept: a darker backdrop raises the tint', () => {
+  const css = (mutate) => {
+    const copy = structuredClone(SRC);
+    mutate?.(copy);
+    const file = join(dir, `g${Math.random().toString(36).slice(2)}.json`);
+    writeFileSync(file, JSON.stringify(copy));
+    const r = spawnSync(process.execPath, [SCRIPT, '--validate', `--src=${file}`], { encoding: 'utf8' });
+    return r.status;
+  };
+  // The committed source passes with the computed overrides…
+  assert.equal(css(), 0);
+  // …and a much lower base tint still passes: every theme just gets raised.
+  assert.equal(css((s) => { s.platform.glass.percent['glass-tint'].$value = 0.5; }), 0);
+  const out = readFileSync(new URL('../generated/electron/tokens.css', import.meta.url), 'utf8');
+  assert.match(out, /body\[data-ui-style="glass"\]\{[^}]*--glass-tint:72%/);
+  for (const m of out.matchAll(/data-theme="(\w+)"\]\{--glass-tint:(\d+)%;\}/g)) assert.ok(+m[2] > 72, m[1]);
+});

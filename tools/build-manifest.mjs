@@ -77,6 +77,8 @@ CONSUMERS['generated/templates/bundles.json'] = { EXE: 'electron/templates/bundl
 CONSUMERS['generated/templates/pages.json'] = { EXE: 'electron/templates/pages.json', APK: 'flutter/assets/templates/pages.json' };
 // The snapshot fixture both apps' tests import (fixtures/README.md).
 CONSUMERS['fixtures/snapshot-v2.json'] = { EXE: 'electron/test/fixtures/snapshot-v2.json', APK: 'flutter/test/fixtures/snapshot-v2.json' };
+// The stress vault every performance number is measured on (Procress 19).
+CONSUMERS['fixtures/stress-v2.json'] = { EXE: 'electron/test/fixtures/stress-v2.json', APK: 'flutter/test/fixtures/stress-v2.json' };
 for (const f of walk('templates/guide')) {
   CONSUMERS[f] = { EXE: f.replace(/^templates\//, 'electron/'), APK: f.replace(/^templates\//, 'flutter/assets/templates/') };
 }

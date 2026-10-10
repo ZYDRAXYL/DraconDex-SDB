@@ -28,6 +28,7 @@ schema/vault.sql          ~100 CREATE TABLE statements — the canonical source
 schema/version.json       vaultSchemaVersion — the number both apps fold into their init path
 supabase/setup/           the idempotent installer SQL for Cloud Sync
 assets/                   brand, font and app-icon masters both apps ship
+                          + small WebP copies of them (tools/brand-derive.py — re-run after replacing a master)
 generated/                the build output the apps vendor — never hand-edited
 generated/manifest.json   the contract: every artifact, its hash, and where it lands downstream
 sdb.json                  this repo's own release version

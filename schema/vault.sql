@@ -1316,3 +1316,106 @@
       relations TEXT NOT NULL DEFAULT '[]',
       deleted_at TEXT NOT NULL DEFAULT (datetime('now'))
     );
+
+-- @indexes ─────────────────────────────────────────────────────────────────
+-- Everything below this marker is an index, and the generator emits it
+-- SEPARATELY from the tables above (VAULT_INDEX_SQL for Electron,
+-- vaultIndexStatements for Flutter): each app runs it after its own
+-- migrations, on every open, because an index on a column a migration has
+-- not added yet would abort the table DDL — and a table an app rebuilds
+-- (SQLite cannot ALTER a column) loses its indexes, which the next open puts
+-- back. IF NOT EXISTS makes that free once done, so adding one here needs
+-- NO vaultSchemaVersion bump (schema/README.md §indexes).
+--
+-- Until Procress 19 (2026-10-10) this file had no index at all: EXE kept ~120
+-- in electron/src/db/schema/indexes.js and APK had one, so every hot query on
+-- a phone was a full table scan — slower with the size of the whole vault,
+-- not of the module on screen. test/indexes.test.mjs holds the hot queries of
+-- both apps to "no SCAN of a table that grows" with EXPLAIN QUERY PLAN.
+--
+-- Here: the tables v5 reads and writes. The legacy Director / Navigator /
+-- Hero / Writer tables keep their indexes in EXE, the only app that still
+-- reads them. Names are EXE's where an index moved, so a vault that already
+-- has it is not given a second copy. Not here on purpose:
+--   - use_color FKs: a 12-row lookup table whose rows are never deleted.
+--   - idx_entity_relation_v5 (UNIQUE, leading from_key): each app creates it
+--     after de-duplicating relations — UNIQUE over data that is not unique
+--     would fail, so it cannot be an unconditional statement here.
+--   - module.handle's partial UNIQUE index: same reason (EXE migrations.js).
+
+    -- Module tree. Children of a parent within a Nexus is THE query of both
+    -- apps' Nest; nexus_ref alone is covered by its prefix.
+    CREATE INDEX IF NOT EXISTS idx_module_nexus_parent      ON module(nexus_ref, parent_id);
+    CREATE INDEX IF NOT EXISTS idx_module_parent            ON module(parent_id);
+    CREATE INDEX IF NOT EXISTS idx_module_ui_module         ON module_ui(module_ref);
+    CREATE INDEX IF NOT EXISTS idx_module_hashtag_tag       ON module_hashtag(hashtag_id);
+    -- A page is (module_ref, item_key), stacked by block_order.
+    CREATE INDEX IF NOT EXISTS idx_page_block_page          ON page_block(module_ref, item_key, block_order);
+    CREATE INDEX IF NOT EXISTS idx_page_block_parent        ON page_block(parent_id);
+    -- MAX(seq) WHERE module_ref=? and the prune's ORDER BY seq DESC: one seek each.
+    CREATE INDEX IF NOT EXISTS idx_module_version_module    ON module_version(module_ref, seq);
+    -- The dedupe probe on import is exactly (nexus_ref, file_path).
+    CREATE INDEX IF NOT EXISTS idx_import_file_nexus        ON import_file(nexus_ref, file_path);
+    CREATE INDEX IF NOT EXISTS idx_import_file_module       ON import_file(module_ref);
+    CREATE INDEX IF NOT EXISTS idx_trash_nexus              ON trash(nexus_ref);
+    CREATE INDEX IF NOT EXISTS idx_trash_parent             ON trash(parent_ref);
+    CREATE INDEX IF NOT EXISTS idx_nexus_history_nexus      ON nexus_history(nexus_ref);
+
+    -- Classifier
+    CREATE INDEX IF NOT EXISTS idx_classifier_object_module    ON classifier_object(module_ref);
+    CREATE INDEX IF NOT EXISTS idx_classifier_template_module  ON classifier_template(module_ref);
+    CREATE INDEX IF NOT EXISTS idx_classifier_template_object  ON classifier_template(object_ref);
+    CREATE INDEX IF NOT EXISTS idx_classifier_attribute_object ON classifier_attribute(object_ref);
+    CREATE INDEX IF NOT EXISTS idx_classifier_attribute_tmpl   ON classifier_attribute(template_ref);
+    CREATE INDEX IF NOT EXISTS idx_classifier_level_object     ON classifier_level(object_ref, template_ref);
+    CREATE INDEX IF NOT EXISTS idx_classifier_level_template   ON classifier_level(template_ref);
+
+    -- Relations and links. to_key is the backlinks query ("what points here").
+    CREATE INDEX IF NOT EXISTS idx_entity_relation_nexus    ON entity_relation(nexus_ref);
+    CREATE INDEX IF NOT EXISTS idx_entity_relation_to       ON entity_relation(to_key);
+    CREATE INDEX IF NOT EXISTS idx_entity_relation_module   ON entity_relation(module_ref);
+    CREATE INDEX IF NOT EXISTS idx_wiki_link_src            ON wiki_link(src_key);
+    CREATE INDEX IF NOT EXISTS idx_wiki_link_target         ON wiki_link(target_key);
+    CREATE INDEX IF NOT EXISTS idx_wiki_link_nexus          ON wiki_link(nexus_ref);
+    CREATE INDEX IF NOT EXISTS idx_calendar_template_nexus  ON calendar_template(nexus_ref);
+
+    -- Each kind's rows, by their module. Not optional: with foreign_keys=ON and
+    -- ON DELETE CASCADE, an unindexed FK makes SQLite scan the whole child
+    -- table on every parent-row delete.
+    CREATE INDEX IF NOT EXISTS idx_timeline_module          ON timeline(module_ref);
+    CREATE INDEX IF NOT EXISTS idx_timeline_event_timeline  ON timeline_event(timeline_id);
+    CREATE INDEX IF NOT EXISTS idx_timeline_event_start     ON timeline_event(start_at);
+    CREATE INDEX IF NOT EXISTS idx_timeline_event_end       ON timeline_event(end_at);
+    CREATE INDEX IF NOT EXISTS idx_map_module               ON map(module_ref);
+    CREATE INDEX IF NOT EXISTS idx_map_area_map             ON map_area(map_id);
+    CREATE INDEX IF NOT EXISTS idx_map_point_area           ON map_point(area_id);
+    CREATE INDEX IF NOT EXISTS idx_map_event_module         ON map_event(module_ref);
+    CREATE INDEX IF NOT EXISTS idx_map_event_event          ON map_event(event_ref);
+    CREATE INDEX IF NOT EXISTS idx_map_event_area           ON map_event(area_ref);
+    CREATE INDEX IF NOT EXISTS idx_book_chapter_module      ON book_chapter(module_ref);
+    CREATE INDEX IF NOT EXISTS idx_chat_session_module      ON chat_session(module_ref);
+    CREATE INDEX IF NOT EXISTS idx_chat_message_session     ON chat_message(session_ref);
+    CREATE INDEX IF NOT EXISTS idx_story_dialogue_module    ON story_dialogue(module_ref);
+    CREATE INDEX IF NOT EXISTS idx_story_talk_dialogue      ON story_talk(dialogue_ref);
+    CREATE INDEX IF NOT EXISTS idx_story_edge_module        ON story_edge(module_ref);
+    CREATE INDEX IF NOT EXISTS idx_story_edge_to            ON story_edge(to_ref);
+    CREATE INDEX IF NOT EXISTS idx_story_choice_opt_talk    ON story_choice_option(talk_ref);
+    CREATE INDEX IF NOT EXISTS idx_story_choice_opt_jump    ON story_choice_option(jump_ref);
+    CREATE INDEX IF NOT EXISTS idx_design_node_module       ON design_node(module_ref);
+    CREATE INDEX IF NOT EXISTS idx_design_edge_module       ON design_edge(module_ref);
+    CREATE INDEX IF NOT EXISTS idx_design_edge_to           ON design_edge(to_ref);
+    CREATE INDEX IF NOT EXISTS idx_sketch_page_module       ON sketch_page(module_ref);
+    CREATE INDEX IF NOT EXISTS idx_sketch_stroke_page       ON sketch_stroke(page_ref);
+    CREATE INDEX IF NOT EXISTS idx_sketch_pin_page          ON sketch_pin(page_ref);
+    CREATE INDEX IF NOT EXISTS idx_diviner_table_module     ON diviner_table(module_ref);
+    CREATE INDEX IF NOT EXISTS idx_diviner_entry_table      ON diviner_entry(table_ref);
+    CREATE INDEX IF NOT EXISTS idx_diviner_roll_table       ON diviner_roll(table_ref);
+    CREATE INDEX IF NOT EXISTS idx_diviner_roll_entry       ON diviner_roll(entry_ref);
+    CREATE INDEX IF NOT EXISTS idx_exhibit_node_module      ON exhibit_node(module_ref);
+    CREATE INDEX IF NOT EXISTS idx_exhibit_node_parent      ON exhibit_node(parent_id);
+
+    -- Scribe notes (pre-module): still read by both apps' legacy-notes migration.
+    CREATE INDEX IF NOT EXISTS idx_note_nexus               ON note(nexus_ref);
+    CREATE INDEX IF NOT EXISTS idx_note_folder_ref          ON note(folder_ref);
+    CREATE INDEX IF NOT EXISTS idx_note_folder_nexus        ON note_folder(nexus_ref);
+    CREATE INDEX IF NOT EXISTS idx_note_folder_parent       ON note_folder(parent_ref);
