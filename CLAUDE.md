@@ -22,6 +22,7 @@ schema/README.md        the rules for changing a table — READ BEFORE EDITING v
 supabase/setup/         Cloud Sync installer SQL + its own codegen
 supabase/migrations/    server-side migration history
 assets/{brand,flutter,fonts}/   masters both apps ship
+assets/brand/web/, assets/flutter/*.webp   small WebP copies the apps actually display — `python3 tools/brand-derive.py`, never hand-made
 templates/              genre bundles + strings (18 locales) + the TH/EN guide — templates/README.md
 fixtures/               snapshot-v2.json, the snapshot both apps' tests import — fixtures/README.md
 generated/              GENERATED + COMMITTED — never hand-edit
