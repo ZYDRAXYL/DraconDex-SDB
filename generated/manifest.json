@@ -2,18 +2,18 @@
   "manifestVersion": 1,
   "sdb": {
     "repo": "ZYDRAXYL/DraconDex-SDB",
-    "version": "2.1.0"
+    "version": "2.1.1"
   },
   "sources": {
     "vaultSchemaVersion": 7,
     "supabaseSchemaVersion": 2,
-    "vaultSqlSha256": "86c90c56c0287eabb26dde43a5612ddaa77211904529b2e48a824f909e7fba32",
+    "vaultSqlSha256": "bb6163448bbee09479eefbd1989dc0be029818b8b9bc26febf94b4f9d3572fdf",
     "setupSqlSha256": "9bc12ba249cc05c2f29bd82e8ba840440704d09934ea5642ce7bb659112e372e"
   },
   "artifacts": {
     "generated/electron/vault-ddl.electron.js": {
-      "sha256": "0c4b4244de687094f260cb1729bc94b712eb3552777461c293463e1c245438f6",
-      "bytes": 60144,
+      "sha256": "2ba36445b6b93ffd9d61f09ccb6cc6a969cff78189345e6c7c99b1e4e9214756",
+      "bytes": 65090,
       "consumers": {
         "EXE": "src/schema/generated/vault-ddl.electron.js"
       }
@@ -26,8 +26,8 @@
       }
     },
     "generated/flutter/vault_schema.g.dart": {
-      "sha256": "e4f2e64bbddc6dc0f7fd4cc080a079a819577e74f757f6af3503041853790280",
-      "bytes": 47908,
+      "sha256": "eaceb6cabee7991707c524a72fe86b7eda2b3445df14ff73a7d6f1f41e3fef1e",
+      "bytes": 53226,
       "consumers": {
         "APK": "flutter/lib/core/database/vault_schema.g.dart"
       }
@@ -208,6 +208,14 @@
       "consumers": {
         "EXE": "electron/test/fixtures/snapshot-v2.json",
         "APK": "flutter/test/fixtures/snapshot-v2.json"
+      }
+    },
+    "fixtures/stress-v2.json": {
+      "sha256": "4e9d5190388af2d4c194cf29a6a3d28a9399af148d73cfa0d5c6d5624aa7d5d9",
+      "bytes": 652460,
+      "consumers": {
+        "EXE": "electron/test/fixtures/stress-v2.json",
+        "APK": "flutter/test/fixtures/stress-v2.json"
       }
     },
     "templates/guide/en.json": {
