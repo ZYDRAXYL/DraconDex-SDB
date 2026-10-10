@@ -1,6 +1,7 @@
 // GENERATED from DraconDex-SDB design/tokens.json by design/tokens.mjs — do not edit here.
 // ignore_for_file: constant_identifier_names
 
+import 'package:flutter/animation.dart';
 import 'package:flutter/painting.dart';
 
 /// One theme's palette — the same names EXE uses as CSS custom properties
@@ -144,6 +145,30 @@ abstract final class DdxShadow {
   static const List<BoxShadow> shadowModal = [BoxShadow(color: Color(0x8C000000), offset: Offset(0.0, 24.0), blurRadius: 64.0, spreadRadius: 0.0)];
 }
 
+/// Component sizes, logical pixels: list rows are rowCompact or rowComfy, nothing else.
+abstract final class DdxSize {
+  static const double rowCompact = 28.0;
+  static const double rowComfy = 40.0;
+  static const double ctlSm = 24.0;
+  static const double ctlMd = 32.0;
+  static const double ctlLg = 40.0;
+  static const double iconSm = 16.0;
+  static const double iconMd = 20.0;
+  static const double modalSm = 400.0;
+  static const double modalMd = 560.0;
+  static const double modalLg = 1100.0;
+  static const double focusRing = 2.0;
+}
+
+/// Durations and easings. Honour MediaQuery.disableAnimations.
+abstract final class DdxMotion {
+  static const Duration durFast = Duration(milliseconds: 120);
+  static const Duration durNormal = Duration(milliseconds: 200);
+  static const Duration durSlow = Duration(milliseconds: 320);
+  static const Cubic easeStandard = Cubic(0.2, 0.0, 0.0, 1.0);
+  static const Cubic easeEmphasized = Cubic(0.3, 0.0, 0.1, 1.0);
+}
+
 /// Platform layer "ios" — sizes, and the colours it derives from the
 /// active palette.
 abstract final class DdxIos {
@@ -162,4 +187,28 @@ abstract final class DdxIos {
   static Color bar(DdxPalette p) => p.bg.withValues(alpha: 0.78);
   static Color fill(DdxPalette p) => p.t1.withValues(alpha: 0.08);
   static Color tint(DdxPalette p) => p.accent;
+}
+
+/// Platform layer "glass" — sizes, and the colours it derives from the
+/// active palette.
+abstract final class DdxGlass {
+  static const double glassBlur = 24.0;
+  static const double glassTint = 0.72;
+  static const List<BoxShadow> glassShadow = [BoxShadow(color: Color(0x2E000000), offset: Offset(0.0, 8.0), blurRadius: 32.0, spreadRadius: 0.0), BoxShadow(color: Color(0x14000000), offset: Offset(0.0, 1.0), blurRadius: 2.0, spreadRadius: 0.0)];
+
+  static Color glassStroke(DdxPalette p) => p.t1.withValues(alpha: 0.14);
+  static Color glassBackdropFrom(DdxPalette p) => p.bg;
+  static Color glassBackdropTo(DdxPalette p) => Color.lerp(p.bg, p.accent, 0.35)!;
+
+  /// glass-tint per theme where the base is not enough for 4.5:1 text
+  /// (computed by tokens.mjs on the worst backdrop).
+  static const Map<String, double> glassTintByTheme = {
+    'daylight': 0.73,
+    'rainbow': 0.76,
+    'afterRain': 0.8,
+    'atSunset': 0.74,
+    'afterStorm': 0.73,
+    'clearMeteor': 0.83,
+  };
+  static double glassTintFor(String theme) => glassTintByTheme[theme] ?? glassTint;
 }

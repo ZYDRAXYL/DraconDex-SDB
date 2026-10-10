@@ -54,15 +54,15 @@
       }
     },
     "generated/electron/tokens.css": {
-      "sha256": "6dfd6491ffb53752ff79f7386adf57319918154bbd400b3169c8048810918bd6",
-      "bytes": 3619,
+      "sha256": "92c76f13d1e1692c8c579147baf733784bb05fa437d54f107f7a1ac7b38f3a59",
+      "bytes": 4683,
       "consumers": {
         "EXE": "src/design/generated/tokens.css"
       }
     },
     "generated/flutter/tokens.g.dart": {
-      "sha256": "d1fda45c29634a4ef12d8f2a0f42bdb174f971201cb2666ac4571302df9cd8f0",
-      "bytes": 20252,
+      "sha256": "238e54172776a5490da586aaf1c9d4ff1a7f4f8b8e01cfb01207e373f976a8d7",
+      "bytes": 22330,
       "consumers": {
         "APK": "flutter/lib/core/theme/tokens.g.dart"
       }
