@@ -65,6 +65,9 @@ npm run check        # ตรวจอย่างเดียว — CI
   (ตัวที่จับ daylight 4.09 ได้ตอนต้นแบบ — รอบนี้จับเพิ่มอีก 11 ธีม)
 - ชั้นแพลตฟอร์มตั้งชื่อใหม่ซ้ำกับชื่อที่แอปใช้อยู่แล้ว (ยกเว้น `r`/`rs`/`rl` ที่ fluent2 ตั้งใจเปลี่ยนค่า)
 - alias ที่ไม่ได้ชี้ `{color.ink.*}`
+- คู่สีของ chip/segmented (Procress 22, APP `docs/COMPONENTS.md`) ต่ำกว่า 4.5:1 : `t1` บน `hover` · `t1` บน `raised` ·
+  `on-accent` บน `accent` — เป็นคู่เดียวที่ผ่านครบ 32 ธีมตอนสำรวจ (2026-10-11) ; `t2`/`t3-aa` บน `hover` ตก 7/32 ธีม ·
+  `accent` เป็นข้อความบน `surface` ตก 17 · `success` ตก 12 → chip สถานะใช้ `t1` + จุดสี ไม่ใช่ข้อความสี
 
 เทสต์ : `test/design-tokens.test.mjs`
 

@@ -134,3 +134,9 @@ test('glass tints are computed, not hand-kept: a darker backdrop raises the tint
   assert.match(out, /body\[data-ui-style="glass"\]\{[^}]*--glass-tint:72%/);
   for (const m of out.matchAll(/data-theme="(\w+)"\]\{--glass-tint:(\d+)%;\}/g)) assert.ok(+m[2] > 72, m[1]);
 });
+
+test('a chip label (t1) below 4.5:1 on its hover fill is refused', () => {
+  const r = validate((s) => { s.color.theme.midnight.hover = hexColor('#b8b8c8'); }); // light fill under light ink
+  assert.ok(!r.ok);
+  assert.match(r.err, /midnight": t1 .* on hover #b8b8c8 — chip\/segmented need 4\.5/);
+});

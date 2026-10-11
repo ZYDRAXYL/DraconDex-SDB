@@ -47,6 +47,8 @@ const REQUIRED = ['bg', 'surface', 'raised', 'hover', 'border', 't1', 't2', 't3'
   'accent', 'accentH', 'danger', 'success'];
 const AA = 4.5;
 const TEXT_SURFACES = ['bg', 'surface', 'raised'];
+// [text, fill] — chip/segmented label on its background (Procress 22).
+const COMPONENT_PAIRS = [['t1', 'hover'], ['t1', 'raised'], ['on-accent', 'accent']];
 
 // Ink colours a palette may alias ({color.ink.ink-dark}) — on-accent and
 // on-button of a theme whose fill is too light for white text.
@@ -104,6 +106,15 @@ for (const [name, node] of Object.entries(src.color?.theme || {})) {
     const on = p[`on-${k}`];
     if (!on) errors.push(`theme "${name}": ${k} without on-${k}`);
     else if (contrast(on, p[k]) < AA) errors.push(`theme "${name}": on-${k} ${on} is ${contrast(on, p[k]).toFixed(2)}:1 on ${k} ${p[k]} — needs ${AA}`);
+  }
+  // Component pairs (APP docs/COMPONENTS.md): what a chip or a segmented
+  // control is allowed to put text on. Only pairs that hold in every palette
+  // are listed — t2/t3-aa on hover and accent/success/danger as text on a
+  // surface do not, which is why chips use t1 and a coloured dot instead.
+  for (const [fg, bg] of COMPONENT_PAIRS) {
+    if (p[fg] && p[bg] && contrast(p[fg], p[bg]) < AA) {
+      errors.push(`theme "${name}": ${fg} ${p[fg]} is ${contrast(p[fg], p[bg]).toFixed(2)}:1 on ${bg} ${p[bg]} — chip/segmented need ${AA}`);
+    }
   }
   themes[name] = { exe, p, pc };
 }
