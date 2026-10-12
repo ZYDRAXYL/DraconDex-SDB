@@ -68,6 +68,9 @@ npm run check        # ตรวจอย่างเดียว — CI
 - คู่สีของ chip/segmented (Procress 22, APP `docs/COMPONENTS.md`) ต่ำกว่า 4.5:1 : `t1` บน `hover` · `t1` บน `raised` ·
   `on-accent` บน `accent` — เป็นคู่เดียวที่ผ่านครบ 32 ธีมตอนสำรวจ (2026-10-11) ; `t2`/`t3-aa` บน `hover` ตก 7/32 ธีม ·
   `accent` เป็นข้อความบน `surface` ตก 17 · `success` ตก 12 → chip สถานะใช้ `t1` + จุดสี ไม่ใช่ข้อความสี
+  ธีมที่ไม่ตั้ง `on-accent` ถูกตรวจเป็น **ขาว** (ค่าที่ทั้งสองแอปใช้แทน) ไม่ใช่ข้ามไป — 10 ธีมที่ขาวไม่ถึง 4.5:1 บน `accent`
+  ตอนนี้ alias ไป `ink-dark` (atDaybreak · atSunrise · atNoon) หรือ `ink-black` ใหม่ `#000000` (midnight · redEclipse ·
+  atDusk · atTwilight · clearDusk · atMidnight · clearGalaxy — ทั้งขาวและ ink-dark ไม่ผ่าน)
 
 เทสต์ : `test/design-tokens.test.mjs`
 

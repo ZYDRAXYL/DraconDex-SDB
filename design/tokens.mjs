@@ -111,9 +111,12 @@ for (const [name, node] of Object.entries(src.color?.theme || {})) {
   // control is allowed to put text on. Only pairs that hold in every palette
   // are listed — t2/t3-aa on hover and accent/success/danger as text on a
   // surface do not, which is why chips use t1 and a coloured dot instead.
+  // A palette with no on-accent gets white from both apps (EXE css/tokens.css
+  // --on-accent:#fff), so white is what gets checked — not a skip.
   for (const [fg, bg] of COMPONENT_PAIRS) {
-    if (p[fg] && p[bg] && contrast(p[fg], p[bg]) < AA) {
-      errors.push(`theme "${name}": ${fg} ${p[fg]} is ${contrast(p[fg], p[bg]).toFixed(2)}:1 on ${bg} ${p[bg]} — chip/segmented need ${AA}`);
+    const f = p[fg] ?? (fg === 'on-accent' ? '#ffffff' : null);
+    if (f && p[bg] && contrast(f, p[bg]) < AA) {
+      errors.push(`theme "${name}": ${fg} ${f}${p[fg] ? '' : ' (unset = white)'} is ${contrast(f, p[bg]).toFixed(2)}:1 on ${bg} ${p[bg]} — chip/segmented need ${AA}`);
     }
   }
   themes[name] = { exe, p, pc };
