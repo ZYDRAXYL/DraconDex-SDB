@@ -47,13 +47,22 @@ const flutterOutPath = path.join(root, 'generated/flutter/vault_schema.g.dart');
 // line-ending noise. See docs/CHANGELOG.md for the day this bit us.
 const normalizeEol = (s) => s.replace(/\r\n/g, '\n');
 
-const vaultSql = normalizeEol(fs.readFileSync(vaultSqlPath, 'utf8'));
+const vaultSqlFull = normalizeEol(fs.readFileSync(vaultSqlPath, 'utf8'));
+
+// vault.sql is two parts: the tables, then — after the `-- @indexes` marker —
+// the indexes (see the comment at the marker for why they are emitted apart).
+// The table part is what VAULT_DDL_SQL has always been, byte for byte, so
+// EXE's schemaStamp() over it does not move just because indexes arrived.
+const INDEX_MARKER = '\n-- @indexes';
+const markerAt = vaultSqlFull.indexOf(INDEX_MARKER);
+const vaultSql = markerAt < 0 ? vaultSqlFull : vaultSqlFull.slice(0, markerAt).replace(/\s+$/, '') + '\n';
+const indexSql = markerAt < 0 ? '' : vaultSqlFull.slice(markerAt + 1);
 const { vaultSchemaVersion } = JSON.parse(fs.readFileSync(versionPath, 'utf8'));
 
 // The Electron artifact wraps vault.sql in ONE JS template literal, so a
 // backtick anywhere in it — even inside an SQL comment — ends the literal
 // and breaks EXE's schema-split test only after vendoring. Refuse it here.
-if (vaultSql.includes('`')) {
+if (vaultSqlFull.includes('`')) {
   console.error('generate.mjs: vault.sql contains a backtick; it would end the Electron template literal');
   process.exit(1);
 }
@@ -86,7 +95,32 @@ function extractDefaultColorCodes(sql) {
   return [...m[0].matchAll(/#[0-9a-f]{6}/g)].map((x) => x[0]);
 }
 
+// One `CREATE [UNIQUE] INDEX IF NOT EXISTS …;` per entry, comments dropped.
+function extractIndexStatements(sql) {
+  const out = [];
+  const body = sql.replace(/--[^\n]*/g, '');
+  for (const m of body.matchAll(/CREATE (?:UNIQUE )?INDEX IF NOT EXISTS (\w+)\s+ON\s+(\w+)\s*\(([^)]*)\)\s*;/g)) {
+    out.push({ name: m[1], table: m[2], sql: `CREATE ${m[0].includes('UNIQUE') ? 'UNIQUE ' : ''}INDEX IF NOT EXISTS ${m[1]} ON ${m[2]}(${m[3].replace(/\s+/g, ' ').trim()});` });
+  }
+  return out;
+}
+
 const tables = extractCreateTableStatements(vaultSql);
+const indexes = extractIndexStatements(indexSql);
+// Everything after the marker must be an index we understood — a statement the
+// regex skipped would silently never reach Flutter.
+const leftover = indexSql.replace(/--[^\n]*/g, '').replace(/CREATE (?:UNIQUE )?INDEX IF NOT EXISTS \w+\s+ON\s+\w+\s*\([^)]*\)\s*;/g, '').trim();
+if (leftover) {
+  console.error(`generate.mjs: the @indexes section of vault.sql holds something that is not an index:\n${leftover.slice(0, 200)}`);
+  process.exit(1);
+}
+const tableNames = new Set(tables.map((t) => t.name));
+for (const ix of indexes) {
+  if (!tableNames.has(ix.table)) {
+    console.error(`generate.mjs: ${ix.name} indexes ${ix.table}, which vault.sql does not create`);
+    process.exit(1);
+  }
+}
 const colors = extractDefaultColorCodes(vaultSql);
 
 const GENERATED_BANNER =
@@ -98,7 +132,11 @@ const VAULT_SCHEMA_VERSION = ${vaultSchemaVersion};
 const VAULT_DDL_SQL = \`
 ${vaultSql.replace(/`/g, '\\`').replace(/\$\{/g, '\\${')}
 \`;
-module.exports = { VAULT_SCHEMA_VERSION, VAULT_DDL_SQL };
+// Run AFTER the app's own migrations, on every open (vault.sql, @indexes).
+const VAULT_INDEX_SQL = \`
+${indexes.map((i) => i.sql).join('\n')}
+\`;
+module.exports = { VAULT_SCHEMA_VERSION, VAULT_DDL_SQL, VAULT_INDEX_SQL };
 `;
 
 const dartColorList = colors.map((c) => `  '${c}',`).join('\n');
@@ -115,6 +153,12 @@ ${dartColorList}
 
 const List<String> vaultCreateStatements = [
 ${dartTableList}
+];
+
+/// Run after VaultUpgrade on every open — vault.sql's @indexes section.
+/// IF NOT EXISTS, so a vault that has them pays one lookup each.
+const List<String> vaultIndexStatements = [
+${indexes.map((i) => `  '${i.sql}',`).join('\n')}
 ];
 `;
 
@@ -141,7 +185,7 @@ if (check) {
     console.error('\nschema generated files out of sync — run: node src/schema/generate.mjs');
     process.exit(1);
   }
-  console.log(`schema generated files in sync (${tables.length} tables, vaultSchemaVersion ${vaultSchemaVersion})`);
+  console.log(`schema generated files in sync (${tables.length} tables, ${indexes.length} indexes, vaultSchemaVersion ${vaultSchemaVersion})`);
 } else {
-  console.log(`${tables.length} tables, vaultSchemaVersion ${vaultSchemaVersion}`);
+  console.log(`${tables.length} tables, ${indexes.length} indexes, vaultSchemaVersion ${vaultSchemaVersion}`);
 }

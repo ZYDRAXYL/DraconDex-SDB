@@ -100,6 +100,26 @@ Nexus ชื่อซ้ำในไฟล์เดียวไม่มีท�
    `CREATE INDEX IF NOT EXISTS` บนตารางที่ไม่มีแล้วยัง throw — bump
    `vaultSchemaVersion` และ `sdbVersion` เป็นเลข X (breaking)
 
+7. **index** (Procress 19, 2026-10-10) : อยู่ท้าย `vault.sql` หลังบรรทัด
+   `-- @indexes` เท่านั้น — generator แยกออกเป็น `VAULT_INDEX_SQL` (Electron)
+   และ `vaultIndexStatements` (Flutter) **ไม่รวม**ใน `VAULT_DDL_SQL` เพราะ
+   ทั้งสองแอปรัน index **หลัง** migration ของตัวเองทุกครั้งที่เปิด : index บน
+   คอลัมน์ที่ migration ยังไม่ได้เพิ่มจะทำให้ DDL ตารางล้มทั้งก้อน และตารางที่
+   แอป rebuild (เพราะ ALTER คอลัมน์ไม่ได้) index หายไปด้วย — เปิดครั้งถัดไป
+   ก็ใส่กลับเอง
+   - เพิ่ม index **ไม่ต้อง bump `vaultSchemaVersion`** (`IF NOT EXISTS` ทุกตัว
+     — มีแล้วก็แค่ lookup) · bump `sdbVersion` เลข Z
+   - ใส่เฉพาะตารางที่ v5 ใช้ · ตาราง legacy (Director / Navigator / Hero /
+     Writer) เก็บ index ไว้ใน EXE `indexes.js` ที่เดียวที่ยังอ่านมัน
+   - ชื่อ index ที่ย้ายมาจาก EXE ใช้ชื่อเดิม — vault เก่าที่มีอยู่แล้วจะไม่ได้
+     index ซ้ำสองตัว
+   - **ห้าม UNIQUE ที่ข้อมูลเก่าอาจละเมิด** (เช่น `idx_entity_relation_v5`,
+     handle ของ module) — แต่ละแอปสร้างเองหลัง dedupe
+   - `test/indexes.test.mjs` (อยู่ใน `npm run check`) : query หลักของทั้งสองแอป
+     ต้องไม่มี `SCAN` ตารางที่โตได้ใน `EXPLAIN QUERY PLAN` + FK ทุกตัวของตาราง
+     v5 ต้องมี index นำหน้า (ไม่งั้น `ON DELETE CASCADE` scan ทั้งตารางลูก) —
+     แอปเปลี่ยนรูป query ที่ร้อน ให้แก้ query ในเทสต์นี้ตาม
+
 ## Electron ฝั่ง APP_DDL_SQL — ยังเหมือนเดิมทุกอย่าง
 
 `electron/src/db/schema/ddl.js` (DraconDex-EXE) ของ `APP_DDL_SQL`, `electron/src/db/schema/
