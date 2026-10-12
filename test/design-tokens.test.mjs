@@ -142,7 +142,7 @@ test('a chip label (t1) below 4.5:1 on its hover fill is refused', () => {
 });
 
 test('a palette with no on-accent is checked as white, not skipped', () => {
-  const r = validate((s) => { delete s.color.theme.midnight['on-accent']; }); // white on #6366f1 = 4.47:1
+  const r = validate((s) => { delete s.color.theme.redEclipse['on-accent']; }); // white on #b8703c = 3.87:1
   assert.ok(!r.ok);
-  assert.match(r.err, /midnight": on-accent #ffffff \(unset = white\) is 4\.47:1 on accent/);
+  assert.match(r.err, /redEclipse": on-accent #ffffff \(unset = white\) is 3\.87:1 on accent/);
 });
