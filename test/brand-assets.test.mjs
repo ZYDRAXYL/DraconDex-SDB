@@ -13,7 +13,15 @@ const root = new URL('..', import.meta.url);
 const SETS = [
   ['assets/brand', 'assets/brand/web', 256, /\.png$/],
   ['assets/flutter', 'assets/flutter', 128, /^DraconDex-Symbol.*\.png$/],
+  ['assets/brand', 'assets/flutter', 128, /^DraconDex_Color\.png$/],
 ];
+
+// Procress 26: the exe icon carries every size Windows asks for, not 256 alone.
+test('assets/brand/DraconDex_Icon.ico carries 16-256 px', () => {
+  const buf = readFileSync(new URL('assets/brand/DraconDex_Icon.ico', root));
+  const sizes = Array.from({ length: buf.readUInt16LE(4) }, (_, i) => buf[6 + i * 16] || 256);
+  for (const n of [16, 24, 32, 48, 256]) assert.ok(sizes.includes(n), `missing ${n} px (has ${sizes})`);
+});
 
 function webpSize(buf) {
   assert.equal(buf.subarray(0, 4).toString(), 'RIFF');

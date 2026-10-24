@@ -2,7 +2,7 @@
   "manifestVersion": 1,
   "sdb": {
     "repo": "ZYDRAXYL/DraconDex-SDB",
-    "version": "2.1.1"
+    "version": "2.1.2"
   },
   "sources": {
     "vaultSchemaVersion": 7,
@@ -89,8 +89,8 @@
       }
     },
     "assets/brand/DraconDex_Icon.ico": {
-      "sha256": "56d6efc2718a38b39209842adc14123db58230cc3b3c0f0a65bacd414611b428",
-      "bytes": 54944,
+      "sha256": "eae502fd84e5389c620f58db12313e91af332f70ae387fd06bce18ac40a3a5f3",
+      "bytes": 104829,
       "consumers": {
         "EXE": "src/assets/brand/DraconDex_Icon.ico"
       }
@@ -205,6 +205,13 @@
       "bytes": 3662,
       "consumers": {
         "APK": "flutter/assets/images/DraconDex-SymbolWhite.webp"
+      }
+    },
+    "assets/flutter/DraconDex_Color.webp": {
+      "sha256": "26489dc09de668deaf0ffc4278a525dac7969a4f4e835606738e32acbd53ca5b",
+      "bytes": 13386,
+      "consumers": {
+        "APK": "flutter/assets/images/DraconDex_Color.webp"
       }
     },
     "assets/fonts/NotoSans-Bold.ttf": {
