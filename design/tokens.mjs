@@ -42,7 +42,7 @@ const mix = (a, b, t) => toHex(rgb(a).map((v, i) => v + (rgb(b)[i] - v) * t));
 // and every user's custom theme are keyed by them, so this list only grows.
 const PALETTE = ['bg', 'surface', 'raised', 'hover', 'border', 't1', 't2', 't3', 't3-aa',
   'accent', 'accentH', 'danger', 'success', 'button', 'on-accent', 'on-button',
-  'warn', 'info', 'on-warn', 'on-info'];
+  'warn', 'info', 'on-warn', 'on-info', 'link'];
 const REQUIRED = ['bg', 'surface', 'raised', 'hover', 'border', 't1', 't2', 't3', 't3-aa',
   'accent', 'accentH', 'danger', 'success'];
 const AA = 4.5;
@@ -106,6 +106,12 @@ for (const [name, node] of Object.entries(src.color?.theme || {})) {
     const on = p[`on-${k}`];
     if (!on) errors.push(`theme "${name}": ${k} without on-${k}`);
     else if (contrast(on, p[k]) < AA) errors.push(`theme "${name}": on-${k} ${on} is ${contrast(on, p[k]).toFixed(2)}:1 on ${k} ${p[k]} — needs ${AA}`);
+  }
+  // link (Procress 31 part 5): the [[wikilink]] colour — one blue on every
+  // theme, so it is text on every surface. Optional: a package theme without
+  // one falls back to the accent (EXE css var(--link, var(--accent-text))).
+  if (p.link) for (const s of TEXT_SURFACES) {
+    if (p[s] && contrast(p.link, p[s]) < AA) errors.push(`theme "${name}": link ${p.link} is ${contrast(p.link, p[s]).toFixed(2)}:1 on ${s} ${p[s]} — needs ${AA}`);
   }
   // Component pairs (APP docs/COMPONENTS.md): what a chip or a segmented
   // control is allowed to put text on. Only pairs that hold in every palette
