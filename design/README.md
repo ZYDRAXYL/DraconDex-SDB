@@ -31,6 +31,9 @@ npm run check        # ตรวจอย่างเดียว — CI
   ธีมสว่าง `#92400e`/`#075985` · generator ตรวจว่าเป็นข้อความได้ ≥ 4.5:1 บน `bg`
   `surface` `raised` และ `on-*` ≥ 4.5:1 บนสีของมัน · ไม่บังคับ (แพ็กเกจธีมที่ไม่มีก็ใช้ได้)
   แต่ถ้ามี `warn`/`info` ต้องมี `on-*` คู่กัน
+- **`link`** (Procress 31 part 5) — สีของ `[[wikilink]]` : **ฟ้าเดียวกันทุกธีม** — ธีมมืด `#60a5fa`
+  ธีมสว่าง `#1d4ed8` · generator ตรวจว่าเป็นข้อความได้ ≥ 4.5:1 บน `bg` `surface` `raised` ·
+  ไม่บังคับ — แพ็กเกจธีมที่ไม่มี EXE ใช้ `var(--link, var(--accent-text))` (สี accent แบบเดิม)
 - **`space` `fontSize` `lineHeight` `radius` `shadow`** — ค่าเดียวกับ `css/tokens.css` ของ EXE
 - **`size`** (Procress 21–22) — `row-compact` 28 / `row-comfy` 40 (แถว list มี 2 ระดับนี้เท่านั้น) ·
   `ctl-sm/md/lg` 24/32/40 · `icon-sm/md` 16/20 · `modal-sm/md/lg` 400/560/1100 · `focus-ring` 2
