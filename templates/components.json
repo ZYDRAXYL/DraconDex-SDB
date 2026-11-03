@@ -4,6 +4,7 @@
     { "id": "core.properties", "kind": "core", "since": "exe", "borrowable": false, "once": true },
     { "id": "core.related", "kind": "core", "since": "exe", "borrowable": false, "once": true },
     { "id": "item.body", "kind": "item", "since": "exe", "borrowable": false, "once": true },
+    { "id": "item.fields", "kind": "item", "since": "exe", "borrowable": false, "once": true },
 
     { "id": "manager.view", "kind": "manager", "since": "exe", "borrowable": true, "presets": ["cards", "list", "table", "graph"] },
     { "id": "inspector.view", "kind": "inspector", "since": "exe", "borrowable": true, "once": true },
