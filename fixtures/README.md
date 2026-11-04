@@ -31,3 +31,23 @@ to:
 - APK: `flutter/test/fixtures/stress-v2.json`, read by `test/perf_data_test.dart`
 
 Regenerate it only when the snapshot format changes.
+
+## portlink-merge-v1.json — the Port Link 3-way merge cases
+
+Procress 32 9.0 (APP `docs/VAULTS.md` §11.6). Twelve cases — the owner's own
+example (A renamed to B on the drive while this machine made C → B and C), a
+conflict asked and a conflict answered, edit vs delete, new rows colliding on
+id, every `idRefs` shape following a renumbered row, a tag both sides made,
+join-table removals, a deleted parent coming back. Each case is SQL only, so
+both engines run it as written: `seed` (+ `seedExtra`) on three vaults built
+from the vault DDL, `local` on one, `drive` on another, then the merge;
+`expect` is checked with queries that never assume an id made after the seed.
+
+Written by hand (it is a statement of the rules, not an export), checked here
+by `test/portlink-fixture.test.mjs` (the SQL runs; an expected conflict is one
+the edits really make), and run through the real engines by:
+- EXE: `electron/test/portlink-fixture.test.mjs` → `src/db/portlink-merge.js mergeInto`
+- APK: `flutter/test/portlink_fixture_test.dart` → `portlink_merge.dart` (Plan part 9.4)
+
+A change to a merge rule is a change here first; a case both engines fail on
+the same way is the rule, a case only one fails is that engine's bug.
