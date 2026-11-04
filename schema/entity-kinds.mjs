@@ -62,6 +62,33 @@ for (const k of src.keyColumns) {
   for (const c of k.cols) if (!cols.has(c)) errors.push(`keyColumns: no column ${k.table}.${c}`);
   if (k.only) try { new RegExp(k.only); } catch (e) { errors.push(`keyColumns: bad regex ${k.only}`); }
 }
+// idRefs — every id stored without an FK or an entity key (Procress 32 9.0).
+const SHAPES = new Set(['id', 'prefixedKey', 'jsonIdList', 'jsonObjectIdLists']);
+for (const r of src.idRefs || []) {
+  const cols = columnsOf(r.table);
+  if (!cols) { errors.push(`idRefs: no table ${r.table}`); continue; }
+  if (!cols.has(r.col)) errors.push(`idRefs: no column ${r.table}.${r.col}`);
+  if (!SHAPES.has(r.shape)) errors.push(`idRefs: ${r.table}.${r.col} has unknown shape ${r.shape}`);
+  if (r.shape === 'prefixedKey' ? !r.prefix : !columnsOf(r.to)) errors.push(`idRefs: ${r.table}.${r.col} needs ${r.shape === 'prefixedKey' ? 'a prefix' : `a table in to (${r.to})`}`);
+  if (r.shape === 'jsonObjectIdLists' && !(Array.isArray(r.keys) && r.keys.length)) errors.push(`idRefs: ${r.table}.${r.col} needs keys`);
+  if (r.when && (!cols.has(r.when.col) || !Array.isArray(r.when.in))) errors.push(`idRefs: ${r.table}.${r.col} has a bad when`);
+  if (!r.why) errors.push(`idRefs: ${r.table}.${r.col} needs a why`);
+}
+// Completeness: an INTEGER *_ref / *_id column with no REFERENCES is a row id
+// nothing remaps unless it is declared here. Found by reading vault.sql, so a
+// column added there later without an FK fails this check, not a merge.
+for (const m of vaultSql.matchAll(/CREATE TABLE IF NOT EXISTS (\w+) \(/g)) {
+  const t = m[1];
+  const start = m.index + m[0].length;
+  let depth = 1, i = start;
+  for (; i < vaultSql.length && depth; i++) { if (vaultSql[i] === '(') depth++; else if (vaultSql[i] === ')') depth--; }
+  for (const line of vaultSql.slice(start, i).split('\n')) {
+    const l = line.split('--')[0].trim();
+    const c = /^([a-z_]+)\s+INTEGER\b(.*)$/.exec(l);
+    if (!c || c[1] === 'id' || !/_(ref|id)$/.test(c[1]) || /REFERENCES/.test(c[2])) continue;
+    if (!(src.idRefs || []).some((r) => r.table === t && r.col === c[1])) errors.push(`idRefs: ${t}.${c[1]} stores an id with no FK — declare it in idRefs`);
+  }
+}
 if (errors.length) {
   console.error(`entity-kinds.json is invalid:\n  ${errors.join('\n  ')}`);
   process.exit(1);
@@ -86,6 +113,8 @@ const famDart = src.families.map((f) => `  EntityFamily(
     search: ${dlist(f.search)},
   ),`).join('\n');
 const kcDart = src.keyColumns.map((k) => `  KeyColumn(table: '${k.table}', cols: ${dlist(k.cols)}, json: ${!!k.json}, only: ${k.only ? `r'${k.only}'` : 'null'}),`).join('\n');
+const dWhen = (w) => (w ? `IdRefWhen(col: '${w.col}', values: ${dlist(w.in)})` : 'null');
+const irDart = (src.idRefs || []).map((r) => `  IdRef(table: '${r.table}', col: '${r.col}', shape: '${r.shape}', to: ${r.to ? `'${r.to}'` : 'null'}, prefix: ${r.prefix ? `'${r.prefix}'` : 'null'}, keys: ${dlist(r.keys ?? null)}, when: ${dWhen(r.when)}),`).join('\n');
 const flutterOut = `// ${BANNER}
 // ignore_for_file: lines_longer_than_80_chars
 
@@ -149,6 +178,33 @@ ${famDart}
 const List<KeyColumn> keyColumns = [
 ${kcDart}
 ];
+
+/// Only rows whose [col] is one of [values].
+class IdRefWhen {
+  final String col;
+  final List<String> values;
+  const IdRefWhen({required this.col, required this.values});
+}
+
+/// A row id stored without a foreign key or an entity key — what an importer
+/// or a merge must remap when it renumbers rows. [shape]: \`id\` (the column
+/// is the id) · \`prefixedKey\` ([prefix] + an entity key) · \`jsonIdList\` ·
+/// \`jsonObjectIdLists\` (a JSON object whose [keys] are id lists). [to]: the
+/// table the ids belong to.
+class IdRef {
+  final String table;
+  final String col;
+  final String shape;
+  final String? to;
+  final String? prefix;
+  final List<String>? keys;
+  final IdRefWhen? when;
+  const IdRef({required this.table, required this.col, required this.shape, required this.to, required this.prefix, required this.keys, required this.when});
+}
+
+const List<IdRef> idRefs = [
+${irDart}
+];
 `;
 
 function writeOrCheck(rel, content) {
@@ -163,4 +219,4 @@ function writeOrCheck(rel, content) {
 }
 writeOrCheck('generated/electron/entity-kinds.json', electronOut);
 writeOrCheck('generated/flutter/entity_kinds.g.dart', flutterOut);
-console.log(`entity kinds ${check ? 'in sync' : 'written'} (${src.families.length} families, ${src.keyColumns.length} key columns)`);
+console.log(`entity kinds ${check ? 'in sync' : 'written'} (${src.families.length} families, ${src.keyColumns.length} key columns, ${(src.idRefs || []).length} id refs)`);

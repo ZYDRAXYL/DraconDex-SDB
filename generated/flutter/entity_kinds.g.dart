@@ -227,3 +227,34 @@ const List<KeyColumn> keyColumns = [
   KeyColumn(table: 'page_block', cols: ['item_key'], json: false, only: r'^[a-z]+_\d+$'),
   KeyColumn(table: 'page_block', cols: ['source_key'], json: false, only: null),
 ];
+
+/// Only rows whose [col] is one of [values].
+class IdRefWhen {
+  final String col;
+  final List<String> values;
+  const IdRefWhen({required this.col, required this.values});
+}
+
+/// A row id stored without a foreign key or an entity key — what an importer
+/// or a merge must remap when it renumbers rows. [shape]: `id` (the column
+/// is the id) · `prefixedKey` ([prefix] + an entity key) · `jsonIdList` ·
+/// `jsonObjectIdLists` (a JSON object whose [keys] are id lists). [to]: the
+/// table the ids belong to.
+class IdRef {
+  final String table;
+  final String col;
+  final String shape;
+  final String? to;
+  final String? prefix;
+  final List<String>? keys;
+  final IdRefWhen? when;
+  const IdRef({required this.table, required this.col, required this.shape, required this.to, required this.prefix, required this.keys, required this.when});
+}
+
+const List<IdRef> idRefs = [
+  IdRef(table: 'nexus_history', col: 'module_ref', shape: 'id', to: 'module', prefix: null, keys: null, when: null),
+  IdRef(table: 'module_ui', col: 'ui_key', shape: 'prefixedKey', to: null, prefix: 'pageHead:', keys: null, when: null),
+  IdRef(table: 'module_ui', col: 'ui_value', shape: 'id', to: 'module', prefix: null, keys: null, when: IdRefWhen(col: 'ui_key', values: ['mapModule', 'timelineModule'])),
+  IdRef(table: 'module_ui', col: 'ui_value', shape: 'jsonIdList', to: 'module', prefix: null, keys: null, when: IdRefWhen(col: 'ui_key', values: ['clsRelInclude'])),
+  IdRef(table: 'exhibit_node', col: 'props', shape: 'jsonObjectIdLists', to: 'classifier_template', prefix: null, keys: ['fields', 'columns'], when: null),
+];

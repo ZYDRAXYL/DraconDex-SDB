@@ -79,6 +79,8 @@ CONSUMERS['generated/templates/pages.json'] = { EXE: 'electron/templates/pages.j
 CONSUMERS['fixtures/snapshot-v2.json'] = { EXE: 'electron/test/fixtures/snapshot-v2.json', APK: 'flutter/test/fixtures/snapshot-v2.json' };
 // The stress vault every performance number is measured on (Procress 19).
 CONSUMERS['fixtures/stress-v2.json'] = { EXE: 'electron/test/fixtures/stress-v2.json', APK: 'flutter/test/fixtures/stress-v2.json' };
+// Procress 32 9.0: the 3-way merge cases both apps' Port Link engines must pass (fixtures/README.md).
+CONSUMERS['fixtures/portlink-merge-v1.json'] = { EXE: 'electron/test/fixtures/portlink-merge-v1.json', APK: 'flutter/test/fixtures/portlink-merge-v1.json' };
 for (const f of walk('templates/guide')) {
   CONSUMERS[f] = { EXE: f.replace(/^templates\//, 'electron/'), APK: f.replace(/^templates\//, 'flutter/assets/templates/') };
 }
