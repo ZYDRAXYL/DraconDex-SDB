@@ -49,5 +49,13 @@ the edits really make), and run through the real engines by:
 - EXE: `electron/test/portlink-fixture.test.mjs` → `src/db/portlink-merge.js mergeInto`
 - APK: `flutter/test/portlink_fixture_test.dart` → `portlink_merge.dart` (Plan part 9.4)
 
+**A runner seeds once and copies.** Build the base from the vault DDL + `seed`
+(+ `seedExtra`), close it, and copy that FILE to make this machine's and the
+drive's databases — as real use does (the base and both sides are always
+copies of one file). Seeding three databases separately gives the
+`datetime('now')` defaults different seconds whenever the seeds straddle
+one, and every row then reads as changed on the drive: EXE's first runner
+failed `edit-beats-delete` that way, intermittently.
+
 A change to a merge rule is a change here first; a case both engines fail on
 the same way is the rule, a case only one fails is that engine's bug.
