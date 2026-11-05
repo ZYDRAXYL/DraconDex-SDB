@@ -34,10 +34,12 @@ Regenerate it only when the snapshot format changes.
 
 ## portlink-merge-v1.json — the Port Link 3-way merge cases
 
-Procress 32 9.0 (APP `docs/VAULTS.md` §11.6). Twelve cases — the owner's own
+Procress 32 9.0 (APP `docs/VAULTS.md` §11.6). Thirteen cases — the owner's own
 example (A renamed to B on the drive while this machine made C → B and C), a
 conflict asked and a conflict answered, edit vs delete, new rows colliding on
-id, every `idRefs` shape following a renumbered row, a tag both sides made,
+id, every `idRefs` shape following a renumbered row, a renumber leaving the
+drive's own references alone (`drive-ref-stays`, added in 2.1.6 after EXE's
+engine was found re-mapping them), a tag both sides made,
 join-table removals, a deleted parent coming back. Each case is SQL only, so
 both engines run it as written: `seed` (+ `seedExtra`) on three vaults built
 from the vault DDL, `local` on one, `drive` on another, then the merge;
